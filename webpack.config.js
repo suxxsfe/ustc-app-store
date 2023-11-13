@@ -1,4 +1,5 @@
 const path = require("path");
+
 module.exports = {
   
   entry: ["@babel/polyfill", "./client/src/index.js"],
@@ -31,6 +32,13 @@ module.exports = {
   },
   
   mode:"development",
+  
+  devServer: {
+    historyApiFallback: true,
+    port: 5000,
+    static: path.resolve(__dirname, "client", "dist"),
+    open: true,
+  },
   
 };
 
