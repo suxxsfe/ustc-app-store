@@ -11,6 +11,9 @@ class HeaderActions extends Component{
         <a href="www.baidu.com">
           <button>Download</button>
         </a>
+        <a href="www.baidu.com">
+          <button>web</button>
+        </a>
       </div>
     );
   }
