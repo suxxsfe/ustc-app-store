@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { Router } from "@reach/router";
+
+import AppPage from "./pages/AppPage.js";
 
 import "./App.css";
 
@@ -9,7 +12,13 @@ class App extends Component{
   
   render(){
     return (
-      <h1>test</h1>
+      <>
+        <div className="app-container">
+          <Router>
+            <AppPage path="/app/" />
+          </Router>
+        </div>
+      </>
     );
   }
 }
