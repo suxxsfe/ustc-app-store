@@ -6,6 +6,7 @@ import AppPage from "./pages/AppPage.js";
 import Footer from "./modules/Footer.js";
 import NavBar from "./modules/NavBar.js";
 
+import "../utilities.css";
 import "./App.css";
 
 class App extends Component{

@@ -1,0 +1,26 @@
+/**
+ * utilities.css
+ * 
+ */
+
+:root{
+    --white: #FFFFFF;
+    
+    --xs: 4px;
+    --s: 8px;
+    --m: 16px;
+    --l: 24px;
+}
+
+body{
+    margin: 0px;
+    padding: 0px;
+    font-weight: 300;
+}
+
+.u-inlineblock{
+    display: inline-block;
+}
+.u-flex{
+    display: flex;
+}
