@@ -3,6 +3,8 @@ import { Router } from "@reach/router";
 
 import AppPage from "./pages/AppPage.js";
 
+import Footer from "./modules/Footer.js";
+
 import "./App.css";
 
 class App extends Component{
@@ -18,6 +20,7 @@ class App extends Component{
             <AppPage path="/app/" />
           </Router>
         </div>
+        <Footer />
       </>
     );
   }
