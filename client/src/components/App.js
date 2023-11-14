@@ -3,6 +3,7 @@ import { Router } from "@reach/router";
 
 import AppPage from "./pages/AppPage.js";
 import Profile from "./pages/Profile.js";
+import NotFound from "./pages/NotFound.js";
 
 import Footer from "./modules/Footer.js";
 import NavBar from "./modules/NavBar.js";
@@ -23,6 +24,7 @@ class App extends Component{
           <Router>
             <AppPage path="/app/" />
             <Profile path="/user/" />
+            <NotFound default />
           </Router>
         </div>
         <Footer />
