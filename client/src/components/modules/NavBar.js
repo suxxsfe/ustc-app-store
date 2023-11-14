@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "@reach/router";
 
+import "./NavBar.css";
+
 class NavBar extends Component{
   constructor(props){
     super(props);
@@ -9,11 +11,13 @@ class NavBar extends Component{
   render(){
     return (
       <nav className="navbar">
-        <div className="navbar-title u-inlineblock">ustc-app-store</div>
-        <div className="navbar-links-container u-inlineblock">
+        <div className="navbar-title">
+          <Link className="navbar-title-link" to="/">ustc-app-store</Link>
+        </div>
+        <div className="navbar-links-container">
           <Link className="navbar-link" to="/">Home</Link>
           <Link className="navbar-link" to="/app">App</Link>
-          <Link className="navbar-link" to="/profile">Profile</Link>
+          <Link className="navbar-link" to="/user">Profile</Link>
         </div>
       </nav>
     );

@@ -1,0 +1,55 @@
+.navbar{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 50px;
+    width: 100vw;
+    background-color: var(--primary-color);
+    padding: 0px 100px 0px 100px;
+    box-shadow: 2px 2px 2px var(--shadow-color);
+    
+    z-index: 1000;
+    display: flex;
+}
+
+.navbar-link,.navbar-title-link{
+    text-decoration: none;
+    outline: none;
+    vertical-align: middle;
+    text-align: center;
+    margin: 0px;
+    padding: 0px;
+}
+.navbar-title-link{
+    color: #1396DB
+}
+.navbar-link{
+    color: #666666;
+    padding: 0px 20px 0px 20px;
+    margin: 0px;
+    line-height: 50px;
+    display: block;
+    height: 100%;
+}
+.navbar-link:hover{
+    color: #000000;
+    background-color: #8a8a8a;
+}
+
+.navbar-title{
+    font-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,PingFang SC, Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
+    font-size: var(--l);
+    font-weight: bold;
+    text-shadow: 1px 1px 1px var(--shadow-color);
+    
+    height: 100%;
+    padding: 0px;
+    margin: auto 80px auto 0px;
+}
+
+.navbar-links-container{
+    text-align: center;
+    vertical-align: middle;
+    display: flex;
+}
+

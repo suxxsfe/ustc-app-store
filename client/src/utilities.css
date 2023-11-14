@@ -5,17 +5,28 @@
 
 :root{
     --white: #FFFFFF;
+    --primary-color: #edeae6;
+    
+    --shadow-color: #888888;
     
     --xs: 4px;
     --s: 8px;
     --m: 16px;
     --l: 24px;
+    --xl: 36px;
 }
 
 body{
     margin: 0px;
     padding: 0px;
     font-weight: 300;
+}
+#root{
+    position: relative;
+    top: 0px;
+    right: 0px;
+    padding: 0px;
+    margin: 0px;
 }
 
 .u-inlineblock{

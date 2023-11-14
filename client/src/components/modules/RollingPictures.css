@@ -1,7 +1,7 @@
 .rolling-pictures{
-    width: 80vw;
-    height: 500px;
-    margin-left: 10vw;
+    width: calc(100% - 70px);
+    height: 400px;
+    margin-left: 35px;
     position: relative;
 }
 
@@ -16,6 +16,7 @@
 .rolling-container{
     display: flex;
     flex-direction: row;
+    height: 100%;
     width: 1000%;
     position: absolute;
     left: 0px;
@@ -23,10 +24,13 @@
 
 .single-rolling-picture{
     padding: 0px;
-    width: 37.5vw;
-    margin: 0px 5vw 0px 0px;
+    width: calc(( 10% - 20px - 2px * 4 ) / 2);
+    height: calc(100% - 20px);
+    margin: 0px 20px 0px 0px;
     display: flex;
     justify-content: center;
+    border: 100px;
+    border-radius: 10px;
 }
 .single-rolling-picture img{
     max-width: 100%;
@@ -35,7 +39,10 @@
 }
 
 .arrow-button{
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
+    border: 0;
     position: absolute;
     padding: 0px;
 }

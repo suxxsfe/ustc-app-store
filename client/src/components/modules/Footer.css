@@ -1,0 +1,20 @@
+.footer{
+    position: relative;
+    top: 50px;
+    
+    border-width: 1px 0 0 0;
+    border-color: rgba(0, 0, 0, 0.5);
+    border-style: solid;
+    
+    padding-top: 30px;
+    padding-bottom: 30px;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.footer-text{
+    margin: auto;
+}
+
