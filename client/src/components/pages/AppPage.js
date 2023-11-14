@@ -8,6 +8,8 @@ import AppHomePage from "../modules/AppHomePage.js";
 import AppDownloadPage from "../modules/AppDownloadPage.js";
 import AppCommentsPage from "../modules/AppCommentsPage.js";
 
+import "./AppPage.css";
+
 const TMP_PICTURES_URL = [
   "https://pic.imgdb.cn/item/64edf25b661c6c8e543d1f99.png",
   "https://pic.imgdb.cn/item/64ede707661c6c8e54364bee.png",
@@ -35,6 +37,11 @@ class AppPage extends Component{
   }
   changeHash(event){
     window.location.hash = "#"+event.target.getAttribute("hashcode");
+    
+    for(const bro of event.target.parentNode.children){
+      bro.className="";
+    }
+    event.target.className="focus-tab";
 //    console.log(event.target.getAttribute("hashcode"));
   }
   
@@ -61,9 +68,11 @@ class AppPage extends Component{
       <>
         <AppHeader />
         <RollingPictures pictures={TMP_PICTURES_URL} />
-        <AppTabs _onClick={this.changeHash}/>
-        {subPage}
-        <AppSideBar />
+        <div className="sub-page">
+          <AppTabs _onClick={this.changeHash}/>
+          {subPage}
+          <AppSideBar />
+        </div>
       </>
     );
   }

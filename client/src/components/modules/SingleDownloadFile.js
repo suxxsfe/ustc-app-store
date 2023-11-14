@@ -7,19 +7,17 @@ class SingleDownloadFile extends Component{
   
   render(){
     return (
-      <div className="download-file">
-        <ul>
-          <li>{this.props.platform}</li>
-          <li>{this.props.uploadedDate}</li>
-          <li>
-            <a href={this.props.downloadUrl}>
-              <button>
-                download!
-              </button>
-            </a>
-          </li>
-        </ul>
-      </div>
+      <>
+        <div className="platform">{this.props.platform}</div>
+        <div className="upload-date">{this.props.uploadedDate}</div>
+        <div className="download-button">
+          <a href={this.props.downloadUrl}>
+            <button>
+              download!
+            </button>
+          </a>
+        </div>
+      </>
     );
   }
 }

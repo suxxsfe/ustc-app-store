@@ -7,7 +7,7 @@ class AppHomePage extends Component{
   
   render(){
     return (
-      <div className="home-page">
+      <div className="home-page sub-page-main">
         <h2>
           Home Page Title
         </h2>

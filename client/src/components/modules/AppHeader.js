@@ -11,10 +11,10 @@ class AppHeader extends Component{
   render(){
     return (
       <div className="app-header">
-        <img src="https://himg.bdimg.com/sys/portraitn/item/public.1.f355b4ea.XQ0gvtdscacwVeJkfGxQWw" />
-        <h1>App name</h1>
-        <AppHeaderDetail />
+        <img className="app-logo" src="https://himg.bdimg.com/sys/portraitn/item/public.1.f355b4ea.XQ0gvtdscacwVeJkfGxQWw" />
+        <h1 className="app-name">App name</h1>
         <AppHeaderActions />
+        <AppHeaderDetail />
       </div>
     );
   }

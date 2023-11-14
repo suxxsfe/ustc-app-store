@@ -10,7 +10,7 @@ class AppCommentsPage extends Component{
   
   render(){
     return (
-      <div className="comments-page-container">
+      <div className="comments-page sub-page-main">
         <CommentsOverview score="4.5" comments_num="100" />
         <CommentCard _id="1" score="3.5" 
             author_name="comment author" content="comment content" />

@@ -6,8 +6,6 @@ import ArrowButton from "./ArrowButton.js";
 
 import "./RollingPictures.css";
 
-const SINGLE_PICTURE_WIDTH = 42.5;
-
 class RollingPictures extends Component{
   constructor(props){
     super(props);
@@ -16,9 +14,10 @@ class RollingPictures extends Component{
       useTransition: true,
     };
     
-    this.currentImplementedPicture = 2,// [2, size+1]
+    this.currentImplementedPicture = 0,// [2, size+1]
     this.size = 0;
     this.pictureComponents = null;
+    this.singlePictureWidth = null;
   }
 
   urlToComponent(url){
@@ -38,6 +37,12 @@ class RollingPictures extends Component{
   buttonOnClick(shift, ele){
     if(this.currentImplementedPicture === 0
        || this.currentImplementedPicture === this.size+2){
+      if(this.singlePictureWidth === null){
+        this.singlePictureWidth = ele.children[0].offsetWidth+20;
+        console.log(ele.children[0]);
+        console.log(this.singlePictureWidth);
+      }
+      
       this.currentImplementedPicture = this.currentImplementedPicture === 0 ? (this.size) : 2;
       ele.style.transition = "0s";
       ele.style.left = this.getPositionLeft();
@@ -53,10 +58,9 @@ class RollingPictures extends Component{
   }
   
   getPositionLeft(){
-    return "-"+this.currentImplementedPicture*SINGLE_PICTURE_WIDTH+"vw";
-  }
-  getPositionRight(){
-    return "-"+(this.size+4-this.currentImplementedPicture)*SINGLE_PICTURE_WIDTH+"vw";
+    let a = "-"+this.singlePictureWidth*this.currentImplementedPicture+"px";
+    console.log(a);
+    return a;
   }
   
   componentDidMount(){
@@ -74,8 +78,7 @@ class RollingPictures extends Component{
     return (
       <div className="rolling-pictures">
         <div className="rolling-hide-container">
-          <div className="rolling-container"
-               style={{left:this.getPositionLeft()}}>
+          <div className="rolling-container">
             {this.pictureComponents}
           </div>
         </div>

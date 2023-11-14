@@ -7,12 +7,10 @@ class AppHeaderDetail extends Component{
   
   render(){
     return (
-      <ul className="app-header-detail">
-        <li>
-          By
-          <a href="www.baidu.com">author name</a>
-        </li>
-      </ul>
+      <div className="app-header-detail">
+        By 
+        <a href="www.baidu.com">author name</a>
+      </div>
     )
   }
 }
