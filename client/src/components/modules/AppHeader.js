@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-import HeaderDetailList from "./HeaderDetailList.js";
-import HeaderActions from "./HeaderActions.js";
+import AppHeaderDetail from "./AppHeaderDetail.js";
+import AppHeaderActions from "./AppHeaderActions.js";
 
 class AppHeader extends Component{
   constructor(props){
@@ -13,8 +13,8 @@ class AppHeader extends Component{
       <div className="app-header">
         <img src="https://himg.bdimg.com/sys/portraitn/item/public.1.f355b4ea.XQ0gvtdscacwVeJkfGxQWw" />
         <h1>App name</h1>
-        <HeaderDetailList />
-        <HeaderActions />
+        <AppHeaderDetail />
+        <AppHeaderActions />
       </div>
     );
   }

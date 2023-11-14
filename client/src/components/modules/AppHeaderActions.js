@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class HeaderActions extends Component{
+class AppHeaderActions extends Component{
   constructor(props){
     super(props);
   }
@@ -19,5 +19,5 @@ class HeaderActions extends Component{
   }
 }
 
-export default HeaderActions;
+export default AppHeaderActions;
 

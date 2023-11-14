@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 
-class HeaderDetailList extends Component{
+class AppHeaderDetail extends Component{
   constructor(props){
     super(props);
   }
   
   render(){
     return (
-      <ul className="header-detail-list">
+      <ul className="app-header-detail">
         <li>
-          "By"
+          By
           <a href="www.baidu.com">author name</a>
         </li>
       </ul>
@@ -17,5 +17,5 @@ class HeaderDetailList extends Component{
   }
 }
 
-export default HeaderDetailList;
+export default AppHeaderDetail;
 
