@@ -21,6 +21,9 @@ body{
 .u-inlineblock{
     display: inline-block;
 }
+.u-block{
+    display: block;
+}
 .u-flex{
     display: flex;
 }

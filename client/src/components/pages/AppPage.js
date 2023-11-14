@@ -1,11 +1,18 @@
 import React, { Component } from "react";
 
 import AppHeader from "../modules/AppHeader.js";
+import RollingPictures from "../modules/RollingPictures.js";
 import AppTabs from "../modules/AppTabs.js";
 import AppSideBar from "../modules/AppSideBar.js";
 import AppHomePage from "../modules/AppHomePage.js";
 import AppDownloadPage from "../modules/AppDownloadPage.js";
 import AppCommentsPage from "../modules/AppCommentsPage.js";
+
+const TMP_PICTURES_URL = [
+  "https://pic.imgdb.cn/item/64edf25b661c6c8e543d1f99.png",
+  "https://pic.imgdb.cn/item/64ede707661c6c8e54364bee.png",
+  'https://pic.imgdb.cn/item/64edf25b661c6c8e543d1f8b.png',
+];
 
 const SubPages = {
   HomePage: "#HomePage",
@@ -53,6 +60,7 @@ class AppPage extends Component{
     return (
       <>
         <AppHeader />
+        <RollingPictures pictures={TMP_PICTURES_URL} />
         <AppTabs _onClick={this.changeHash}/>
         {subPage}
         <AppSideBar />
