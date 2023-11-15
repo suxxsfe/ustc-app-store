@@ -8,7 +8,7 @@ class AppHeaderDetail extends Component{
   render(){
     return (
       <div className="app-header-detail">
-        By 
+        <span>By&nbsp;</span>
         <a href="www.baidu.com">author name</a>
       </div>
     )

@@ -9,6 +9,7 @@ import AppDownloadPage from "../modules/AppDownloadPage.js";
 import AppCommentsPage from "../modules/AppCommentsPage.js";
 
 import "./AppPage.css";
+import "../modules/Header.css";
 
 const TMP_PICTURES_URL = [
   "https://pic.imgdb.cn/item/64edf25b661c6c8e543d1f99.png",

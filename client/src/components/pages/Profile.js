@@ -4,6 +4,9 @@ import ProfileHeader from "../modules/ProfileHeader.js";
 import ProfileProjects from "../modules/ProfileProjects.js";
 import ProfileSideBar from "../modules/ProfileSideBar.js";
 
+import "./Profile.css";
+import "../modules/Header.css";
+
 class Profile extends Component{
   constructor(props){
     super(props);
