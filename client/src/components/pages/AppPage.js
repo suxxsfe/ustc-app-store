@@ -37,12 +37,7 @@ class AppPage extends Component{
     });
   }
   changeHash(event){
-    window.location.hash = "#"+event.target.getAttribute("hashcode");
-    
-    for(const bro of event.target.parentNode.children){
-      bro.className="";
-    }
-    event.target.className="focus-tab";
+    window.location.hash = event.target.getAttribute("hashcode");
 //    console.log(event.target.getAttribute("hashcode"));
   }
   
@@ -70,7 +65,7 @@ class AppPage extends Component{
         <AppHeader />
         <RollingPictures pictures={TMP_PICTURES_URL} />
         <div className="sub-page">
-          <AppTabs _onClick={this.changeHash}/>
+          <AppTabs _onClick={this.changeHash} focus={this.state.page}/>
           {subPage}
           <AppSideBar />
         </div>
