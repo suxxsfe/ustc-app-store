@@ -11,9 +11,10 @@ class ProfileHeader extends Component{
   render(){
     return (
       <div className="profile-header">
-        <img src="https://himg.bdimg.com/sys/portraitn/item/public.1.f355b4ea.XQ0gvtdscacwVeJkfGxQWw" />
-        <ProfileHeaderDetail />
+        <img className="user-logo" src="https://himg.bdimg.com/sys/portraitn/item/public.1.f355b4ea.XQ0gvtdscacwVeJkfGxQWw" />
+        <h1 className="user-name">user_name</h1>
         <ProfileHeaderActions />
+        <ProfileHeaderDetail />
       </div>
     );
   }
