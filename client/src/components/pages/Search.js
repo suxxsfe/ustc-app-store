@@ -4,6 +4,8 @@ import SearchBlock from "../modules/SearchBlock.js";
 import TagsSelection from "../modules/TagsSelection.js";
 import Projects from "../modules/Projects.js";
 
+import "./Search.css";
+
 class Search extends Component{
   constructor(props){
     super(props);
