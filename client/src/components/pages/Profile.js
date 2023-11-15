@@ -17,7 +17,7 @@ class Profile extends Component{
       <>
         <ProfileHeader />
         <div className="profile-main">
-          <ProfileProjects />
+          <Projects />
           <ProfileSideBar />
         </div>
       </>

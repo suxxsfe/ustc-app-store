@@ -20,7 +20,7 @@ const TMP_PROJECTS = [
   },
 ];
 
-class ProfileProjects extends Component{
+class Projects extends Component{
   constructor(props){
     super(props);
   }
@@ -42,5 +42,5 @@ class ProfileProjects extends Component{
   }
 }
 
-export default ProfileProjects;
+export default Projects;
 
