@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import ProfileHeader from "../modules/ProfileHeader.js";
-import ProfileProjects from "../modules/ProfileProjects.js";
+import Projects from "../modules/Projects.js";
 import ProfileSideBar from "../modules/ProfileSideBar.js";
 
 import "./Profile.css";
