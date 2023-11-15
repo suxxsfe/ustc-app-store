@@ -38,7 +38,7 @@
     box-shadow: 3px 3px 3px var(--shadow-color);
     
     display: grid;
-    grid-template-columns: 120px auto auto;
+    grid-template-columns: 140px auto auto;
     grid-template-rows: 40px 60px 20px;
     grid-row-gap: 10px;
     grid-column-gap: 20px;
