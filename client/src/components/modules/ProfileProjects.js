@@ -28,7 +28,7 @@ class ProfileProjects extends Component{
   render(){
     return (
       <div className="projects">
-        <h2>Projects</h2>
+        <h2 className="project-title">Projects</h2>
         <ProjectsOverview projects_num={TMP_PROJECTS.length} />
         {
           TMP_PROJECTS.map((obj) => {

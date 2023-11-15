@@ -8,7 +8,7 @@ class SingleProject extends Component{
   render(){
     return (
       <div className="project">
-        <img src={this.props.project.img_url} />
+        <img className="project-logo" src={this.props.project.img_url} />
         <div className="project-title">
           <a href="www.baidu.com">
             <span>{this.props.project.name}</span>

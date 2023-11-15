@@ -16,8 +16,10 @@ class Profile extends Component{
     return (
       <>
         <ProfileHeader />
-        <ProfileProjects />
-        <ProfileSideBar />
+        <div className="profile-main">
+          <ProfileProjects />
+          <ProfileSideBar />
+        </div>
       </>
     );
   }
