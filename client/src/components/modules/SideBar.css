@@ -1,0 +1,19 @@
+.sidebar-part{
+    margin: 0 0 20px 0;
+    padding: 10px;
+    background-color: var(--primary-color);
+}
+.sidebar-part ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-part-title{
+    display: inline-block;
+    width: 100%;
+    font-size: var(--m);
+    text-align: center;
+    margin: 0 0 10px 0;
+}
+

@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import AppHeader from "../modules/AppHeader.js";
 import RollingPictures from "../modules/RollingPictures.js";
 import AppTabs from "../modules/AppTabs.js";
-import AppSideBar from "../modules/AppSideBar.js";
+import { AppSideBar } from "../modules/SideBar.js";
 import AppHomePage from "../modules/AppHomePage.js";
 import AppDownloadPage from "../modules/AppDownloadPage.js";
 import AppCommentsPage from "../modules/AppCommentsPage.js";
