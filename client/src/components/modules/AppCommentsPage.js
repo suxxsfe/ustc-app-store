@@ -16,7 +16,10 @@ class AppCommentsPage extends Component{
         <CommentCard _id="1" score="3.5" 
             author_name="comment author" content="comment content"
         />
-        <NewComment app_id={"asdfasfdfa"} />
+        <div className="new-comment">
+          <span className="new-comment-title">发表评论</span>
+          <NewComment app_id={"asdfasfdfa"} />
+        </div>
       </div>
     );
   }
