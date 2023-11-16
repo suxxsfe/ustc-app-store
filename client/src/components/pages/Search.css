@@ -4,19 +4,19 @@
     text-align: center;
 }
 
-.search-input-block{
+.search-block .new-post-input{
     height: 35px;
     position: relative;
     display: flex;
     justify-content: center;
 }
-.search-input{
+.search-block .new-post-input .new-post-input-input{
     width: 40%;
     min-width: 100px;
     height: 100%;
     box-sizing: border-box;
 }
-.search-go-button{
+.search-block .new-post-input .new-post-input-button{
     height: 100%;
     width: 5%;
     min-width: 40px;
