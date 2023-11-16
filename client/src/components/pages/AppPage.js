@@ -12,9 +12,10 @@ import "./AppPage.css";
 import "../modules/Header.css";
 
 const TMP_PICTURES_URL = [
-  "https://pic.imgdb.cn/item/64edf25b661c6c8e543d1f99.png",
-  "https://pic.imgdb.cn/item/64ede707661c6c8e54364bee.png",
-  'https://pic.imgdb.cn/item/64edf25b661c6c8e543d1f8b.png',
+  "https://pic.downk.cc/item/5e7b1494504f4bcb04d6cda4.jpg",
+	"https://pic.downk.cc/item/5e7cd9d5504f4bcb04e063ec.jpg",
+	"https://pic.downk.cc/item/5e7b16a0504f4bcb04d8f5aa.jpg",
+	"https://pic.downk.cc/item/5e7cd9d5504f4bcb04e063ce.jpg",
 ];
 
 const SubPages = {
