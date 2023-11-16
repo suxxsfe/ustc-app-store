@@ -1,0 +1,46 @@
+
+/******************** search block *********************/
+.search-block .new-post-input{
+    height: 35px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+.search-block .new-post-input .new-post-input-input{
+    width: 40%;
+    min-width: 100px;
+    height: 100%;
+    box-sizing: border-box;
+}
+.search-block .new-post-input .new-post-input-button{
+    height: 100%;
+    width: 5%;
+    min-width: 40px;
+    box-sizing: border-box;
+}
+
+
+/********* new comment **************/
+.new-comment{
+    margin: 20px 0 0 0;
+}
+.new-comment .new-post-input .new-post-input-input{
+    display: block;
+    width: 60%;
+    height: 200px;
+    min-height: 100px;
+    margin: 10px 0 0 0;
+    padding: 8px 14px 8px 14px;
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    outline: none;
+}
+.new-comment .new-post-input .new-post-input-button{
+    margin: 20px 0 0 0;
+    width: 60px;
+    height: 35px;
+    border-radius: 10%;
+    text-align: center;
+}
+

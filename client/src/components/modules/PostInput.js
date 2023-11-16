@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import { post } from "../../utilities.js";
 
+import "./PostInput.css";
+
 class NewPostInput extends Component{
   constructor(props){
     super(props);
