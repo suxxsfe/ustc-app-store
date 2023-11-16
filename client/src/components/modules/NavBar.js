@@ -18,6 +18,7 @@ class NavBar extends Component{
           <Link className="navbar-link" to="/">Home</Link>
           <Link className="navbar-link" to="/app">App</Link>
           <Link className="navbar-link" to="/user">Profile</Link>
+          <Link className="navbar-link" to="/search">Catalog</Link>
         </div>
       </nav>
     );
