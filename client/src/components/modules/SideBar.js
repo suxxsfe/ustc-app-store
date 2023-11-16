@@ -71,6 +71,45 @@ class AppSideBar extends Component{
   }
 }
 
+class ProfileSideBar extends Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      about_elements: [],
+      links_elements: [],
+    };
+  }
+  
+  componentDidMount(){
+    this.setState({
+      about_elements: [
+        "用户类型：普通用户",
+        "注册时间：1111111",
+        "最后访问：2222222",
+      ],
+    });
+    this.setState({
+      links_elements: [
+        (
+          <>
+            <a href="www.baidu.com">TODO: img</a>
+            <span>bilibili</span>
+          </>
+        ),
+      ],
+    });
+  }
+  
+  render(){
+    return (
+      <div className="profile-sidebar">
+        <SideBar title="About:" elements={this.state.about_elements} />
+        <SideBar title="Links:" elements={this.state.links_elements} />
+      </div>
+    );
+  }
+}
+
 export default SideBar;
-export { AppSideBar };
+export { AppSideBar, ProfileSideBar };
 
