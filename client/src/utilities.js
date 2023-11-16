@@ -14,6 +14,8 @@ const convertToJSON = (res) => {
 }
 
 const post = (endpoint, params = {}) => {
-  console.log("send to server (post): "+params);
+  console.log("send to server (post): "+JSON.stringify(params));
 }
+
+export { post };
 
