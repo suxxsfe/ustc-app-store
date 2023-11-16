@@ -1,8 +1,58 @@
 import React, { Component } from "react";
 
+import TagsSelection from "../modules/TagsSelection.js";
+
+const TMP_TAGS = [
+  {
+    name: "tag_a",
+  },
+  {
+    name: "tag_b",
+  },
+  {
+    name: "tag_c",
+  },
+  {
+    name: "tag_d",
+  },
+  {
+    name: "tag long long long",
+  },
+];
+const TMP_PLATFORMS = [
+  {
+    name: "windows",
+  },
+  {
+    name: "mac",
+  },
+  {
+    name: "web",
+  },
+];
+
+const INIT_TAG_NAME = "all";
+const INIT_PLATFORM_NAME = "all";
+
 class SearchBlock extends Component{
   constructor(props){
     super(props);
+    this.state = {
+      selectedTag: INIT_TAG_NAME,
+      selectedPlatform: INIT_PLATFORM_NAME,
+    };
+  }
+  
+  handleTagSelection(tag){
+    this.setState((preState) => ({
+      selectedTag: preState.selectedTag === tag ? INIT_TAG_NAME : tag,
+    }));
+  }
+  
+  handlePlatformSelection(platform){
+    this.setState((preState) => ({
+      selectedPlatform: preState.selectedPlatform === platform ? INIT_PLATFORM_NAME : platform,
+    }));
   }
 
   render(){
@@ -13,6 +63,14 @@ class SearchBlock extends Component{
           <input className="search-input" />
           <button className="search-go-button">搜索</button>
         </div>
+        <TagsSelection handle_selection={this.handleTagSelection.bind(this)}
+                       selected_tag={this.state.selectedTag}
+                       tags_name={TMP_TAGS} tags_title="Tags"
+        />
+        <TagsSelection handle_selection={this.handlePlatformSelection.bind(this)}
+                       selected_tag={this.state.selectedPlatform}
+                       tags_name={TMP_PLATFORMS} tags_title="Platforms"
+        />
       </div>
     );
   }

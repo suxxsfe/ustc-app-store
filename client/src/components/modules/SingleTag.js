@@ -7,8 +7,8 @@ class SingleTag extends Component{
 
   render(){
     return (
-      <div className={this.props._classname+" tag"} onClick={this.props._onclick}>
-        <span>{this.props.tag_name}</span>
+      <div className={(this.props.is_selected ? "selected-tag" : "") +" tag"}>
+        <span onClick={this.props._onclick}>{this.props.tag_name}</span>
       </div>
     );
   }
