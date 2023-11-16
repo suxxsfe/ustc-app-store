@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import TagsSelection from "../modules/TagsSelection.js";
+import { SearchPostInput } from "../modules/PostInput.js";
 
 const TMP_TAGS = [
   {
@@ -59,10 +60,7 @@ class SearchBlock extends Component{
     return (
       <div className="search-block">
         <h1 className="search-block-title">搜索</h1>
-        <div className="search-input-block">
-          <input className="search-input" />
-          <button className="search-go-button">搜索</button>
-        </div>
+        <SearchPostInput selected_tag={this.state.selectedTag} selected_platform={this.state.selectedPlatform} />
         <TagsSelection handle_selection={this.handleTagSelection.bind(this)}
                        selected_tag={this.state.selectedTag}
                        tags_name={TMP_TAGS} tags_title="Tags"
