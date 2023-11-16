@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import SingleComment from "./SingleComment.js";
 import RepliesBlock from "./RepliesBlock.js";
+import { NewReply } from "./PostInput.js";
 
 const TMP_COMMENTS = [
   {
@@ -27,6 +28,7 @@ class CommentCard extends Component{
         <SingleComment _id={this.props._id} score={this.props.score}
             author_name={this.props.author_name} content={this.props.content} />
         <RepliesBlock CommentId={this.props._id} replies={TMP_COMMENTS} />
+        <NewReply app_id={"this_app"} />
       </div>
     );
   }
