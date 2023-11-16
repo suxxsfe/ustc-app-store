@@ -27,12 +27,20 @@ class NewPostInput extends Component{
   }
 
   render(){
+    let input_type = this.props.use_textarea !== undefined ?
+          (<textarea type="text" placeholder={this.props.default_text}
+                     value={this.state.value} onChange={this.handleChange.bind(this)}
+                     className="new-post-input-input"
+          />) :
+          (<input type="text" placeholder={this.props.default_text}
+                 value={this.state.value} onChange={this.handleChange.bind(this)}
+                 className="new-post-input-input"
+          />);
     return (
       <div className="new-post-input">
-        <input type="text" placeholder={this.props.default_text}
-               value={this.state.value} onChange={this.handleChange.bind(this)}
-               className="new-post-input-input"
-        />
+        {
+          input_type
+        }
         <button type="submit" value="Submit"
                 onClick={this.handleSubmit.bind(this)} className="new-post-input-button"
         >
@@ -73,7 +81,7 @@ class NewComment extends Component{
   render(){
     return (
       <NewPostInput default_text="new comment" button_text="提交"
-                    on_submit={this.postNewComment.bind(this)}
+                    on_submit={this.postNewComment.bind(this)} use_textarea={true}
       />
     );
   }
@@ -91,7 +99,7 @@ class NewReply extends Component{
   render(){
     return (
       <NewPostInput default_text="new reply" button_text="提交"
-                    on_submit={this.postNewReply.bind(this)}
+                    on_submit={this.postNewReply.bind(this)} use_textarea={true}
       />
     );
   }
