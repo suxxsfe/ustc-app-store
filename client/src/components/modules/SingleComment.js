@@ -14,6 +14,9 @@ class SingleComment extends Component{
         <div className="single-comment-content">
           {this.props.content}
         </div>
+        <div className="single-comment-actions">
+          <span className="show-reply-button" onClick={this.props.handle_show_reply}>回复</span>
+        </div>
       </div>
     );
   }

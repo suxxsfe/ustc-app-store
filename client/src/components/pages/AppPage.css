@@ -98,6 +98,15 @@
     padding: 10px;
 }
 
+.single-comment-actions{
+    margin: 0 10px 0 10px;
+}
+.show-reply-button{
+    font-size: var(--s);
+    cursor: pointer;
+}
+
+
 .download-container{
     display: grid;
     grid-template-columns: auto auto auto;

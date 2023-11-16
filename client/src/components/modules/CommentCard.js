@@ -20,15 +20,28 @@ const TMP_COMMENTS = [
 class CommentCard extends Component{
   constructor(props){
     super(props);
+    this.state = {
+      showNewReply: false,
+    };
+  }
+  
+  handleShowReply(){
+    this.setState((preState) => ({
+      showNewReply: !preState.showNewReply,
+    }));
   }
   
   render(){
     return (
       <div className="comment-card">
         <SingleComment _id={this.props._id} score={this.props.score}
-            author_name={this.props.author_name} content={this.props.content} />
+                       author_name={this.props.author_name} content={this.props.content} 
+                       handle_show_reply={this.handleShowReply.bind(this)}
+        />
         <RepliesBlock CommentId={this.props._id} replies={TMP_COMMENTS} />
-        <NewReply app_id={"this_app"} />
+        <div className="new-reply" style={{display:this.state.showNewReply ? "block" : "none"}}>
+            <NewReply app_id={"this_app"} />
+        </div>
       </div>
     );
   }

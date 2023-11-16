@@ -44,3 +44,28 @@
     text-align: center;
 }
 
+/************ new reply *******************/
+.new-reply{
+    margin: 0px;
+    padding : 0 0 0 20px;
+    transition: 1s 0s ease-out;
+}
+.new-reply .new-post-input .new-post-input-input{
+    display: block;
+    width: 60%;
+    height: 100px;
+    margin: 10px 0 0 0;
+    padding: 8px 14px 8px 14px;
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    outline: none;
+}
+.new-reply .new-post-input .new-post-input-button{
+    margin: 20px 0 0 0;
+    width: 60px;
+    height: 35px;
+    border-radius: 10%;
+    text-align: center;
+}
+
