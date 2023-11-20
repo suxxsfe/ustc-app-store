@@ -1,8 +1,8 @@
 .comment-stars{
     height: 30px;
-    width: 150px;
     display: flex;
     flex-direction: row-reverse;
+    justify-content: start;
 }
 
 .single-star{
