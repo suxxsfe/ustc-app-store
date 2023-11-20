@@ -125,7 +125,7 @@ returns
 
 | 名称 | 解释 | 示例 |
 | ---- | ---- | ---- |
-| tags | 标签列表 | `[\_id: "123", name: "tag name"]` |  
+| tags | 标签列表 | `[_id: "123", name: "tag name"]` |  
 
 ## GET /search  
 
