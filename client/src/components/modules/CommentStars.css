@@ -1,0 +1,33 @@
+.comment-stars{
+    height: 30px;
+    width: 150px;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.single-star{
+    height: 100%;
+    width: 30px;
+    margin: 0px;
+    border: 0px;
+}
+.single-star:hover{
+    background-color: blue;
+}
+.single-star:hover + .single-star{
+    background-color: blue;
+}
+.single-star:hover + .single-star + .single-star{
+    background-color: blue;
+}
+.single-star:hover + .single-star + .single-star + .single-star{
+    background-color: blue;
+}
+.single-star:hover + .single-star + .single-star + .single-star + .single-star{
+    background-color: blue;
+}
+
+.focus-star{
+    background-color: blue;
+}
+
