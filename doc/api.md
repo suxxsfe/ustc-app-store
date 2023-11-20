@@ -10,10 +10,14 @@ user: {
 
 params  
 
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
 | \_id | app id | `""` |  
 
 returns  
 
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
 | name | app 名 | `"app name"` |
 | authors | 作者列表 | `["1", "2"]` |
 | creatdate | 创建日期 | `"2023-11-11"` |
@@ -26,50 +30,70 @@ returns
 
 params  
 
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
 | \_id | app id | `""` |  
 
 returns  
 
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
 | describe | 主页描述 | `"home page"` |  
 
 ## GET /comments  
 
 params  
 
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
 | \_id | app id | `""` |  
 
 returns  
 
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
 | comments | 评论列表 | `[{_id: "", author: user, score: 5, content: "content"}]` |  
 
 ## GET /replies  
 
 params  
 
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
 | \_id | comment id | `""` |  
 
 returns  
 
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
 | replies | 回复列表 | `[{_id: "", author: user}]` |  
 
 ## GET /appdownload
 
 params  
 
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
 | \_id | app id | `""` |  
 
 returns  
 
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
 | downloads | 下载列表 | `[{platform: "Windows", uploaddate: "2023-11-11", downloadid=""}]` |  
 
 ## GET /userinfo  
 
 params  
 
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
 | \_id | user id | `""` |  
 
 returns  
 
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
 | user | 用户名、id | `user` |  
 | intro | 简介 | `"intro"` |
 | type | 用户类型 | `"普通用户"` |
@@ -81,31 +105,41 @@ returns
 
 params  
 
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
 | \_id | user id | `""` |  
 
 returns 
 
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
 | projects | 用户项目 id 列表 | `["123"]` |  
 
 ## GET /tags  
 
 params  
 
-| none |  
+none  
 
 returns 
 
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
 | tags | 标签列表 | `[\_id: "123", name: "tag name"]` |  
 
 ## GET /search  
 
 params  
 
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
 | tag（可选） | 选定标签 | `"123"` |
 | platform（可选） | 选定平台 | `"Windows"` |  
 
 returns  
 
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
 | projects | 搜索结果项目 id 列表 | `["123"]` |  
 
 
