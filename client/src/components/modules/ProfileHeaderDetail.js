@@ -8,7 +8,7 @@ class ProfileHeaderDetail extends Component{
   render(){
     return (
       <div className="profile-header-detail">
-        <p>简介简介简介简介</p>
+        <p>{this.props.intro}</p>
       </div>
     )
   }

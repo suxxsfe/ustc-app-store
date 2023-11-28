@@ -26,7 +26,8 @@ class TagsSelection extends Component{
           {
             this.props.tags_name.map((obj) => {
               return (
-                <SingleTag tag_name={obj.name} is_selected={this.isSelected(obj.name)}
+                <SingleTag tag_name={obj.name} _id={obj._id}
+				  		   is_selected={this.isSelected(obj.name)}
                            _onclick={this.handleOnClick.bind(this)}
                 />
               );

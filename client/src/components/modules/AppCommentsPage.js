@@ -5,32 +5,58 @@ import CommentCard from "./CommentCard.js";
 import { NewComment } from "./PostInput.js";
 import CommentStars from "./CommentStars.js";
 
+import { get } from "../../utilities.js";
+
 class AppCommentsPage extends Component{
   constructor(props){
     super(props);
     this.state = {
-      score: 0,
+      newScore: 0,
+	  score: 0,
+	  comments: [],
     };
   }
   
   handleScore(newScore){
     console.log(newScore);
+	  
     this.setState({
-      score: newScore,
+      newScore: newScore,
     });
+  }
+	
+  componentDidMount(){
+	get("/api/comments", {_id: this.props.appId}).then((comments) => {
+	  let score = 0;
+	  for(let comment in comments){
+	  	score+=comment.score;
+	  }
+	  score = (score === 0) ? "no score" : (score/comments.length);
+	    
+	  this.setState({
+	    comments: comments,
+	    score: score,
+	  });
+	});
   }
   
   render(){
     return (
       <div className="comments-page sub-page-main">
-        <CommentsOverview score="4.5" comments_num="100" />
-        <CommentCard _id="1" score="3.5" 
-            author_name="comment author" content="comment content"
-        />
+        <CommentsOverview score={this.state.score} comments_num={this.props.comments.length} />
+		{
+		  this.state.comments.map((comment) => {
+  		    return (
+			  <CommentCard _id={comment._id} score={comment.score}
+						   author_name={comment.author} content={comment.content}
+			  />
+		    );
+		  })
+		}
         <div className="new-comment">
           <span className="new-comment-title">发表评论</span>
-          <CommentStars score={this.state.score} handleScore={this.handleScore.bind(this)} />
-          <NewComment app_id={"123"} score={this.state.score} />
+          <CommentStars score={this.state.newScore} handleScore={this.handleScore.bind(this)} />
+          <NewComment app_id={this.props.appid} score={this.state.newScore} />
         </div>
       </div>
     );

@@ -3,23 +3,8 @@ import React, { Component } from "react";
 import TagsSelection from "../modules/TagsSelection.js";
 import { SearchPostInput } from "../modules/PostInput.js";
 
-const TMP_TAGS = [
-  {
-    name: "tag_a",
-  },
-  {
-    name: "tag_b",
-  },
-  {
-    name: "tag_c",
-  },
-  {
-    name: "tag_d",
-  },
-  {
-    name: "tag long long long",
-  },
-];
+import { get } from "../../utilities.js";
+
 const TMP_PLATFORMS = [
   {
     name: "windows",
@@ -55,6 +40,14 @@ class SearchBlock extends Component{
       selectedPlatform: preState.selectedPlatform === platform ? INIT_PLATFORM_NAME : platform,
     }));
   }
+	
+  componentDidMount(){
+	get("/api/tags").then((tags) => {
+	  this.setState({
+		tags: tags,
+	  });
+	});
+  }
 
   render(){
     return (
@@ -63,7 +56,7 @@ class SearchBlock extends Component{
         <SearchPostInput selected_tag={this.state.selectedTag} selected_platform={this.state.selectedPlatform} />
         <TagsSelection handle_selection={this.handleTagSelection.bind(this)}
                        selected_tag={this.state.selectedTag}
-                       tags_name={TMP_TAGS} tags_title="Tags"
+                       tags_name={this.state.tags} tags_title="Tags"
         />
         <TagsSelection handle_selection={this.handlePlatformSelection.bind(this)}
                        selected_tag={this.state.selectedPlatform}

@@ -39,7 +39,6 @@ class AppPage extends Component{
   }
   changeHash(event){
     window.location.hash = event.target.getAttribute("hashcode");
-//    console.log(event.target.getAttribute("hashcode"));
   }
   
   componentDidMount(){
@@ -52,23 +51,23 @@ class AppPage extends Component{
   render(){
     let subPage = null;
     if(this.state.page === SubPages.HomePage || this.state.page === ""){
-      subPage = (<AppHomePage />);
+      subPage = (<AppHomePage appId={123} />);
     }
     else if(this.state.page === SubPages.DownloadPage){
-      subPage = (<AppDownloadPage />);
+      subPage = (<AppDownloadPage appId={123} />);
     }
     else if(this.state.page === SubPages.CommentsPage){
-      subPage = (<AppCommentsPage />);
+      subPage = (<AppCommentsPage appId={123} />);
     }
     
     return (
       <>
-        <AppHeader />
+        <AppHeader appId={123} />
         <RollingPictures pictures={TMP_PICTURES_URL} />
         <div className="sub-page">
           <AppTabs _onClick={this.changeHash} focus={this.state.page}/>
           {subPage}
-          <AppSideBar />
+          <AppSideBar appId={123} />
         </div>
       </>
     );

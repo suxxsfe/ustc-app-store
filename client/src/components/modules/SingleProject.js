@@ -1,8 +1,27 @@
 import React, { Component } from "react";
 
+import { get } from "../../utilities.js";
+
 class SingleProject extends Component{
   constructor(props){
     super(props);
+	this.state = {
+	  name: "",
+	  intro: "",
+	  updateDate: "",
+	  creatDate: "",
+	};
+  }
+	
+  componentDidMount(){
+	get("/api/appinfo", {_id: this.props.projectId}).then((info) => {
+	  this.setState({
+		name: info.name,
+		intro: "todo: intro",
+		updateDate: info.updatedate,
+		creatDate: info.creatdate,
+	  });
+	});
   }
 
   render(){
@@ -11,18 +30,18 @@ class SingleProject extends Component{
         <img className="project-logo" src={this.props.project.img_url} />
         <div className="project-title">
           <a href="www.baidu.com">
-            <span>{this.props.project.name}</span>
+            <span>{this.state.name}</span>
           </a>
         </div>
         <div className="project-overview">
-          <span>{this.props.project.intro}</span>
+          <span>{this.state.intro}</span>
           <a className="project-entry" href="www.baidu.com">
             <span>进入>></span>
           </a>
         </div>
         <div className="project-detail">
-          <span>{"创建于: "+this.props.project.create_time}</span>
-          <span>{"更新于: "+this.props.project.update_time}</span>
+          <span>{"创建于: "+this.state.creatDate}</span>
+          <span>{"更新于: "+this.state.updateDate}</span>
         </div>
       </div>
     );

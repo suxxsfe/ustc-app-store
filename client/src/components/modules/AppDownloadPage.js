@@ -5,6 +5,17 @@ import SingleDownloadFile from "./SingleDownloadFile.js";
 class AppDownloadPage extends Component{
   constructor(props){
     super(props);
+	this.state = {
+	  donwloadList,
+	};
+  }
+	
+  componentDidMount(){
+	get("/api/appdonwload", {_id: this.props.appId}).then((list) => {
+	  this.setState({
+		donwloadList: list,
+	  });
+	});
   }
   
   render(){
@@ -15,7 +26,15 @@ class AppDownloadPage extends Component{
           <div className="platform download-title">platform</div>
           <div className="upload-date download-title">upload date</div>
           <div className="download-button download-title">download</div>
-          <SingleDownloadFile platform="Windows" downloadUrl="www.baidu.com" uploadedDate="2023-11-13" />
+		  {
+			this.state.donwloadList.map((item) => {
+			  return (
+				<SingleDownloadFile platform={item.platform} uploadedDate={item.updatedate}
+				  				    downloadUrl={""}
+				/>
+			  );
+			})
+		  }
         </div>
       </div>
     );

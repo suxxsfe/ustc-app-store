@@ -11,9 +11,11 @@ class AppHomePage extends Component{
   }
   
   componentDidMount(){
-    this.setState({
-      describe: get("/api/appdescribe"),
-    });
+	get("/api/appdescribe", {_id: this.props.appId}).then((des) => {
+	  this.setState({
+		describe: des,
+	  });
+	});
   }
   
   render(){

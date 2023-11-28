@@ -9,7 +9,13 @@ class AppHeaderDetail extends Component{
     return (
       <div className="app-header-detail">
         <span>By&nbsp;</span>
-        <a href="www.baidu.com">author name</a>
+		{
+		  this.props.authors.map((author) => {
+		    return (
+			  <a href="">{author.name}</a>
+			);
+		  })
+		}
       </div>
     )
   }

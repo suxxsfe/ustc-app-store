@@ -8,7 +8,7 @@ class SingleReply extends Component{
   render(){
     return (
       <div className="comments-card-replybody">
-        {this.props.author_name+": "+this.props.content}
+        {this.props.author.name+": "+this.props.content}
       </div>
     );
   }

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { get } from "../../utilities.js";
+
 import "./SideBar.css";
 
 class SideBar extends Component{
@@ -36,28 +38,28 @@ class AppSideBar extends Component{
   }
   
   componentDidMount(){
-    this.setState({
-      about_elements: [
-        "创建时间: 1111111",
-        "最后编辑: 2222222",
-        "支持平台: Windows Web",
-      ],
-    });
-    this.setState({
-      links_elements: [
-        (
-          <>
-            <a href="www.bilibili.com">TODO: img</a>
-            <span>bilibili</span>
-          </>
-        ),
-      ],
-    });
-    this.setState({
-      tags_elements: [
-        "tool",
-      ],
-    });
+	get("/api/appinfo", {_id: this.props.appId}).then((info) => {
+	  this.setState({
+		about_elements: [
+          "创建时间: "+info.creatdate,
+          "最后编辑: "+info.updatedate,
+          "支持平台: "+info.platform,
+		],
+		links_elements: [
+		  info.links.map((link) => {
+		    return (
+			  <>
+		       <a href={link.url}>TODO: img</a>
+			    <span>{link.name}</span>
+			  </>
+			);
+		  })
+		],
+		tags_elements: [
+		  info.tags,
+		],
+	  });
+	});
   }
   
   render(){
@@ -81,23 +83,25 @@ class ProfileSideBar extends Component{
   }
   
   componentDidMount(){
-    this.setState({
-      about_elements: [
-        "用户类型：普通用户",
-        "注册时间：1111111",
-        "最后访问：2222222",
-      ],
-    });
-    this.setState({
-      links_elements: [
-        (
-          <>
-            <a href="www.baidu.com">TODO: img</a>
-            <span>bilibili</span>
-          </>
-        ),
-      ],
-    });
+	get("/api/userinfo", {_id: userId}).then((info) => {
+	  this.setState({
+		about_elements: [
+          "用户类型："+info.type,
+          "注册时间："+info.regdate,
+          "最后访问："+info.visdate,
+		],
+		links_elements: [
+		  info.links.map((link) => {
+		    return (
+			  <>
+			    <a href={link.url}>TODO: img</a>
+			    <span>{link.name}</span>
+			  </>
+			);
+		  })
+		],
+	  });
+	});
   }
   
   render(){

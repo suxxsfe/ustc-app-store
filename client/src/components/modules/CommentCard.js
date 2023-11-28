@@ -4,19 +4,6 @@ import SingleComment from "./SingleComment.js";
 import RepliesBlock from "./RepliesBlock.js";
 import { NewReply } from "./PostInput.js";
 
-const TMP_COMMENTS = [
-  {
-    _id: "1",
-    author_name: "replyer",
-    content: "reply content",
-  },
-  {
-    _id: "2",
-    author_name: "replyer2",
-    content: "reply content 2222222",
-  },
-];
-
 class CommentCard extends Component{
   constructor(props){
     super(props);
@@ -38,9 +25,9 @@ class CommentCard extends Component{
                        author_name={this.props.author_name} content={this.props.content} 
                        handle_show_reply={this.handleShowReply.bind(this)}
         />
-        <RepliesBlock CommentId={this.props._id} replies={TMP_COMMENTS} />
+        <RepliesBlock commentId={this.props._id}/>
         <div className="new-reply" style={{display:this.state.showNewReply ? "block" : "none"}}>
-            <NewReply app_id={"this_app"} />
+          <NewReply commentId={this.props._id} />
         </div>
       </div>
     );
