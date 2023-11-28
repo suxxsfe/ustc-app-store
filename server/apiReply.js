@@ -9,7 +9,7 @@ const router = express.Router();
 router.get("/replies", (req, res) => {
     Reply.find({parent: req.query._id}),then((rep)=>res.send({replies:rep}));
 });
-router.get("/replies", (req, res) => {
+router.post("/replies", (req, res) => {
     const newcomm = new Comment({
         _id:Comment.length(),
         author:{
@@ -21,4 +21,5 @@ router.get("/replies", (req, res) => {
     });
     newcomm.save().then((comm) => res.send(comm));
 });
+
 module.exports = router;

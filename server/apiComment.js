@@ -2,11 +2,7 @@
 
 const express = require("express");
 
-const User = require("./models/user.js");
-const App = require("./models/app.js");
 const Comment = require("./models/Comment.js");
-const Reply = require("./models/reply.js");
-const Tag = require("./models/tags.js");
 const router = express.Router();
 
 
