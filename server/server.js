@@ -57,7 +57,7 @@ app.use(express.static(reactPath));
 // });
 
 // // hardcode port to 3000 for now
-const port = 1958;
+const port = 3000;
 app.listen(port, () => {
   console.log(`Server running on port: ${port}`);
 });

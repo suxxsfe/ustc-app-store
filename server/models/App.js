@@ -4,7 +4,7 @@ const AppSchema = new mongoose.Schema({
     _id:Number,
     name:String,
     authors:Array,
-    creatdate:String,
+    createdate:String,
     updatedate:String,
     links:{
         name:String,

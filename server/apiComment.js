@@ -24,6 +24,8 @@ router.post("/comments", (req, res) => {
     });
     newcomm.save().then((comm) => res.send(comm));
 });
-  
+router.post("/commentscore", (req, res) => {
+    User.update({_id:req.query._id},{$set:{score:score+e.scorechange}},exec());
+});
 
 module.exports = router;

@@ -14,7 +14,7 @@ class AppHomePage extends Component{
     this.setState({
       describe: get("/api/appdescribe"),
     });
-  }
+  } 
   
   render(){
     return (
