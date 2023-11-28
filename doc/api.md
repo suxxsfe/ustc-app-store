@@ -148,17 +148,18 @@ params
 
 | 名称 | 解释 | 示例 |
 | ---- | ---- | ---- |
-| name | 项目名称 | "app name" |
-| tags | 项目标签的 id 的列表 | [2, 4] |
-| paltform | 运行平台列表 | ["Windows", "Web"] |
-| links | 相关链接列表 | [{name: "url name", url: "www.xxx.yyy"}] |
-| describe | 描述 | "hello world" |
+| \_id（可选） | 项目 id，留空为新建 | `123` |
+| name | 项目名称 | `"app name"` |
+| tags | 项目标签的 id 的列表 | `[2, 4]` |
+| paltform | 运行平台列表 | `["Windows", "Web"]` |
+| links | 相关链接列表 | `[{name: "url name", url: "www.xxx.yyy"}]` |
+| describe | 描述 | `"hello world"` |
 
 returns  
 
 | 名称 | 解释 | 示例 |
 | ---- | ---- | ---- |
-| \_id | 项目 id | 123 |  
+| \_id | 项目 id | `123` |  
 
 ## POST /api/comment  
 
@@ -166,14 +167,14 @@ params
 
 | 名称 | 解释 | 示例 |
 | ---- | ---- | ---- |
-| score | 打分 | 5 |
-| content | 评论内容 | "hello" |  
+| score | 打分 | `5` |
+| content | 评论内容 | `"hello"` |  
 
 returns  
 
 | 名称 | 解释 | 示例 |
 | ---- | ---- | ---- |
-| \_id | 评论 id | 123 |  
+| \_id | 评论 id | `123` |  
 
 ## POST /api/reply  
 
@@ -181,14 +182,14 @@ params
 
 | 名称 | 解释 | 示例 |
 | ---- | ---- | ---- |
-| parent | 被回复的评论 id | 123 |
-| content | 回复内容 | "hello" |
+| parent | 被回复的评论 id | `123` |
+| content | 回复内容 | `"hello"` |
 
 returns  
 
 | 名称 | 解释 | 示例 |
 | ---- | ---- | ---- |
-| \_id | 回复 id | 123 |
+| \_id | 回复 id | `123` |
 
 ## POST /api/userinfo  
 
@@ -196,14 +197,14 @@ params
 
 | 名称 | 解释 | 示例 |
 | ---- | ---- | ---- |
-| intro | 自我介绍 | "hello" |
-| links | 相关链接 | [{name: "link name", url: "www.xxx.yyy"}] |
+| intro | 自我介绍 | `"hello"` |
+| links | 相关链接 | `[{name: "link name", url: "www.xxx.yyy"}]` |
 
 returns  
 
 | 名称 | 解释 | 示例 |
 | ---- | ---- | ---- |
-| \_id | 用户 id | 123 |  
+| \_id | 用户 id | `123` |  
 
 
 
