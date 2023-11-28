@@ -6,7 +6,7 @@ user: {
 }
 ```  
 
-## GET /appinfo  
+## GET /api/appinfo  
 
 params  
 
@@ -26,7 +26,7 @@ returns
 | tags | 标签 | `["tag name"]` |
 | platform | 运行平台 | `["Windows", "Web"]` | 
 
-## GET /appdescribe  
+## GET /api/appdescribe  
 
 params  
 
@@ -40,7 +40,7 @@ returns
 | ---- | ---- | ---- |
 | describe | 主页描述 | `"home page"` |  
 
-## GET /comments  
+## GET /api/comments  
 
 params  
 
@@ -54,7 +54,7 @@ returns
 | ---- | ---- | ---- |
 | comments | 评论列表 | `[{_id: "", author: user, score: 5, content: "content"}]` |  
 
-## GET /replies  
+## GET /api/replies  
 
 params  
 
@@ -68,7 +68,7 @@ returns
 | ---- | ---- | ---- |
 | replies | 回复列表 | `[{_id: "", author: user}]` |  
 
-## GET /appdownload
+## GET /api/appdownload
 
 params  
 
@@ -82,7 +82,7 @@ returns
 | ---- | ---- | ---- |
 | downloads | 下载列表 | `[{platform: "Windows", uploaddate: "2023-11-11", downloadid=""}]` |  
 
-## GET /userinfo  
+## GET /api/userinfo  
 
 params  
 
@@ -101,7 +101,7 @@ returns
 | visdate | 访问时间 | `"2023-11-11"` |
 | links | 相关链接 | `[{name: "link name", url: "www.xxx.yyy"}]` |
 
-## GET /userprojects  
+## GET /api/userprojects  
 
 params  
 
@@ -115,7 +115,7 @@ returns
 | ---- | ---- | ---- |
 | projects | 用户项目 id 列表 | `["123"]` |  
 
-## GET /tags  
+## GET /api/tags  
 
 params  
 
@@ -127,7 +127,7 @@ returns
 | ---- | ---- | ---- |
 | tags | 标签列表 | `[_id: "123", name: "tag name"]` |  
 
-## GET /search  
+## GET /api/search  
 
 params  
 
@@ -141,6 +141,68 @@ returns
 | 名称 | 解释 | 示例 |
 | ---- | ---- | ---- |
 | projects | 搜索结果项目 id 列表 | `["123"]` |  
+
+## POST /api/appinfo  
+
+params  
+
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
+| tags | 项目标签 | ["tool"] |
+| paltform | 运行平台哦 | ["Windows", "Web"] |
+| links | 相关链接 | [{name: "url name", url: "www.xxx.yyy"}] |
+| describe | 描述 | "hello world" |
+
+returns  
+
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
+| \_id | 项目 id | 123 |  
+
+## POST /api/comment  
+
+params  
+
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
+| score | 打分 | 5 |
+| content | 评论内容 | "hello" |  
+
+returns  
+
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
+| \_id | 评论 id | 123 |  
+
+## POST /api/reply  
+
+params  
+
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
+| parent | 被回复的评论 id | 123 |
+| content | 回复内容 | "hello" |
+
+returns  
+
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
+| \_id | 回复 id | 123 |
+
+## POST /api/userinfo  
+
+params  
+
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
+| intro | 自我介绍 | "hello" |
+| links | 相关链接 | [{name: "link name", url: "www.xxx.yyy"}] |
+
+returns  
+
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
+| \_id | 用户 id | 123 |  
 
 
 
