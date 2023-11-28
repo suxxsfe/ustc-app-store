@@ -83,7 +83,7 @@ class ProfileSideBar extends Component{
   }
   
   componentDidMount(){
-	get("/api/userinfo", {_id: userId}).then((info) => {
+	get("/api/userinfo", {_id: this.props.userId}).then((info) => {
 	  this.setState({
 		about_elements: [
           "用户类型："+info.type,

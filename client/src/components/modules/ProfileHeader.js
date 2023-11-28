@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import ProfileHeaderDetail from "./ProfileHeaderDetail.js";
 import ProfileHeaderActions from "./ProfileHeaderActions.js";
 
+import { get } from "../../utilities.js";
+
 class ProfileHeader extends Component{
   constructor(props){
     super(props);
