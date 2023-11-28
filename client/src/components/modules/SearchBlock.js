@@ -41,12 +41,12 @@ class SearchBlock extends Component{
     }));
   }
 	
-  componentDidMount(){
-	get("/api/tags").then((tags) => {
-	  this.setState({
-		tags: tags,
-	  });
-	});
+  componentdidmount(){
+	  get("/api/tags").then((tags) => {
+	    this.setstate({
+    		tags: tags,
+	    });
+  	});
   }
 
   render(){

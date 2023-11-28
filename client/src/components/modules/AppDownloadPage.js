@@ -2,18 +2,20 @@ import React, { Component } from "react";
 
 import SingleDownloadFile from "./SingleDownloadFile.js";
 
+import { get } from "../../utilities.js";
+
 class AppDownloadPage extends Component{
   constructor(props){
     super(props);
-	this.state = {
-	  donwloadList,
-	};
+  	this.state = {
+      donwloadList: [],
+  	};
   }
 	
   componentDidMount(){
 	get("/api/appdonwload", {_id: this.props.appId}).then((list) => {
 	  this.setState({
-		donwloadList: list,
+  		donwloadList: list,
 	  });
 	});
   }
