@@ -39,7 +39,7 @@ module.exports = {
     static: path.resolve(__dirname, "client", "dist"),
     open: true,
     proxy: {
-      "/api": "http://localhost:3000",
+      "/api": "http://localhost:5000",
     }
   },
   
