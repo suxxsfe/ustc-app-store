@@ -38,6 +38,9 @@ module.exports = {
     port: 5000,
     static: path.resolve(__dirname, "client", "dist"),
     open: true,
+    proxy: {
+      "/api": "http://localhost:3000",
+    }
   },
   
 };
