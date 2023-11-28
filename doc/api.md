@@ -148,9 +148,10 @@ params
 
 | 名称 | 解释 | 示例 |
 | ---- | ---- | ---- |
-| tags | 项目标签 | ["tool"] |
-| paltform | 运行平台哦 | ["Windows", "Web"] |
-| links | 相关链接 | [{name: "url name", url: "www.xxx.yyy"}] |
+| name | 项目名称 | "app name" |
+| tags | 项目标签的 id 的列表 | [2, 4] |
+| paltform | 运行平台列表 | ["Windows", "Web"] |
+| links | 相关链接列表 | [{name: "url name", url: "www.xxx.yyy"}] |
 | describe | 描述 | "hello world" |
 
 returns  
