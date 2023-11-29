@@ -12,12 +12,14 @@ router.get("/comments", (req, res) => {
 });
 
 
-router.post("/comments", (req, res) => {
+router.post("/comment", (req, res) => {
     const newcomm = new Comment({
         _id:Comment.length(),
         author:{
-            name: req.query.author.name,
-            _id: req.query.author._id,
+            name:"123",
+            _id:123,
+            // name: document.cookie.name,
+            // _id: document.cookie._id,
         },
         score:req.query.score,
         content:req.query.content,
