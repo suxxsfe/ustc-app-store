@@ -39,17 +39,17 @@ router.post("/appinfo", (req, res) => {
     }
     const newApp = new App({
         _id:App.length(),
-        name:"hello",
-        authors:["Sba","Asb"],
-        creatdate:"111",
-        updatedate:"222",
+        name:req.query.name,
+        authors:req.query.authors,
+        createdate:req.query.createdate,
+        updatedate:req.query.updatedate,
         links:{
-            name:"123",
-            url:"I don't know",
+            name:req.query.links.name,
+            url:req.query.links.url,
         },
-        tags:["1"],
-        platforms:["windows"],
-        describe:"what????",
+        tags:req.query.tags,
+        platforms:req.query.platforms,
+        describe:req.query.describe,
     });
     newApp.save().then((app) => res.send(app));
 });

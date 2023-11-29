@@ -2,11 +2,7 @@
 
 const express = require("express");
 
-const User = require("./models/user.js");
-const App = require("./models/app.js");
 const Comment = require("./models/Comment.js");
-const Reply = require("./models/reply.js");
-const Tag = require("./models/tags.js");
 const router = express.Router();
 
 
@@ -28,6 +24,8 @@ router.post("/comments", (req, res) => {
     });
     newcomm.save().then((comm) => res.send(comm));
 });
-  
+router.post("/commentscore", (req, res) => {
+    User.update({_id:req.query._id},{$set:{score:score+e.scorechange}},exec());
+});
 
 module.exports = router;
