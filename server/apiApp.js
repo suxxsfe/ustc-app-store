@@ -4,7 +4,7 @@
 const express = require("express");
 //asdsfaf
 
-const App = require("./models/app.js");
+const App = require("./models/App.js");
 
 const Tags = require("./models/Tags.js");
 

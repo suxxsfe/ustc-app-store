@@ -7,7 +7,7 @@ const path = require("path");
 const api_app = require("./apiApp");
 const api_comment = require("./apiComment");
 const api_reply = require("./apiReply");
-const api_user = require("./apiuser");
+const api_user = require("./apiUser");
 
 const mongoConnectionURL =
   "mongodb+srv://mathdaren:coutendl@base0.129ulws.mongodb.net/";
