@@ -8,13 +8,14 @@ const router = express.Router();
 
 
 router.get("/comments", (req, res) => {
-    Comment.find({_id: req.query._id}),then((comm)=>res.send({comments:comm}));
+    const tmp={replies:Comment.find({_id: req.query._id})};
+    res.send(tmp);
 });
 
 
 router.post("/comment", (req, res) => {
     const newcomm = new Comment({
-        _id:Comment.length(),
+        _id:15,
         author:{
             name:"123",
             _id:123,
@@ -24,7 +25,7 @@ router.post("/comment", (req, res) => {
         score:req.query.score,
         content:req.query.content,
     });
-    newcomm.save().then((comm) => res.send(comm));
+    newcomm.save();res.send(newcomm);
 });
 router.post("/commentscore", (req, res) => {
     User.update({_id:req.query._id},{$set:{score:score+e.scorechange}},exec());

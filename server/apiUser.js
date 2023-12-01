@@ -16,7 +16,7 @@ router.get("/userprojects", (req, res) => {
 router.post("/userCreate", (req, res) => {
     const newuser = new User({
         user:req.query.user,
-        _id:User.length(),
+        _id:User.countDocuments({}),
         intro: req.query.intro,
         type:req.query.type,
         regdate:req.query.regdate,

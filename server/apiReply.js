@@ -7,11 +7,12 @@ const router = express.Router();
 
 
 router.get("/replies", (req, res) => {
-    Reply.find({parent: req.query._id}),then((rep)=>res.send({replies:rep}));
+    const tmp={replies: Reply.find({parent: req.query._id})};
+    res.send(tmp);
 });
 router.post("/replies", (req, res) => {
     const newcomm = new Comment({
-        _id:Comment.length(),
+        _id:Reply.countDocuments({}),
         author:{
             name: req.query.author.name,
             _id: req.query.author._id,
@@ -19,7 +20,8 @@ router.post("/replies", (req, res) => {
         parent:req.query.parent,
         content:req.query.content,
     });
-    newcomm.save().then((comm) => res.send(comm));
+    newcomm.save();
+    res.send(newcomm);
 });
 
 module.exports = router;

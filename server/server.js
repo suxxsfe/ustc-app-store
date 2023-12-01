@@ -1,5 +1,4 @@
-const validator = require("./validator");
-validator.checkSetup();
+
 const express = require("express"); 
 const mongoose = require("mongoose");
 const path = require("path"); 
@@ -18,10 +17,11 @@ const options = { useNewUrlParser: true, useUnifiedTopology: true, dbName: datab
 // connect to mongodb
 mongoose
   .connect(mongoConnectionURL, options)
-  .then(() => console.log("Connected to MongoDB"))
+  .then(() => console.log("Connected to MongoDB,WOW!"))
   .catch((err) => console.log(`Error connecting to MongoDB: ${err}`));
 
 const app = express();
+
 app.use(express.json());
 
 // connect user-defined routes
@@ -30,34 +30,34 @@ app.use("/api", api_app);
 app.use("/api",api_comment);
 app.use("/api", api_reply);
 
-app.use(validator.checkRoutes);
 // // load the compiled react files, which will serve /index.html and /bundle.js
 const reactPath = path.resolve(__dirname, "..", "client", "dist");
 app.use(express.static(reactPath));
 
-// // for all other routes, render index.html and let react router handle it
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(reactPath, "index.html"));
-// });
+// for all other routes, render index.html and let react router handle it
+app.get("*", (req, res) => {
+  res.sendFile(path.join(reactPath, "index.html"));
+});
 
-// // any server errors cause this function to run
-// app.use((err, req, res, next) => {
-//   const status = err.status || 500;
-//   if (status === 500) {
-//     // 500 means Internal Server Error
-//     console.log("The server errored when processing a request!");
-//     console.log(err);
-//   }
+//any server errors cause this function to run
+app.use((err, req, res, next) => {
+  const status = err.status || 500;
+  if (status === 500) {
+    // 500 means Internal Server Error
+    console.log("The server uyyutcessing a request!");
+    console.log(err);
+  }
 
-//   res.status(status);
-//   res.send({
-//     status: status,
-//     message: err.message,
-//   });
-// });
-
+  res.status(status);
+  res.send({
+    status: status,
+    message: err.message,
+  });
+});
+const asdf=123;
 // // hardcode port to 3000 for now
 const port = 3000;
 app.listen(port, () => {
-  console.log(`Server running on port: ${port}`);
+  console.log(`Server runnwfasding on port: ${port}`);
 });
+//I think it canwork now

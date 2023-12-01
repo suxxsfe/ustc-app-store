@@ -8,10 +8,10 @@ const UserSchema = new mongoose.Schema({
   regdate:String,
   visdate:String,
   projects:Array,
-  links:{
-    name:String,
-    url:String,
-  }
+ links:{
+   name:String,
+   url:String,
+ }
 });
 
 // compile model from schema

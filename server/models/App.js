@@ -7,7 +7,7 @@ const AppSchema = new mongoose.Schema({
     createdate:String,
     updatedate:String,
     links:{
-        name:String,
+        web:String,
         url:String,
     },
     tags:Array,
