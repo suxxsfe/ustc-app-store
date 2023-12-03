@@ -10,6 +10,8 @@ class SingleProject extends Component{
 	  intro: "",
 	  updateDate: "",
 	  creatDate: "",
+    //加上
+    img_url:"",
 	};
   }
 	
@@ -20,14 +22,15 @@ class SingleProject extends Component{
 		intro: "todo: intro",
 		updateDate: info.updatedate,
 		creatDate: info.creatdate,
+    img_url:info.img_url,
 	  });
 	});
   }
 
   render(){
     return (
-      <div className="project">
-        <img className="project-logo" src={this.props.project.img_url} />
+      <div className="project">      
+        <img className="project-logo" src={this.state.img_url} />
         <div className="project-title">
           <a href="www.baidu.com">
             <span>{this.state.name}</span>
@@ -36,7 +39,7 @@ class SingleProject extends Component{
         <div className="project-overview">
           <span>{this.state.intro}</span>
           <a className="project-entry" href="www.baidu.com">
-            <span>进入>></span>
+            <span>进入</span>
           </a>
         </div>
         <div className="project-detail">

@@ -14,9 +14,10 @@ class Projects extends Component{
   }
 	
   componentDidMount(){
-	get("/api/userprojects", {_id: this.props.userId}).then((projects) => {
+	get("/api/userprojects", {_id: this.props.userId}).then((pro) => {
 	  this.setState({
-		projects: projects,
+        //api.md是这么写的
+		projects: pro.projects,
 	  });
 	});
   }

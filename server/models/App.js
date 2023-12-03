@@ -6,10 +6,14 @@ const AppSchema = new mongoose.Schema({
     authors:Array,
     createdate:String,
     updatedate:String,
-    links:{
-        web:String,
-        url:String,
-    },
+    img_url:String,
+    links:Array,
+      // {
+  //   webname:String,
+  //   url:String,
+  // }
+    downloads:Array,
+    //看api.md
     tags:Array,
     platforms:Array,
     describe:String,

@@ -14,7 +14,7 @@ class Search extends Component{
     return (
       <>
         <SearchBlock />
-        <Projects />
+        <Projects userId={123}/>
       </>
     );
   }

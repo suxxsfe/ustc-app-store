@@ -1,9 +1,12 @@
 
-```  
+```
+//用name当内层变量名好像会因为重名炸掉，我改成link:webname+url了  
 user: {
     name: "name",
     id: "123",
 }
+//就是这样
+
 ```  
 
 ## GET /api/appinfo  
@@ -22,7 +25,7 @@ returns
 | authors | 作者列表 | `[user]` |
 | createdate | 创建日期 | `"2023-11-11"` |
 | updatedate | 修改日子 | `"2023-11-11"` |
-| links | 相关链接 | `[{name: "link name", url: "www.xxx.yyy"}]` |
+| links | 相关链接 | `[{webname: "link name", url: "www.xxx.yyy"}]` |
 | tags | 标签 | `["tag name"]` |
 | platform | 运行平台 | `["Windows", "Web"]` | 
 
@@ -99,7 +102,7 @@ returns
 | type | 用户类型 | `"普通用户"` |
 | regdate | 注册时间 | `"2023-11-11"` |
 | visdate | 访问时间 | `"2023-11-11"` |
-| links | 相关链接 | `[{name: "link name", url: "www.xxx.yyy"}]` |
+| links | 相关链接 | `[{webname: "link name", url: "www.xxx.yyy"}]` |
 
 ## GET /api/userprojects  
 
@@ -152,7 +155,7 @@ params
 | name | 项目名称 | `"app name"` |
 | tags | 项目标签的 id 的列表 | `[2, 4]` |
 | paltform | 运行平台列表 | `["Windows", "Web"]` |
-| links | 相关链接列表 | `[{name: "url name", url: "www.xxx.yyy"}]` |
+| links | 相关链接列表 | `[{webname: "url name", url: "www.xxx.yyy"}]` |
 | describe | 描述 | `"hello world"` |
 
 returns  
@@ -198,7 +201,7 @@ params
 | 名称 | 解释 | 示例 |
 | ---- | ---- | ---- |
 | intro | 自我介绍 | `"hello"` |
-| links | 相关链接 | `[{name: "link name", url: "www.xxx.yyy"}]` |
+| links | 相关链接 | `[{webname: "link name", url: "www.xxx.yyy"}]` |
 
 returns  
 

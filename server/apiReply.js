@@ -7,8 +7,7 @@ const router = express.Router();
 
 
 router.get("/replies", (req, res) => {
-    const tmp={replies: Reply.find({parent: req.query._id})};
-    res.send(tmp);
+    Reply.find({parent: req.query._id}).then((tmp)=>res.sned(tmp));
 });
 router.post("/replies", (req, res) => {
     const newcomm = new Comment({

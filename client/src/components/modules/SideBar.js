@@ -50,7 +50,7 @@ class AppSideBar extends Component{
 		    return (
 			  <>
 		       <a href={link.url}>TODO: img</a>
-			    <span>{link.name}</span>
+			    <span>{link.webname}</span>
 			  </>
 			);
 		  })
@@ -61,7 +61,7 @@ class AppSideBar extends Component{
 	  });
 	});
   }
-  
+     
   render(){
     return (
       <div className="app-sidebar">

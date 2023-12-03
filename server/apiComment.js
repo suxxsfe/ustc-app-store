@@ -8,27 +8,25 @@ const router = express.Router();
 
 
 router.get("/comments", (req, res) => {
-    const tmp={replies:Comment.find({_id: req.query._id})};
-    res.send(tmp);
+    Comment.find({_id: req.query._id}).then((tmp)=>{res.send(tmp)});
 });
 
 
 router.post("/comment", (req, res) => {
     const newcomm = new Comment({
-        _id:15,
+        _id:Comments.countDocuments({}),
         author:{
-            name:"123",
+            name:"ixed",
             _id:123,
+            //name:req.author.name,
+            //_id:req.author._id,
             // name: document.cookie.name,
             // _id: document.cookie._id,
         },
         score:req.query.score,
         content:req.query.content,
     });
-    newcomm.save();res.send(newcomm);
-});
-router.post("/commentscore", (req, res) => {
-    User.update({_id:req.query._id},{$set:{score:score+e.scorechange}},exec());
+    newcomm.save();res.send(newcomm._id);
 });
 
 module.exports = router;

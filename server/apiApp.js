@@ -11,18 +11,18 @@ const Tags = require("./models/Tags.js");
 const router = express.Router();
 
 router.get("/tags", (req, res) => {
-    res.send(Tags);
+    Tags.find({}).then((tmp)=>res.send(tmp));
 });
 //aeatea
 router.get("/appinfo", (req, res) => {
-    App.find({_id: req.query._id}).then((tmp)=>{res.send(tmp)});
+    App.findOne({_id: req.query._id}).then((tmp)=>{res.send(tmp)});
  //   res.send(tmp);
 });
 router.get("/appdescribe", (req, res) => {
-    App.find({_id: req.query._id}).then((tmp)=>{res.send(tmp)});
+    App.findOne({_id: req.query._id}).then((tmp)=>{res.send(tmp)});
 });
 router.get("/appdownload", (req, res) => {
-    App.find({_id: req.query._id}).then((tmp)=>{res.send(tmp)});
+    App.findOne({_id: req.query._id}).then((tmp)=>{res.send(tmp)});
 });
 
 router.post("/appinfo", (req, res) => {
@@ -45,8 +45,10 @@ router.post("/appinfo", (req, res) => {
             authors:req.query.authors,
             createdate:req.query.createdate,
             updatedate:req.query.updatedate,
+            img_url:req.query.img_url,
+            downloads:req.query.downloads,
             links:{
-                web:req.query.links.name,
+                webname:req.query.links.webname,
                 url:req.query.links.url,
             },
             tags:req.query.tags,
@@ -70,14 +72,22 @@ router.post("/appinfo", (req, res) => {
         // }},exec());
    // }
 });
-// router.get("/userprojects", (req, res) => {
-//     let taghas=1,plathas=1;
-//     if(req.tag.length()<2)taghas=0;
-//     if(req.tag.length()<2)plathas=1;
-//     if(taghas){
-
-//         User.find({tag: req.query._id}),then((user)=>res.send(User));
-//     }
-// });
+router.get("/search", (req, res) => {
+    if(req.query.tag!=undefined){
+        if(req.query.platforms!=undefined){
+            App.find({'tag': req.query.tag,platforms:req.query.platforms}).
+            then((app)=>res.send(app));
+        }else{
+            App.find({'tag': req.query.tag}).
+            then((app)=>res.send(app));
+        }
+    }else if(req.query.platforms!=undefined){
+        App.find({platforms:req.query.platforms}).
+            then((app)=>res.send(app));
+    }else{
+        App.find({}).
+        then((app)=>res.send(app));
+    }
+});
 //neraefads  
 module.exports = router;

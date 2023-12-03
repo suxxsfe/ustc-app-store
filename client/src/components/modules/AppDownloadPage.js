@@ -8,14 +8,15 @@ class AppDownloadPage extends Component{
   constructor(props){
     super(props);
   	this.state = {
-      donwloadList: [],
+      downloadList: [],
   	};
   }
-	
+	//get("/api/appdonwload")
+  //这个怎么还有折磨多个啊
   componentDidMount(){
-	get("/api/appdonwload", {_id: this.props.appId}).then((list) => {
+	get("/api/appdownload", {_id: this.props.appId}).then((list) => {
 	  this.setState({
-  		donwloadList: list,
+  		downloadList: list.downloads,
 	  });
 	});
   }
@@ -29,7 +30,7 @@ class AppDownloadPage extends Component{
           <div className="upload-date download-title">upload date</div>
           <div className="download-button download-title">download</div>
 		  {
-			this.state.donwloadList.map((item) => {
+			this.state.downloadList.map((item) => {
 			  return (
 				<SingleDownloadFile platform={item.platform} uploadedDate={item.updatedate}
 				  				    downloadUrl={""}

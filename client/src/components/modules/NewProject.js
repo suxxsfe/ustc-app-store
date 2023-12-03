@@ -13,7 +13,7 @@ class NewProject extends Component{
       platforms: [{name: "Web"}, {name: "Windows"}, {name: "MacOS"}, {name: "Linux"}],
       selectedPlatforms:this.props.selected_platforms,
       links: this.props.links,
-      downloads: this.props.donwloads,
+      downloads: this.props.downloads,
     };
   }
 
