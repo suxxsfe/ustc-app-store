@@ -27,42 +27,23 @@ router.get("/appdownload", (req, res) => {
 
 router.post("/appinfo", (req, res) => {
     console.log("kkksc03");
-//    if(req.query._id==null||req.query._id==undefined){
-        // for(let i=0;i<req.query.tags.length();i++){
-        //     const tmp=req.query.tags[i];
-        //     let ok=1;
-        //     Tags.find({name:tmp}),then((tp)=>{ok=tp.length()})
-        //     if(ok==0){
-        //         const newTag = new Tag({
-        //             _id:Tags.length()+1,
-        //             name:req.query.tags[i],
-        //         });   
-        //         newTag.save();
-        //    }
         const newApp = new App({
-            _id:req.query._id>1?req.query.id:1,
+            _id: (req.query._id !== undefined ? req.query.id : 114514),
             name:req.query.name,
-            authors:req.query.authors,
-            createdate:req.query.createdate,
-            updatedate:req.query.updatedate,
+            authors:[{name: "qwerty", _id: 123}],
             img_url:req.query.img_url,
             downloads:req.query.downloads,
-//            links:{
-//                webname:req.query.links.webname,
-//                url:req.query.links.url,
-//            },
-          // CHANGE: links should be array of {webname: "", url ""}
             links: req.query.links,
             tags:req.query.tags,
             platforms:req.query.platforms,
-            describe:req.query.describe,
+            describe:req.query.description,
         });
-        //}
         
-        newApp.save();
-        console.log("success");
-        //CHANGE: newAPP -> newApp
-        res.send(newApp);
+        newApp.save().then((app) => {
+            console.log("success");
+            res.send(app);
+		});
+	
  //   }else{
         // App.update({_id:req.query._id},{$set:{
         //     name:req.query.name,
