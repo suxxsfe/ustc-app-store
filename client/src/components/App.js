@@ -24,7 +24,7 @@ class App extends Component{
         <NavBar />
         <div className="app-container">
           <Router>
-            <AppPage path="/app/" />
+            <AppPage path="/app/:appId" />
             <Profile path="/user/" />
             <Search path="/search/" />
             <NewProjectPage path="/new/" />

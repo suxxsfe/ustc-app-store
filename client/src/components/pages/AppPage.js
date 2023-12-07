@@ -49,25 +49,26 @@ class AppPage extends Component{
   }
   
   render(){
+    console.log(this.props.match);
     let subPage = null;
     if(this.state.page === SubPages.HomePage || this.state.page === ""){
-      subPage = (<AppHomePage appId={123} />);
+      subPage = (<AppHomePage appId={this.props.appId} />);
     }
     else if(this.state.page === SubPages.DownloadPage){
-      subPage = (<AppDownloadPage appId={123} />);
+      subPage = (<AppDownloadPage appId={this.props.appId} />);
     }
     else if(this.state.page === SubPages.CommentsPage){
-      subPage = (<AppCommentsPage appId={123} />);
+      subPage = (<AppCommentsPage appId={this.props.appId} />);
     }
     
     return (
       <>
-        <AppHeader appId={123} />
+        <AppHeader appId={this.props.appId} />
         <RollingPictures pictures={TMP_PICTURES_URL} />
         <div className="sub-page">
           <AppTabs _onClick={this.changeHash} focus={this.state.page}/>
           {subPage}
-          <AppSideBar appId={123} />
+          <AppSideBar appId={this.props.appId} />
         </div>
       </>
     );
