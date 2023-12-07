@@ -47,10 +47,12 @@ router.post("/appinfo", (req, res) => {
             updatedate:req.query.updatedate,
             img_url:req.query.img_url,
             downloads:req.query.downloads,
-            links:{
-                webname:req.query.links.webname,
-                url:req.query.links.url,
-            },
+//            links:{
+//                webname:req.query.links.webname,
+//                url:req.query.links.url,
+//            },
+          // CHANGE: links should be array of {webname: "", url ""}
+            links: req.query.links,
             tags:req.query.tags,
             platforms:req.query.platforms,
             describe:req.query.describe,
@@ -59,7 +61,8 @@ router.post("/appinfo", (req, res) => {
         
         newApp.save();
         console.log("success");
-        res.send(newAPP);
+        //CHANGE: newAPP -> newApp
+        res.send(newApp);
  //   }else{
         // App.update({_id:req.query._id},{$set:{
         //     name:req.query.name,
