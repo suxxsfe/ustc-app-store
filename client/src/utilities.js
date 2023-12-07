@@ -1,4 +1,6 @@
 
+
+
 const convertToJSON = (res) => {
   if(!res.ok){
     throw "API request failed with status "+res.status+" and text: "+res.statusText;
@@ -13,10 +15,6 @@ const convertToJSON = (res) => {
             });
 }
 
-const post = (endpoint, params = {}) => {
-  console.log("send to server (post): "+JSON.stringify(params));
-}
-
 const formatParams = (params) => {
   // iterate of all the keys of params as an array,
   // map it to a new array of URL string encoded key,value pairs
@@ -26,13 +24,26 @@ const formatParams = (params) => {
     .join("&");
 }
 
+const post = (endpoint, params = {}) => {
+  console.log("send to server (post): "+JSON.stringify(params));
+  
+  return fetch(endpoint, {
+    method: "post",
+    headers: {"Content-type": "application/json" },
+    body: JSON.stringify(params),
+  }).then(convertToJSON)
+    .catch((error) => {
+      throw "POST request to "+endpoint+" fail with error:\n"+error;
+    });
+}
+
 const get = (endpoint, params = {}) => {
   const fullPath = endpoint + "?" + formatParams(params);
   return fetch(fullPath)
     .then(convertToJSON)
     .catch((error) => {
       // give a useful error message
-      throw `GET request to ${fullPath} failed with error:\n${error}`;
+      throw "GET request to "+fullPath+" failed with error:\n"+error;
     });
 }
 
