@@ -24,8 +24,7 @@ class SearchBlock extends Component{
   constructor(props){
     super(props);
     this.state = {
-      //是忘写了吗
-      tags:[],
+      tags: [],
       selectedTag: INIT_TAG_NAME,
       selectedPlatform: INIT_PLATFORM_NAME,
     };

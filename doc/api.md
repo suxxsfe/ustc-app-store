@@ -1,13 +1,20 @@
 
+user:  
 ```
-//用name当内层变量名好像会因为重名炸掉，我改成link:webname+url了  
 user: {
     name: "name",
     id: "123",
 }
-//就是这样
-
 ```  
+
+link:  
+```  
+link: {
+    webname: "web name",
+    url: "www.xxx.yyy",
+}
+```
+
 
 ## GET /api/appinfo  
 

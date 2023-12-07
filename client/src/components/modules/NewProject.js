@@ -93,6 +93,8 @@ class NewProject extends Component{
       platforms: this.state.selectedPlatforms,
       links: this.state.links.map((link) => ({name: link.name, url: link.url}))
                              .filter((link) => (link.name !== "" && link.url !== "")),
+      img_url: "",
+      donwloads: [],
     });
   }
   

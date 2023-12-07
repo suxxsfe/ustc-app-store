@@ -5,32 +5,31 @@ import { get } from "../../utilities.js";
 class SingleProject extends Component{
   constructor(props){
     super(props);
-	this.state = {
-	  name: "",
-	  intro: "",
-	  updateDate: "",
-	  creatDate: "",
-    //加上
-    img_url:"",
-	};
+  	this.state = {
+  	  name: "",
+  	  intro: "",
+  	  updateDate: "",
+  	  creatDate: "",
+      imgUrl: "",
+  	};
   }
 	
   componentDidMount(){
-	get("/api/appinfo", {_id: this.props.projectId}).then((info) => {
-	  this.setState({
-		name: info.name,
-		intro: "todo: intro",
-		updateDate: info.updatedate,
-		creatDate: info.creatdate,
-    img_url:info.img_url,
-	  });
-	});
+  	get("/api/appinfo", {_id: this.props.projectId}).then((info) => {
+  	  this.setState({
+    		name: info.name,
+    		intro: "todo: intro",
+    		updateDate: info.updatedate,
+    		creatDate: info.creatdate,
+        imgUrl:info.img_url,
+  	  });
+  	});
   }
 
   render(){
     return (
       <div className="project">      
-        <img className="project-logo" src={this.state.img_url} />
+        <img className="project-logo" src={this.state.imgUrl} />
         <div className="project-title">
           <a href="www.baidu.com">
             <span>{this.state.name}</span>

@@ -13,8 +13,7 @@ class AppHomePage extends Component{
   componentDidMount(){
   	get("/api/appdescribe", {_id: this.props.appId}).then((des) => {
   	  this.setState({
-        //api.md是这么写的
-  		describe: des.describe,
+  		  describe: des.describe,
   	  });
   	});
   }

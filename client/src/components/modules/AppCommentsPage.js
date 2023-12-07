@@ -40,7 +40,7 @@ class AppCommentsPage extends Component{
 	});
   }
   
-  render(){                                                     //this.props.comments绝对是打错了吧
+  render(){
     return (
       <div className="comments-page sub-page-main">
         <CommentsOverview score={this.state.score} comments_num={this.state.comments.length} />

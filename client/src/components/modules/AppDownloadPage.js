@@ -11,14 +11,13 @@ class AppDownloadPage extends Component{
       downloadList: [],
   	};
   }
-	//get("/api/appdonwload")
-  //这个怎么还有折磨多个啊
+  
   componentDidMount(){
-	get("/api/appdownload", {_id: this.props.appId}).then((list) => {
-	  this.setState({
-  		downloadList: list.downloads,
-	  });
-	});
+  	get("/api/appdownload", {_id: this.props.appId}).then((list) => {
+  	  this.setState({
+    		downloadList: list.downloads,
+  	  });
+  	});
   }
   
   render(){

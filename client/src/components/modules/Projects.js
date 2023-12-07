@@ -8,18 +8,17 @@ import { get } from "../../utilities.js";
 class Projects extends Component{
   constructor(props){
     super(props);
-	this.state = {
+  	this.state = {
       projects: [],
-	};
+  	};
   }
 	
   componentDidMount(){
-	get("/api/userprojects", {_id: this.props.userId}).then((pro) => {
-	  this.setState({
-        //api.md是这么写的
-		projects: pro.projects,
-	  });
-	});
+   	get("/api/userprojects", {_id: this.props.userId}).then((pro) => {
+   	  this.setState({
+   		  projects: pro.projects,
+   	  });
+   	});
   }
 
   render(){
