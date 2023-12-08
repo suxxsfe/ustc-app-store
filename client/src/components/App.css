@@ -9,3 +9,20 @@ h1{
     margin: 0px;
 }
 
+.message-block{
+    display: none;
+    z-index: 5000;
+    position: fixed;
+    top: 70px;
+    padding: 0 20px 0 20px;
+    height: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.message-block span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+

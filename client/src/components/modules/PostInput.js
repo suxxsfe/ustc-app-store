@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 import { post, getLoggedInfo } from "../../utilities.js";
 import PopUpSignIn from "./PopUpSignIn.js";
@@ -81,6 +82,10 @@ class NewComment extends Component{
     };
   }
   
+  static contextTypes ={
+    setMessage: PropTypes.func,
+  }
+  
   postNewComment(value){
     if(!getLoggedInfo()){
       this.setState({
@@ -94,6 +99,12 @@ class NewComment extends Component{
       parent: this.props.app_id,
       score: this.props.score,
       Authorization: "Bearer "+localStorage.getItem("token"),
+    })
+    .then((res) => {
+      this.context.setMessage("success", "评论成功！", 1000);
+    })
+    .catch((error) => {
+      console.log(error);
     });
   }
   

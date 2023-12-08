@@ -48,6 +48,13 @@ class SignUp extends Component{
       projects: [],
       links: [],
       type: "普通用户",
+    })
+    .then((res) => {
+      console.log("created user successfully");
+      location.href = "/signin";
+    })
+    .catch((error) => {
+      console.log(error);
     });
   }
 
