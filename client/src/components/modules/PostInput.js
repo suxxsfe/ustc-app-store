@@ -77,7 +77,12 @@ class NewComment extends Component{
   }
   
   postNewComment(value){
-    post("/api/comment", {content: value, parent: this.props.app_id, score: this.props.score});
+    post("/api/comment", {
+      content: value,
+      parent: this.props.app_id,
+      score: this.props.score,
+      Authorization: "Bearer "+localStorage.getItem("token"),
+    });
   }
   
   render(){
@@ -95,7 +100,11 @@ class NewReply extends Component{
   }
   
   postNewReply(value){
-    post("/api/reply", {content: value, parent: this.props.commentId});
+    post("/api/reply", {
+      content: value,
+      parent: this.props.commentId,
+      Authorization: "Bearer "+localStorage.getItem("token"),
+    });
   }
   
   render(){

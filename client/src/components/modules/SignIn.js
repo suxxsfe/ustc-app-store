@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { post } from "../../utilities.js";
+
 class SignIn extends Component{
   constructor(props){
     super(props);
@@ -26,6 +28,7 @@ class SignIn extends Component{
       password: this.state.password,
     }).then((res) => {
       console.log(res);
+      window.localStorage.setItem("token", res.token);
     });
   }
 

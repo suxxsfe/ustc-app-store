@@ -96,6 +96,7 @@ class NewProject extends Component{
                              .filter((link) => (link.name !== "" && link.url !== "")),
       img_url: "",
       donwloads: [],
+      Authorization: "Bearer "+localStorage.getItem("token"),
     });
   }
   
