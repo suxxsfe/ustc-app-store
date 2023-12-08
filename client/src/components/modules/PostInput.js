@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
-import { post } from "../../utilities.js";
+import { post, getLoggedInfo } from "../../utilities.js";
+import PopUpSignIn from "./PopUpSignIn.js";
 
 import "./PostInput.css";
 
@@ -74,9 +75,20 @@ class SearchPostInput extends Component{
 class NewComment extends Component{
   constructor(props){
     super(props);
+    
+    this.state = {
+      popupSignIn: false,
+    };
   }
   
   postNewComment(value){
+    if(!getLoggedInfo()){
+      this.setState({
+        popupSignIn: true,
+      });
+      return;
+    }
+    
     post("/api/comment", {
       content: value,
       parent: this.props.app_id,
@@ -85,11 +97,22 @@ class NewComment extends Component{
     });
   }
   
+  handleClosePopUp(){
+    this.setState({
+      popupSignIn: false,
+    });
+  }
+  
   render(){
     return (
-      <NewPostInput default_text="new comment" button_text="提交"
-                    on_submit={this.postNewComment.bind(this)} use_textarea={true}
-      />
+      <>
+        <PopUpSignIn showPopUpSignIn={this.state.popupSignIn}
+                     handleClosePopUp={this.handleClosePopUp.bind(this)}
+        />
+        <NewPostInput default_text="new comment" button_text="提交"
+                      on_submit={this.postNewComment.bind(this)} use_textarea={true}
+        />
+      </>
     );
   }
 }
@@ -97,9 +120,20 @@ class NewComment extends Component{
 class NewReply extends Component{
   constructor(props){
     super(props);
+    
+    this.state = {
+      popupSignIn: false,
+    };
   }
   
   postNewReply(value){
+    if(!getLoggedInfo()){
+      this.setState({
+        popupSignIn: true,
+      });
+      return;
+    }
+    
     post("/api/reply", {
       content: value,
       parent: this.props.commentId,
@@ -107,11 +141,22 @@ class NewReply extends Component{
     });
   }
   
+  handleClosePopUp(){
+    this.setState({
+      popupSignIn: false,
+    });
+  }
+  
   render(){
     return (
-      <NewPostInput default_text="new reply" button_text="提交"
-                    on_submit={this.postNewReply.bind(this)} use_textarea={true}
-      />
+      <>
+        <PopUpSignIn showPopUpSignIn={this.state.popupSignIn}
+                     handleClosePopUp={this.handleClosePopUp.bind(this)}
+        />
+        <NewPostInput default_text="new reply" button_text="提交"
+                      on_submit={this.postNewReply.bind(this)} use_textarea={true}
+        />
+      </>
     );
   }
 }

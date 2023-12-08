@@ -48,5 +48,16 @@ const get = (endpoint, params = {}) => {
 }
 
 
-export { post, get };
+const getLoggedInfo = () => {
+  let token = null;
+  
+  token = window.localStorage.getItem("token");
+  if(!token){
+    token = window.sessionStorage.getItem("token");
+  }
+  
+  return token;
+}
+
+export { post, get, getLoggedInfo };
 
