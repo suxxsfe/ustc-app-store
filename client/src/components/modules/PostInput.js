@@ -95,7 +95,7 @@ class NewReply extends Component{
   }
   
   postNewReply(value){
-    post("", {content: value, comment: this.props.commentId});
+    post("/api/reply", {content: value, parent: this.props.commentId});
   }
   
   render(){

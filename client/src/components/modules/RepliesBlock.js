@@ -13,9 +13,11 @@ class RepliesBlock extends Component{
   }
 	
   componentDidMount(){
-	  get("/api/replies", {_id: this.props.commentId}).then((replies) => this.setState({
-      replies: replies,
-    }));
+	  get("/api/replies", {_id: this.props.commentId}).then((replies) => {
+      this.setState({
+        replies: replies,
+      });
+    });
 	  
   }
 
