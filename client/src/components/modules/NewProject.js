@@ -91,7 +91,7 @@ class NewProject extends Component{
       description: this.state.description,
       tags: this.state.selectedTags,
       platforms: this.state.selectedPlatforms,
-      links: this.state.links.map((link) => ({name: link.name, url: link.url}))
+      links: this.state.links.map((link) => ({webname: link.name, url: link.url}))
                              .filter((link) => (link.name !== "" && link.url !== "")),
       img_url: "",
       donwloads: [],
