@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const ReplySchema = new mongoose.Schema({
-    parent:Number,
+    parent: String,
     author:{
         name: String,
         _id: Number,
