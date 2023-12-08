@@ -27,34 +27,44 @@ router.get("/appdownload", (req, res) => {
 
 router.post("/appinfo", (req, res) => {
     console.log("kkksc03");
-        const newApp = new App({
-            _id: (req.query._id !== undefined ? req.query.id : 114514),
-            name:req.query.name,
-            authors:[{name: "qwerty", _id: 123}],
-            img_url:req.query.img_url,
-            downloads:req.query.downloads,
-            links: req.query.links,
-            tags:req.query.tags,
-            platforms:req.query.platforms,
-            describe:req.query.description,
+    
+    let nowDate = new Date().toLocaleDateString();
+  
+    if(req.body._id === undefined){
+      console.log(req.body);
+      const newApp = new App({
+          name: req.body.name,
+          authors: [{name: "qwerty", _id: 123}],
+          img_url: req.body.img_url,
+          downloads: req.body.downloads,
+          links: req.body.links,
+          tags: req.body.tags,
+          platforms: req.body.platforms,
+          describe: req.body.description,
+          createdate: nowDate,
+          updatedate: nowDate,
+      });
+      
+      newApp.save().then((app) => {
+          console.log("success");
+          res.send(app);
+  		});
+    }
+    else{
+        App.update({_id:req.query._id},{$set:{
+            name: req.body.name,
+            img_url: req.body.img_url,
+            downloads: req.body.downloads,
+            links: req.body.links,
+            tags: req.body.tags,
+            platforms: req.body.platforms,
+            describe: req.body.description,
+            updatedate: nowDate,
+        }},exec()).then((app) => {
+          console.log("success");
+          res.send(app);
         });
-        
-        newApp.save().then((app) => {
-            console.log("success");
-            res.send(app);
-		});
-	
- //   }else{
-        // App.update({_id:req.query._id},{$set:{
-        //     name:req.query.name,
-        //     platforms:req.query.platforms,
-        //     describe:req.query.describe,
-        //     links:{
-        //         web:req.query.links.name,
-        //         url:req.query.links.url,
-        //     },
-        // }},exec());
-   // }
+    }
 });
 router.get("/search", (req, res) => {
     if(req.query.tag!=undefined){
