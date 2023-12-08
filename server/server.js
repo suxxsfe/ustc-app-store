@@ -7,7 +7,7 @@ const api_app = require("./apiApp");
 const api_comment = require("./apiComment");
 const api_reply = require("./apiReply");
 const api_user = require("./apiUser");
-
+const api_login = require("./apiLogin");
 const mongoConnectionURL =
   "mongodb+srv://mathdaren:coutendl@base0.129ulws.mongodb.net/";
 
@@ -29,7 +29,7 @@ app.use("/api", api_user);
 app.use("/api", api_app);
 app.use("/api",api_comment);
 app.use("/api", api_reply);
-
+app.use("/api", api_login);
 // // load the compiled react files, which will serve /index.html and /bundle.js
 const reactPath = path.resolve(__dirname, "..", "client", "dist");
 app.use(express.static(reactPath));

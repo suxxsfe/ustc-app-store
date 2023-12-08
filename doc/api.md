@@ -217,5 +217,41 @@ returns
 | ---- | ---- | ---- |
 | \_id | 用户 id | `123` |  
 
+## POST /api/login 
+
+params  
+
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
+| name | 用户名 | `"1st"` |
+| password | 密码 | `123456` |
+
+returns  
+
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
+| token | 用户token | `ahsfkgfjhgfjsadf` |
 
 
+然后userinfo这些都改成传token了
+
+## POST /api/usercreate 
+
+params  
+```
+const newuser = new User({
+        name:req.body.name,
+        intro:req.body.intro,
+        password:req.body.password,
+        regdate:nowDate,
+        visdate:nowDate,
+        projects:req.body.projects,
+        links:req.body.links,
+        type:req.body.type,
+    });
+```
+returns  
+
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
+| \token | 用户 token | `12asdffasdafsd3` |  
