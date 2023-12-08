@@ -17,9 +17,10 @@ class NewProject extends Component{
     };
   }
 
-  componentdidmount(){
+  componentDidMount(){
 	  get("/api/tags").then((tags) => {
-	    this.setstate({
+      console.log(tags)
+	    this.setState({
     		tags: tags,
 	    });
   	});
