@@ -8,19 +8,19 @@ import { get } from "../../utilities.js";
 class AppHeader extends Component{
   constructor(props){
     super(props);
-	this.state = {
+  	this.state = {
       appName: "",
-	  authors: [],
-	}
+	    authors: [],
+	  };
   }
 	
   componentDidMount(){
-	get("/api/appinfo", {_id: this.props.appId}).then((info) => {
+  	get("/api/appinfo", {_id: this.props.appId}).then((info) => {
       this.setState({
-       appName: info.name,
-       authors: info.authors,
-     });
-	});
+        appName: info.name,
+        authors: info.authors,
+      });
+  	});
   }
   
   render(){
