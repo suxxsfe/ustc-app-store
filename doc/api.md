@@ -179,6 +179,7 @@ params
 | ---- | ---- | ---- |
 | score | 打分 | `5` |
 | content | 评论内容 | `"hello"` |  
+| parent | 被打分 app 的 id | `123` |
 
 returns  
 

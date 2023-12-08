@@ -7,6 +7,7 @@ const CommentSchema = new mongoose.Schema({
     },
     score:Number,
     content:String,
+    parent: String,
 });
 
 module.exports = mongoose.model("Comment", CommentSchema);

@@ -8,7 +8,7 @@ const router = express.Router();
 
 
 router.get("/comments", (req, res) => {
-    Comment.find({_id: req.query._id}).then((tmp)=>{res.send(tmp)});
+    Comment.find({parent: req.query._id}).then((tmp)=>{res.send(tmp)});
 });
 
 
@@ -22,8 +22,9 @@ router.post("/comment", (req, res) => {
             // name: document.cookie.name,
             // _id: document.cookie._id,
         },
-        score:req.query.score,
-        content:req.query.content,
+        score:req.body.score,
+        content:req.body.content,
+        parent: req.body.parent,
     });
     newcomm.save();res.send(newcomm._id);
 });

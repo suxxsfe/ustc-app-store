@@ -77,7 +77,7 @@ class NewComment extends Component{
   }
   
   postNewComment(value){
-    post("", {content: value, app: this.props.app_id, score: this.props.score});
+    post("/api/comment", {content: value, parent: this.props.app_id, score: this.props.score});
   }
   
   render(){

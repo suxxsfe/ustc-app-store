@@ -56,7 +56,7 @@ class AppCommentsPage extends Component{
         <div className="new-comment">
           <span className="new-comment-title">发表评论</span>
           <CommentStars score={this.state.newScore} handleScore={this.handleScore.bind(this)} />
-          <NewComment app_id={this.props.appid} score={this.state.newScore} />
+          <NewComment app_id={this.props.appId} score={this.state.newScore} />
         </div>
       </div>
     );
