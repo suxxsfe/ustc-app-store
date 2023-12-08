@@ -7,10 +7,14 @@ class PopUpSignIn extends Component{
     super(props);
   }
 
+  cancelPopUp = () => {
+    this.props.handleClosePopUp();
+  }
+  
   render(){
     return (
       <div className="pop-up-sign-in" style={{display: this.props.showPopUpSignIn ? "" : "none"}}>
-        <SignIn />
+        <SignIn successSignInHook={this.cancelPopUp.bind(this)}/>
         <button className="pop-up-sign-in-close" onClick={this.props.handleClosePopUp}>X</button>
       </div>
     );

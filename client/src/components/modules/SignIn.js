@@ -26,9 +26,14 @@ class SignIn extends Component{
     post("/api/login", {
       name: this.state.username,
       password: this.state.password,
-    }).then((res) => {
+    })
+    .then((res) => {
       console.log(res);
       window.localStorage.setItem("token", res.token);
+      this.props.successSignInHook();
+    })
+    .catch((error) => {
+      console.log(error);
     });
   }
 
