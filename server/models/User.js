@@ -8,6 +8,7 @@ const UserSchema = new mongoose.Schema({
   visdate:String,
   projects:Array,
   links:Array,
+  password: String,
 });
 
 // compile model from schema
