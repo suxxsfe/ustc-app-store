@@ -15,10 +15,10 @@ class Profile extends Component{
   render(){
     return (
       <>
-        <ProfileHeader userId={123} />
+        <ProfileHeader userId={this.props.userId} />
         <div className="profile-main">
-          <Projects userId={123} />
-          <ProfileSideBar userId={123} />
+          <Projects userId={this.props.userId} />
+          <ProfileSideBar userId={this.props.userId} />
         </div>
       </>
     );

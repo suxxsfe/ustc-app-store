@@ -27,7 +27,7 @@ class App extends Component{
         <div className="app-container">
           <Router>
             <AppPage path="/app/:appId" />
-            <Profile path="/user/" />
+            <Profile path="/user/:userId" />
             <Search path="/search/" />
             <NewProjectPage path="/new/" />
             <SignInPage path="/signin/" />
