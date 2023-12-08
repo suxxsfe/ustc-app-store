@@ -33,7 +33,7 @@ returns
 | createdate | 创建日期 | `"2023-11-11"` |
 | updatedate | 修改日子 | `"2023-11-11"` |
 | links | 相关链接 | `[{webname: "link name", url: "www.xxx.yyy"}]` |
-| tags | 标签 | `["tag name"]` |
+| tags | 标签 | `[{name: "tag name", _id: 123}]` |
 | platform | 运行平台 | `["Windows", "Web"]` | 
 
 ## GET /api/appdescribe  

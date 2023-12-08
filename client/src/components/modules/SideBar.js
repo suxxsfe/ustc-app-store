@@ -54,9 +54,7 @@ class AppSideBar extends Component{
     			);
     		  })
     		],
-    		tags_elements: [
-    		  info.tags,
-    		],
+    		tags_elements: info.tags.map((tag) => tag.name),
       });
     });
   }
