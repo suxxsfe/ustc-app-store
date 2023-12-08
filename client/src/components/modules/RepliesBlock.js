@@ -7,17 +7,16 @@ import { get } from "../../utilities.js";
 class RepliesBlock extends Component{
   constructor(props){
     super(props);
-	this.state = {
-		replies: [],
-	}
+  	this.state = {
+	  	replies: [],
+  	}
   }
 	
   componentDidMount(){
-	let replies = get("/api/replies", {_id: this.props.commentId});
+	  get("/api/replies", {_id: this.props.commentId}).then((replies) => this.setState({
+      replies: replies,
+    }));
 	  
-	this.setState({
-	  replies: replies,
-	});
   }
 
   render(){
