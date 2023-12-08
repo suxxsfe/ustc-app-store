@@ -15,14 +15,29 @@ router.get("/tags", (req, res) => {
 });
 //aeatea
 router.get("/appinfo", (req, res) => {
-    App.findOne({_id: req.query._id}).then((tmp)=>{res.send(tmp)});
+    App.findOne({_id: req.query._id})
+    .then((tmp)=>{res.send(tmp)})
+    .catch((error) => {
+      console.log("data base not found: \n"+error);
+      res.status(404).send({});
+    });
  //   res.send(tmp);
 });
 router.get("/appdescribe", (req, res) => {
-    App.findOne({_id: req.query._id}).then((tmp)=>{res.send(tmp)});
+    App.findOne({_id: req.query._id})
+    .then((tmp)=>{res.send(tmp)})
+    .catch((error) => {
+      console.log("data base not found: \n"+error);
+      res.status(404).send({});
+    });
 });
 router.get("/appdownload", (req, res) => {
-    App.findOne({_id: req.query._id}).then((tmp)=>{res.send(tmp)});
+    App.findOne({_id: req.query._id})
+    .then((tmp)=>{res.send(tmp)})
+    .catch((error) => {
+      console.log("data base not found: \n"+error);
+      res.status(404).send({});
+    });
 });
 
 const getTagsByTagIds = async function (tagIds){
