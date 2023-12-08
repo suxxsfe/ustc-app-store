@@ -38,28 +38,27 @@ class AppSideBar extends Component{
   }
   
   componentDidMount(){
-	get("/api/appinfo", {_id: this.props.appId}).then((info) => {
-	  this.setState({
-		about_elements: [
-          "创建时间: "+info.creatdate,
+  	get("/api/appinfo", {_id: this.props.appId}).then((info) => {
+  	  this.setState({
+    		about_elements: [
+          "创建时间: "+info.createdate,
           "最后编辑: "+info.updatedate,
-          "支持平台: "+info.platform,
-		],
-		links_elements: [
-		  info.links.map((link) => {
-		    return (
-			  <>
-		       <a href={link.url}>TODO: img</a>
-			    <span>{link.webname}</span>
-			  </>
-			);
-		  })
-		],
-		tags_elements: [
-		  info.tags,
-		],
-	  });
-	});
+          "支持平台: "+info.platforms,
+    		],
+    		links_elements: [
+    		  info.links.map((link) => {
+    		    return (
+    			  <>
+    		      <a href={link.url}>{link.webname}</a>
+    			  </>
+    			);
+    		  })
+    		],
+    		tags_elements: [
+    		  info.tags,
+    		],
+      });
+    });
   }
      
   render(){
@@ -83,25 +82,25 @@ class ProfileSideBar extends Component{
   }
   
   componentDidMount(){
-	get("/api/userinfo", {_id: this.props.userId}).then((info) => {
-	  this.setState({
-		about_elements: [
-          "用户类型："+info.type,
-          "注册时间："+info.regdate,
-          "最后访问："+info.visdate,
-		],
-		links_elements: [
-		  info.links.map((link) => {
-		    return (
-			  <>
-			    <a href={link.url}>TODO: img</a>
-			    <span>{link.name}</span>
-			  </>
-			);
-		  })
-		],
-	  });
-	});
+  	get("/api/userinfo", {_id: this.props.userId}).then((info) => {
+  	  this.setState({
+  		about_elements: [
+        "用户类型："+info.type,
+        "注册时间："+info.regdate,
+        "最后访问："+info.visdate,
+  		],
+  		links_elements: [
+  		  info.links.map((link) => {
+  		    return (
+  			  <>
+  			    <a href={link.url}>TODO: img</a>
+  			    <span>{link.name}</span>
+  			  </>
+  			);
+  		  })
+  		],
+  	  });
+  	});
   }
   
   render(){
