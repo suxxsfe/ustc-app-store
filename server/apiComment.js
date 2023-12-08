@@ -14,7 +14,6 @@ router.get("/comments", (req, res) => {
 
 router.post("/comment", (req, res) => {
     const newcomm = new Comment({
-        _id:Comments.countDocuments({}),
         author:{
             name:"ixed",
             _id:123,

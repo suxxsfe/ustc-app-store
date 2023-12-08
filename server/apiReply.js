@@ -11,10 +11,9 @@ router.get("/replies", (req, res) => {
 });
 router.post("/replies", (req, res) => {
     const newcomm = new Comment({
-        _id:Reply.countDocuments({}),
         author:{
-            name: req.query.author.name,
-            _id: req.query.author._id,
+            name: "ixed",
+            _id: 123,
         },
         parent:req.query.parent,
         content:req.query.content,
