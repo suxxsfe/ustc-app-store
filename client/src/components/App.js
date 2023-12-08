@@ -5,6 +5,7 @@ import AppPage from "./pages/AppPage.js";
 import Profile from "./pages/Profile.js";
 import Search from "./pages/Search.js";
 import NewProjectPage from "./pages/NewProjectPage.js";
+import SignInPage from "./pages/SignInPage.js";
 import NotFound from "./pages/NotFound.js";
 
 import Footer from "./modules/Footer.js";
@@ -28,6 +29,7 @@ class App extends Component{
             <Profile path="/user/" />
             <Search path="/search/" />
             <NewProjectPage path="/new/" />
+            <SignInPage path="/signin/" />
             <NotFound default />
           </Router>
         </div>
