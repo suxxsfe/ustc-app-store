@@ -40,7 +40,8 @@ class NewProject extends Component{
         selectedTags: info.tags.map((tag) => tag._id),
         platforms: [{name: "Web"}, {name: "Windows"}, {name: "MacOS"}, {name: "Linux"}],
         selectedPlatforms:info.platforms,
-        links: info.links,
+        links: info.links.map((link) => ({name: link.name, url: link.url, givenId: Math.random()})),
+
         downloads: info.downloads,
         logo: info.logo,
       });
