@@ -24,13 +24,12 @@ const formatParams = (params) => {
     .join("&");
 }
 
-const post = (endpoint, params = {}) => {
+const post = (endpoint, params, isFormData = false) => {
   console.log("send to server (post): "+JSON.stringify(params));
   
   return fetch(endpoint, {
     method: "post",
-    headers: {"Content-type": "application/json" },
-    body: JSON.stringify(params),
+    body: isFormData ? params : JSON.stringify(params),
   }).then(convertToJSON)
     .catch((error) => {
       throw "POST request to "+endpoint+" fail with error:\n"+error;

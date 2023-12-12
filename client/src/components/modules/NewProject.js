@@ -14,6 +14,7 @@ class NewProject extends Component{
       selectedPlatforms:this.props.selected_platforms,
       links: this.props.links,
       downloads: this.props.downloads,
+      logo: "public/3.png",
     };
   }
 
@@ -85,6 +86,32 @@ class NewProject extends Component{
     }));
   }
   
+  getFile(event){
+    console.log(event.target.parentNode.children);
+    const fileInput = Array.prototype.slice.call(event.target.parentNode.children)
+                      .filter((bro) => bro.classList.contains("file-input"))[0];
+    fileInput.click();
+  }
+  handleLogoChange(event){
+    const fileData = event.target.files[0];
+    if(fileData){
+      const formData = new FormData();
+      formData.append("_id", this.props._id);
+      formData.append("file", fileData);
+      formData.append("Authorization", "Bearer"+localStorage.getItem("token"));
+      post("/api/appinfo/logo", formData, true)
+      .then((res) => {
+        console.log("上传成功");
+        this.setState({
+          logo: res.logo,
+        });
+      })
+      .catch((error) => {
+        console.log("上传失败: "+error);
+      });
+    }
+  }
+  
   submit(){
     post("/api/appinfo", {
       _id: this.props._id,
@@ -98,6 +125,7 @@ class NewProject extends Component{
       donwloads: [],
       Authorization: "Bearer "+localStorage.getItem("token"),
     });
+    
   }
   
   render(){
@@ -109,6 +137,22 @@ class NewProject extends Component{
                  value={this.state.name} onChange={this.handleNameChange.bind(this)}
                  className="new-app-name-input new-post-input-input"
           />
+        </div>
+      
+        <div className="new-app-logo">
+          <div className="current-logo">
+            <img src={this.state.logo} />
+          </div>
+          <input type="file" accept="image/*"
+                 style={{display:"none"}} className="file-input"
+                 onChange={this.handleLogoChange.bind(this)}
+                 encType="multipart/form-data"
+          />
+          <button className="new-app-logo-upload"
+                  onClick={this.getFile.bind(this)}
+          >
+            上传头像
+          </button>
         </div>
       
         <div className="new-app-video">

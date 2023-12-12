@@ -22,7 +22,19 @@ mongoose
 
 const app = express();
 
+const bodyParser = require("body-parser");
+app.use(bodyParser.json({limit: "100mb"}));
+app.use(bodyParser.urlencoded({extended:true, limit: "100mb"}))
+
+//express.json() 必须位于两条 limit 之后，否则不起作用，上传文件时将出现 413 payload too large
+//这玩意查了一下午，傻逼
 app.use(express.json());
+
+const resourcePath = path.resolve(__dirname, "public");
+app.use(express.static(resourcePath));
+
+const reactPath = path.resolve(__dirname, "..", "client", "dist");
+app.use(express.static(reactPath));
 
 // connect user-defined routes
 app.use("/api", api_user);
@@ -31,12 +43,13 @@ app.use("/api",api_comment);
 app.use("/api", api_reply);
 app.use("/api", api_login);
 // // load the compiled react files, which will serve /index.html and /bundle.js
-const reactPath = path.resolve(__dirname, "..", "client", "dist");
-app.use(express.static(reactPath));
 
 // for all other routes, render index.html and let react router handle it
 app.get("*", (req, res) => {
   res.sendFile(path.join(reactPath, "index.html"));
+});
+app.get("/public", (req, res) => {
+  res.sendFile(path.join(resourcePath, "3.png"));
 });
 
 //any server errors cause this function to run
