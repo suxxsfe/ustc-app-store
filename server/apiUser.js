@@ -8,13 +8,23 @@ const jwt = require('jsonwebtoken');
 const SECRET = 'somesecret';
 
 router.get("/userinfo", (req, res) => {
-//const op="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Njk5Nzg0ZGFhMGUzZjRmM2NiMTY3OSIsImlhdCI6MTcwMjAyNzI3NH0.BZKSpegNfSXl8SKLGJf4ZE6HCReKJ-2RrlObIk0HKZ4";
-    const {id} = jwt.verify(req.body.token, SECRET);
-    User.findOne({_id:id}).then((tmp)=>res.send(tmp));
+    User.findOne({_id:req.body._id}).then((tmp)=>{tmp.password="?????";res.send(tmp)});
 });
 router.get("/userprojects", (req, res) => {
-    const {id} = jwt.verify(req.body.token, SECRET);
-    User.findOne({_id:id}).then((tmp)=>res.send(tmp.projects));
+    User.findOne({_id:req.body._id}).then((tmp)=>res.send(tmp.projects));
+});
+router.post("/userupdate", (req, res) => {
+    const {id} = jwt.verify(String(req.body.authorization.split(' ').pop()), SECRET);
+    User.update({_id:id},{$set:{
+        name: req.body.name,
+        password:req.body.password,
+        intro: req.body.intro,
+        type: req.body.type,
+        regdate: req.body.regdate,
+        visdate: req.body.visdate,
+        projects: req.body.projects,
+        links: req.body.links,
+}},exec());
 });
 
 const multer = require("multer");

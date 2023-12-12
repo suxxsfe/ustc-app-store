@@ -9,15 +9,12 @@ const jwt = require('jsonwebtoken');
 const SECRET = 'somesecret';
 
 router.post('/login', async (req, res) => {
-    //let opn="1st";
-    //const user = await User.findOne({name: req.body.opn});
     const user = await User.findOne({name: req.body.name});
 
     if(!user) {
         return res.status(422).send({
         message: '用户名不存在lll'});
     }
-    // compareSync 解密匹配，返回 boolean 值
 
  
     if(req.body.password!=user.password) {

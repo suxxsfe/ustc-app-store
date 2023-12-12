@@ -4,7 +4,7 @@ const ReplySchema = new mongoose.Schema({
     parent: String,
     author:{
         name: String,
-        _id: Number,
+        _id: String,
     },
     content:String,
 });
