@@ -8,10 +8,10 @@ const jwt = require('jsonwebtoken');
 const SECRET = 'somesecret';
 
 router.get("/userinfo", (req, res) => {
-    User.findOne({_id:req.body._id}).then((tmp)=>{tmp.password="?????";res.send(tmp)});
+    User.findOne({_id:req.query._id}).then((tmp)=>{tmp.password="?????";res.send(tmp)});
 });
 router.get("/userprojects", (req, res) => {
-    User.findOne({_id:req.body._id}).then((tmp)=>res.send(tmp.projects));
+    User.findOne({_id:req.query._id}).then((tmp)=>res.send(tmp.projects));
 });
 router.post("/userupdate", (req, res) => {
     const {id} = jwt.verify(String(req.body.authorization.split(' ').pop()), SECRET);
