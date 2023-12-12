@@ -6,16 +6,17 @@ class NewProject extends Component{
   constructor(props){
     super(props);
     this.state = {
-      name: this.props.name,
-      description: this.props.description,
+      _id: undefined,
+      name: "",
+      description: "",
       tags: [],
-      selectedTags: this.props.selected_tags,
+      selectedTags: [],
       platforms: [{name: "Web"}, {name: "Windows"}, {name: "MacOS"}, {name: "Linux"}],
-      selectedPlatforms:this.props.selected_platforms,
-      links: this.props.links,
-      downloads: this.props.downloads,
-      logo: "public/3.png",
-    };
+      selectedPlatforms: [],
+      links: [],
+      donwloads: [],
+      logo: "",
+    }
   }
 
   componentDidMount(){
@@ -25,6 +26,26 @@ class NewProject extends Component{
     		tags: tags,
 	    });
   	});
+    
+    if(this.props.appId === undefined){
+      return;
+    }
+    get("/api/appinfo", {_id: this.props.appId})
+    .then((info) => {
+      console.log(info);
+      this.setState({
+        name: info.name,
+        description: info.describe,
+        tags: [],
+        selectedTags: info.tags.map((tag) => tag._id),
+        platforms: [{name: "Web"}, {name: "Windows"}, {name: "MacOS"}, {name: "Linux"}],
+        selectedPlatforms:info.platforms,
+        links: info.links,
+        downloads: info.downloads,
+        logo: info.logo,
+      });
+    })
+    .catch((error) => console.log(error));
   }
   
   handleNameChange(event){
@@ -96,12 +117,13 @@ class NewProject extends Component{
     const fileData = event.target.files[0];
     if(fileData){
       const formData = new FormData();
-      formData.append("_id", this.props._id);
+      formData.append("_id", this.props.appId);
       formData.append("file", fileData);
       formData.append("Authorization", "Bearer"+localStorage.getItem("token"));
       post("/api/appinfo/logo", formData, true)
       .then((res) => {
         console.log("上传成功");
+        console.log(res);
         this.setState({
           logo: res.logo,
         });
@@ -114,7 +136,7 @@ class NewProject extends Component{
   
   submit(){
     post("/api/appinfo", {
-      _id: this.props._id,
+      _id: this.props.appId,
       name: this.state.name,
       description: this.state.description,
       tags: this.state.selectedTags,
@@ -141,7 +163,7 @@ class NewProject extends Component{
       
         <div className="new-app-logo">
           <div className="current-logo">
-            <img src={this.state.logo} />
+            <img src={"/"+this.state.logo} />
           </div>
           <input type="file" accept="image/*"
                  style={{display:"none"}} className="file-input"
