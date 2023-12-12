@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema({
   projects:Array,
   links:Array,
   password: String,
+  logo: String,
 });
 
 // compile model from schema
