@@ -128,7 +128,7 @@ router.post("/appinfo/logo", upload.single("file"), (req, res) => {
       .then((app) => {
 //        fs.unlink(app.logo);
         App.findOneAndUpdate({_id: req.body._id}, {
-          logo: "public/applogo/"+req.file.filename,
+          logo: "public/applogo/"+req.file.filename+"."+yourType,
         }, {new: true})
         .then((logo) => {
           res.send(logo);
@@ -139,7 +139,7 @@ router.post("/appinfo/logo", upload.single("file"), (req, res) => {
       })
     }
     else{
-      fs.unlink(path.join(__dirname, "upload", "applogo", req.file.filename));
+//      fs.unlink(path.join(__dirname, "upload", "applogo", req.file.filename));
     }
   }
 });
