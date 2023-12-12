@@ -12,6 +12,7 @@ const AppSchema = new mongoose.Schema({
     platforms:Array,
     describe:String,
     logo: String,
+    video: String,
 });
 
 // compile model from schema

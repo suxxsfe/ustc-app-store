@@ -114,25 +114,33 @@ class NewProject extends Component{
                       .filter((bro) => bro.classList.contains("file-input"))[0];
     fileInput.click();
   }
-  handleLogoChange(event){
-    const fileData = event.target.files[0];
+  uploadFile(api, fileData, func){
     if(fileData){
       const formData = new FormData();
       formData.append("_id", this.props.appId);
       formData.append("file", fileData);
       formData.append("Authorization", "Bearer"+localStorage.getItem("token"));
-      post("/api/appinfo/logo", formData, true)
+      post(api, formData, true)
       .then((res) => {
         console.log("上传成功");
-        console.log(res);
-        this.setState({
-          logo: res.logo,
-        });
+        func(res);
       })
       .catch((error) => {
         console.log("上传失败: "+error);
       });
     }
+  }
+  handleLogoChange(event){
+    this.uploadFile("/api/appinfo/logo", event.target.files[0], (res) => {
+      this.setState({
+        logo: res.logo,
+      });
+    });
+  }
+  handleVideoChange(event){
+    this.uploadFile("/api/appinfo/video", event.target.files[0], (res) => {
+      console.log(res);
+    });
   }
   
   submit(){
@@ -179,7 +187,16 @@ class NewProject extends Component{
       
         <div className="new-app-video">
           <h2>App video</h2>
-          TODO
+          <input type="file" accept="video/*"
+                 style={{display:"none"}} className="file-input"
+                 onChange={this.handleVideoChange.bind(this)}
+                 encType="multipart/form-data"
+          />
+          <button className="new-app-logo-upload"
+                  onClick={this.getFile.bind(this)}
+          >
+            上传宣传视频
+          </button>
         </div>
       
         <div className="new-app-description">

@@ -99,7 +99,7 @@ router.post("/appinfo", (req, res) => {
 
 const multer = require("multer");
 const path = require("path");
-const storage = multer.diskStorage({
+const logoStorage = multer.diskStorage({
   destination: function(req, file, cb){
     return cb(null, path.join(__dirname, "upload", "applogo"));
   },
@@ -107,15 +107,24 @@ const storage = multer.diskStorage({
     return cb(null, file.fieldname+'-'+Date.now()+"."+file.mimetype.split('/')[1]);
   },
 })
-const upload = multer({ storage: storage, limits: {fileSize: 1024*1024*10} });
+const logoUpload = multer({ storage: logoStorage, limits: {fileSize: 1024*1024*10} });
+const videoStorage = multer.diskStorage({
+  destination: function(req, file, cb){
+    return cb(null, path.join(__dirname, "upload", "appvideo"));
+  },
+  filename: function(req, file, cb){
+    return cb(null, file.fieldname+'-'+Date.now()+"."+file.mimetype.split('/')[1]);
+  },
+})
+const videoUpload = multer({ storage: videoStorage, limits: {fileSize: 1024*1024*100} });
 
 const fs = require("fs");
-router.post("/appinfo/logo", upload.single("file"), (req, res) => {
+router.post("/appinfo/logo", logoUpload.single("file"), (req, res) => {
   let { size, mimetype, path } = req.file;
   const allowType = ["jpeg", "jpg", "png"];
   const yourType = mimetype.split('/')[1];
   
-  if(size > 1232896){
+  if(size > 1024*1024*10){
     return res.status(500).send("size too large");
   }
   else if(allowType.indexOf(yourType) === -1){
@@ -140,6 +149,39 @@ router.post("/appinfo/logo", upload.single("file"), (req, res) => {
     }
     else{
 //      fs.unlink(path.join(__dirname, "upload", "applogo", req.file.filename));
+    }
+  }
+});
+router.post("/appinfo/video", videoUpload.single("file"), (req, res) => {
+  let { size, mimetype, path } = req.file;
+  const allowType = ["ts", "mp4"];
+  const yourType = mimetype.split('/')[1];
+  
+  if(size > 1024*1024*100){
+    return res.status(500).send("size too large");
+  }
+  else if(allowType.indexOf(yourType) === -1){
+    return res.status(500).send("wrong photo format");
+  }
+  else{
+    //TODO: check Authorization
+    if(/*Authorization checked*/true){
+      App.findOne({_id: req.body._id})
+      .then((app) => {
+//        fs.unlink(app.video);
+        App.findOneAndUpdate({_id: req.body._id}, {
+          video: "upload/appvideo/"+req.file.filename,
+        }, {new: true})
+        .then((video) => {
+          res.send(video);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      })
+    }
+    else{
+//      fs.unlink(path.join(__dirname, "upload", "appvideo", req.file.filename));
     }
   }
 });
