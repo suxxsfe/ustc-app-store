@@ -25,13 +25,13 @@ class Projects extends Component{
     return (
       <div className="projects">
         <h2 className="project-title">Projects</h2>
-        <ProjectsOverview projects_num={this.state.projects.length} />
+        <ProjectsOverview projects_num={this.state.projects ? this.state.projects.length : 0} />
         {
-          this.state.projects.map((obj) => {
+          this.state.projects ? this.state.projects.map((obj) => {
             return (
               <SingleProject projectId={obj} />
             );
-          })
+          }) : null
         }
       </div>
     );

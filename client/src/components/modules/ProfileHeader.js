@@ -17,7 +17,7 @@ class ProfileHeader extends Component{
   componentDidMount(){
 	get("/api/userinfo", {_id: this.props.userId}).then((info) => {
 	  this.setState({
-		name: info.user.name,
+		name: info.name,
 		intro: info.intro,
 	  });
 	});
