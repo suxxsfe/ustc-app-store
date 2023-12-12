@@ -126,7 +126,7 @@ router.post("/appinfo/logo", upload.single("file"), (req, res) => {
     if(/*Authorization checked*/true){
       App.findOne({_id: req.body._id})
       .then((app) => {
-        fs.unlink(app.logo);
+//        fs.unlink(app.logo);
         App.findOneAndUpdate({_id: req.body._id}, {
           logo: "public/applogo/"+req.file.filename,
         }, {new: true})
