@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({extended:true, limit: "100mb"}))
 //这玩意查了一下午，傻逼
 app.use(express.json());
 
-const resourcePath = path.resolve(__dirname, "public");
+const resourcePath = path.join(__dirname, "upload");
 app.use(express.static(resourcePath));
 
 const reactPath = path.resolve(__dirname, "..", "client", "dist");
@@ -44,12 +44,23 @@ app.use("/api", api_reply);
 app.use("/api", api_login);
 // // load the compiled react files, which will serve /index.html and /bundle.js
 
+app.get('/upload/applogo/:name', (req, res) => {
+  var fileName = req.params.name;
+  res.sendFile(path.join(resourcePath, "applogo", fileName), options, (err) => {
+    if (err) {
+      console.log("fuck"+err);
+      res.status(err.status).end();
+    }
+    else {
+      console.log('Sent:', fileName);
+    }
+  });
+
+});
+
 // for all other routes, render index.html and let react router handle it
 app.get("*", (req, res) => {
   res.sendFile(path.join(reactPath, "index.html"));
-});
-app.get("/public", (req, res) => {
-  res.sendFile(path.join(resourcePath, "3.png"));
 });
 
 //any server errors cause this function to run
