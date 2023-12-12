@@ -44,9 +44,10 @@ app.use("/api", api_reply);
 app.use("/api", api_login);
 // // load the compiled react files, which will serve /index.html and /bundle.js
 
-app.get('/upload/applogo/:name', (req, res) => {
-  var fileName = req.params.name;
-  res.sendFile(path.join(resourcePath, "applogo", fileName), options, (err) => {
+app.get('/upload/:resoucename/:name', (req, res) => {
+  let fileName = req.params.name;
+  let dirName = req.params.resoucename;
+  res.sendFile(path.join(resourcePath, dirName, fileName), options, (err) => {
     if (err) {
       console.log("fuck"+err);
       res.status(err.status).end();
