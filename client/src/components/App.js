@@ -8,6 +8,8 @@ import Search from "./pages/Search.js";
 import NewProjectPage from "./pages/NewProjectPage.js";
 import SignInPage from "./pages/SignInPage.js";
 import SignUpPage from "./pages/SignUpPage.js";
+import AppSettings from "./pages/AppSettings.js";
+import ProfileSettingsPage from "./pages/ProfileSettingsPage.js";
 import NotFound from "./pages/NotFound.js";
 
 import MessageBlock from "./modules/MessageBlock.js";
@@ -61,8 +63,10 @@ class App extends Component{
         <NavBar />
         <div className="app-container">
           <Router>
+            <AppSettings path="/app/:appId/settings" />
             <AppPage path="/app/:appId" />
             <Profile path="/user/:userId" />
+            <ProfileSettingsPage path="/user/:userId/settings" />
             <Search path="/search/" />
             <NewProjectPage path="/new/" />
             <SignInPage path="/signin/" />

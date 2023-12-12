@@ -48,7 +48,7 @@ class AppCommentsPage extends Component{
 		  this.state.comments.map((comment) => {
   		    return (
 			  <CommentCard _id={comment._id} score={comment.score}
-						   author_name={comment.author} content={comment.content}
+						   author_name={comment.author.name} content={comment.content}
 			  />
 		    );
 		  })

@@ -14,10 +14,7 @@ class NewProjectPage extends Component{
 
   render(){
     return (
-      <NewProject _id={undefined} name="" description=""
-                  selected_tags={[]} selected_platforms={[]}
-                  links={[{name: "", url: ""}]} downloads={[]}
-      />
+      <NewProject appId={undefined} />
     );
   }
 }

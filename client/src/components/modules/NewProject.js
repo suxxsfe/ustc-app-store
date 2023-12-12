@@ -6,15 +6,17 @@ class NewProject extends Component{
   constructor(props){
     super(props);
     this.state = {
-      name: this.props.name,
-      description: this.props.description,
+      _id: undefined,
+      name: "",
+      description: "",
       tags: [],
-      selectedTags: this.props.selected_tags,
+      selectedTags: [],
       platforms: [{name: "Web"}, {name: "Windows"}, {name: "MacOS"}, {name: "Linux"}],
-      selectedPlatforms:this.props.selected_platforms,
-      links: this.props.links,
-      downloads: this.props.downloads,
-    };
+      selectedPlatforms: [],
+      links: [],
+      donwloads: [],
+      logo: "",
+    }
   }
 
   componentDidMount(){
@@ -24,6 +26,26 @@ class NewProject extends Component{
     		tags: tags,
 	    });
   	});
+    
+    if(this.props.appId === undefined){
+      return;
+    }
+    get("/api/appinfo", {_id: this.props.appId})
+    .then((info) => {
+      console.log(info);
+      this.setState({
+        name: info.name,
+        description: info.describe,
+        tags: [],
+        selectedTags: info.tags.map((tag) => tag._id),
+        platforms: [{name: "Web"}, {name: "Windows"}, {name: "MacOS"}, {name: "Linux"}],
+        selectedPlatforms:info.platforms,
+        links: info.links,
+        downloads: info.downloads,
+        logo: info.logo,
+      });
+    })
+    .catch((error) => console.log(error));
   }
   
   handleNameChange(event){
@@ -85,9 +107,36 @@ class NewProject extends Component{
     }));
   }
   
+  getFile(event){
+    console.log(event.target.parentNode.children);
+    const fileInput = Array.prototype.slice.call(event.target.parentNode.children)
+                      .filter((bro) => bro.classList.contains("file-input"))[0];
+    fileInput.click();
+  }
+  handleLogoChange(event){
+    const fileData = event.target.files[0];
+    if(fileData){
+      const formData = new FormData();
+      formData.append("_id", this.props.appId);
+      formData.append("file", fileData);
+      formData.append("Authorization", "Bearer"+localStorage.getItem("token"));
+      post("/api/appinfo/logo", formData, true)
+      .then((res) => {
+        console.log("上传成功");
+        console.log(res);
+        this.setState({
+          logo: res.logo,
+        });
+      })
+      .catch((error) => {
+        console.log("上传失败: "+error);
+      });
+    }
+  }
+  
   submit(){
     post("/api/appinfo", {
-      _id: this.props._id,
+      _id: this.props.appId,
       name: this.state.name,
       description: this.state.description,
       tags: this.state.selectedTags,
@@ -98,6 +147,7 @@ class NewProject extends Component{
       donwloads: [],
       Authorization: "Bearer "+localStorage.getItem("token"),
     });
+    
   }
   
   render(){
@@ -109,6 +159,22 @@ class NewProject extends Component{
                  value={this.state.name} onChange={this.handleNameChange.bind(this)}
                  className="new-app-name-input new-post-input-input"
           />
+        </div>
+      
+        <div className="new-app-logo">
+          <div className="current-logo">
+            <img src={"/"+this.state.logo} />
+          </div>
+          <input type="file" accept="image/*"
+                 style={{display:"none"}} className="file-input"
+                 onChange={this.handleLogoChange.bind(this)}
+                 encType="multipart/form-data"
+          />
+          <button className="new-app-logo-upload"
+                  onClick={this.getFile.bind(this)}
+          >
+            上传头像
+          </button>
         </div>
       
         <div className="new-app-video">

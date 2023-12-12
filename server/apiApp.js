@@ -96,6 +96,54 @@ router.post("/appinfo", (req, res) => {
       });
     }
 });
+
+const multer = require("multer");
+const path = require("path");
+const storage = multer.diskStorage({
+  destination: function(req, file, cb){
+    return cb(null, path.join(__dirname, "upload", "applogo"));
+  },
+  filename: function(req, file, cb){
+    return cb(null, file.fieldname+'-'+Date.now()+"."+file.mimetype.split('/')[1]);
+  },
+})
+const upload = multer({ storage: storage, limits: {fileSize: 1024*1024*10} });
+
+const fs = require("fs");
+router.post("/appinfo/logo", upload.single("file"), (req, res) => {
+  let { size, mimetype, path } = req.file;
+  const allowType = ["jpeg", "jpg", "png"];
+  const yourType = mimetype.split('/')[1];
+  
+  if(size > 1232896){
+    return res.status(500).send("size too large");
+  }
+  else if(allowType.indexOf(yourType) === -1){
+    return res.status(500).send("wrong photo format");
+  }
+  else{
+    //TODO: check Authorization
+    if(/*Authorization checked*/true){
+      App.findOne({_id: req.body._id})
+      .then((app) => {
+//        fs.unlink(app.logo);
+        App.findOneAndUpdate({_id: req.body._id}, {
+          logo: "upload/applogo/"+req.file.filename,
+        }, {new: true})
+        .then((logo) => {
+          res.send(logo);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      })
+    }
+    else{
+//      fs.unlink(path.join(__dirname, "upload", "applogo", req.file.filename));
+    }
+  }
+});
+
 router.get("/search", (req, res) => {
     if(req.query.tag!=undefined){
         if(req.query.platforms!=undefined){

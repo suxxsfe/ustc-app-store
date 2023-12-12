@@ -11,6 +11,7 @@ const AppSchema = new mongoose.Schema({
     tags:Array,
     platforms:Array,
     describe:String,
+    logo: String,
 });
 
 // compile model from schema
