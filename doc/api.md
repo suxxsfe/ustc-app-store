@@ -173,6 +173,22 @@ returns
 | ---- | ---- | ---- |
 | \_id | 项目 id | `123` |  
 
+## POST /api/userinfo
+
+params  
+
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
+| \_id | 用户 id | `123` |
+| intro | 用户描述 | `"I'm user"` |
+| links | 用户链接 | `[{webname: "url name", url: "www.xxx.yyy"}]` |   
+
+returns  
+
+| 名称 | 解释 | 示例 |
+| ---- | ---- | ---- |
+| \_id | 用户 id | `123` |
+
 ## POST /api/comment  
 
 params  
