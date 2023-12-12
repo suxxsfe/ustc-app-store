@@ -142,8 +142,7 @@ class NewProject extends Component{
       tags: this.state.selectedTags,
       platforms: this.state.selectedPlatforms,
       links: this.state.links.map((link) => ({webname: link.name, url: link.url}))
-                             .filter((link) => (link.name !== "" && link.url !== "")),
-      img_url: "",
+                             .filter((link) => (link.webname !== "" && link.url !== "")),
       donwloads: [],
       Authorization: "Bearer "+localStorage.getItem("token"),
     });
