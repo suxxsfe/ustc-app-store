@@ -104,7 +104,7 @@ const storage = multer.diskStorage({
     return cb(null, path.join(__dirname, "upload", "applogo"));
   },
   filename: function(req, file, cb){
-    return cb(null, file.fieldname+'-'+Date.now());
+    return cb(null, file.fieldname+'-'+Date.now()+"."+file.mimetype.split('/')[1]);
   },
 })
 const upload = multer({ storage: storage, limits: {fileSize: 1024*1024*10} });
@@ -128,7 +128,7 @@ router.post("/appinfo/logo", upload.single("file"), (req, res) => {
       .then((app) => {
 //        fs.unlink(app.logo);
         App.findOneAndUpdate({_id: req.body._id}, {
-          logo: "public/applogo/"+req.file.filename+"."+yourType,
+          logo: "upload/applogo/"+req.file.filename,
         }, {new: true})
         .then((logo) => {
           res.send(logo);
