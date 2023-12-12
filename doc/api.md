@@ -35,6 +35,7 @@ returns
 | links | 相关链接 | `[{webname: "link name", url: "www.xxx.yyy"}]` |
 | tags | 标签 | `[{name: "tag name", _id: 123}]` |
 | platform | 运行平台 | `["Windows", "Web"]` | 
+| logo | 头像 | `"upload/applogo/xxx.png"` |
 
 ## GET /api/appdescribe  
 
@@ -110,6 +111,7 @@ returns
 | regdate | 注册时间 | `"2023-11-11"` |
 | visdate | 访问时间 | `"2023-11-11"` |
 | links | 相关链接 | `[{webname: "link name", url: "www.xxx.yyy"}]` |
+| logo | 头像 | `"upload/userlogo/xxx.png"` |
 
 ## GET /api/userprojects  
 
