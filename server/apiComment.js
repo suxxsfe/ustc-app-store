@@ -7,7 +7,6 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const SECRET = 'somesecret';
 
-
 router.get("/comments", (req, res) => {
     Comment.find({parent: req.query._id}).then((tmp)=>{res.send(tmp)});
 });

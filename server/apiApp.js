@@ -11,7 +11,23 @@ const App = require("./models/App.js");
 const Tags = require("./models/Tags.js");
 
 const router = express.Router();
-
+const jwt = require('jsonwebtoken');
+const SECRET = 'somesecret';
+function getID(token){
+    return jwt.verify(token, SECRET).id;
+}
+function checkAuthorityApp(token,id){
+  console.log("Checking token");
+  App.findOne({_id:id}).then((app)=>{
+    return app.authors.map((author)=>{return String(author._id);}).includes(getID(token));
+  }); 
+}
+// router.get("/test",(req, res)=>{
+//   console.log(req.query);
+//   let e=checkAuthorityApp(req.query.token,req.query._id);
+//   console.log(e);
+//   res.send(e);
+// });
 router.get("/tags", (req, res) => {
     Tags.find({}).then((tmp)=>res.send(tmp));
 });
@@ -148,7 +164,7 @@ router.post("/appinfo/logo", logoUpload.single("file"), (req, res) => {
   }
   else{
     //TODO: check Authorization
-    if(/*Authorization checked*/true){
+    if(checkAuthorityApp(req.body.token,req.body._id)){
       App.findOne({_id: req.body._id})
       .then((app) => (App.findOneAndUpdate({_id: req.body._id}, {
           logo: "upload/applogo/"+req.file.filename,
@@ -178,7 +194,8 @@ router.post("/appinfo/video", videoUpload.single("file"), (req, res) => {
   }
   else{
     //TODO: check Authorization
-    if(/*Authorization checked*/true){
+    //done
+    if(checkAuthorityApp(req.body.token,req.body._id)){
       const videoDir = path.join(__dirname, "upload", "appvideo", req.file.filename+"ts");
       fs.mkdirSync(videoDir);
       fs.renameSync(path.join(__dirname, "upload", "appvideo", req.file.filename),
@@ -208,7 +225,7 @@ router.post("/appinfo/download", downloadUpload.single("file"), (req, res) => {
   }
   else{
     //TODO: check Authorization
-    if(/*Authorization checked*/true){
+    if(checkAuthorityApp(req.body.token,req.body._id)){
       const newDownload = {filename: req.file.originalname, id: req.body.id, path: "upload/appdownload/"+req.file.filename};
       App.findOne({_id: req.body._id})
       .then((app) => (App.findOneAndUpdate({_id: req.body._id}, {
@@ -231,19 +248,21 @@ router.post("/appinfo/download", downloadUpload.single("file"), (req, res) => {
 
 router.post("/appinfo/deletedownload", (req, res) => {
   //TODO: check Authorization
-  
-  App.findOne({_id: req.body._id})
-  .then((app) => {
-    App.findOneAndUpdate({_id: req.body._id}, {
-      downloads: app.downloads.filter((item) => (item.id !== req.body.id)),
-    }, {new: true})
+  if(checkAuthorityApp(req.body.token,req.body._id)){
+    App.findOne({_id: req.body._id})
     .then((app) => {
-      res.send(app);
+      App.findOneAndUpdate({_id: req.body._id}, {
+        downloads: app.downloads.filter((item) => (item.id !== req.body.id)),
+      }, {new: true})
+      .then((app) => {
+        res.send(app);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     })
-    .catch((error) => {
-      console.log(error);
-    });
-  })
+  }
+  
 })
 
 router.get("/search", (req, res) => {

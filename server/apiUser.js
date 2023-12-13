@@ -3,7 +3,12 @@ const express = require("express");
 const User = require("./models/User.js");
 const router = express.Router();
 
-
+function getID(token){
+  return jwt.verify(token, SECRET).id;
+}
+function checkAuthorityUser(token,id){
+  return getID(token)==id;
+}
 const jwt = require('jsonwebtoken');
 const SECRET = 'somesecret';
 
@@ -53,7 +58,7 @@ router.post("/userinfo/logo", upload.single("file"), (req, res) => {
   }
   else{
     //TODO: check Authorization
-    if(/*Authorization checked*/true){
+    if(checkAuthorityUser(req.body.token,req.body._id)){
       User.findOne({_id: req.body._id})
       .then((user) => {
 //      fs.unlink(user.logo);
@@ -73,26 +78,5 @@ router.post("/userinfo/logo", upload.single("file"), (req, res) => {
     }
   }
 });
-// router.post("/userinfo",(req,res)=>{
-//     const newuser = new User({
-//         name:"未命名",
-//         password:req.body.password,
-//         intro: req.query.intro,
-//         links:req.query.links,
-//     });
-//     newuserser.save();
-//     //如果炸了的话用    newuser.save().then((user) => res.send(user));
-//     res.send(newuser.user._id);
-// })
-
-// router.post("/userupdate", (req, res) => {
-//     let e=req.query;
-//     if(e.intro.length()>1)User.update({_id:e._id},{$set:{intro:e.intro}},exec());
-//     if(e.type.length()>1)User.update({_id:e._id},{$set:{type:e.type}},exec());
-//     if(e.regdate.length()>1)User.update({_id:e._id},{$set:{regdate:e.regdate}},exec());
-//     if(e.visdate.length()>1)User.update({_id:e._id},{$set:{visdate:e.visdate}},exec());
-//     if(e.link.webname.length()>1)User.update({_id:e._id},{$set:{link:e.link}},exec());
-
-// });
 
 module.exports = router;

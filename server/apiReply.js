@@ -25,7 +25,7 @@ router.post("/reply", (req, res) => {
             parent: req.body.parent,
         });
     newreply.save();
-    res.send(newcomm);});
+    res.send(newreply);});
 });
 
 module.exports = router;

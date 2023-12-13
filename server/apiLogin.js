@@ -45,4 +45,10 @@ router.post("/userCreate", (req, res) => {
     const token = jwt.sign({ id: String(newuser._id)}, SECRET)
     newuser.save().then((user) => res.send({user,token}));
 });
+
+
+function getID(token){
+    return jwt.verify(token, SECRET);
+}
 module.exports = router;
+
