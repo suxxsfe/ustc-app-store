@@ -1,4 +1,6 @@
 
+const m3u8Make = require("./m3u8Maker.js");
+
 //asdfsda
 
 const express = require("express");
@@ -113,7 +115,7 @@ const videoStorage = multer.diskStorage({
     return cb(null, path.join(__dirname, "upload", "appvideo"));
   },
   filename: function(req, file, cb){
-    return cb(null, file.fieldname+'-'+Date.now()+"."+file.mimetype.split('/')[1]);
+    return cb(null, file.fieldname+'-'+Date.now());
   },
 })
 const videoUpload = multer({ storage: videoStorage, limits: {fileSize: 1024*1024*100} });
@@ -153,7 +155,7 @@ router.post("/appinfo/logo", logoUpload.single("file"), (req, res) => {
   }
 });
 router.post("/appinfo/video", videoUpload.single("file"), (req, res) => {
-  let { size, mimetype, path } = req.file;
+  let { size, mimetype } = req.file;
   const allowType = ["ts", "mp4"];
   const yourType = mimetype.split('/')[1];
   
@@ -166,11 +168,17 @@ router.post("/appinfo/video", videoUpload.single("file"), (req, res) => {
   else{
     //TODO: check Authorization
     if(/*Authorization checked*/true){
+      const videoDir = path.join(__dirname, "upload", "appvideo", req.file.filename+"ts");
+      fs.mkdirSync(videoDir);
+      fs.renameSync(path.join(__dirname, "upload", "appvideo", req.file.filename),
+                    path.join(videoDir, req.file.filename+"."+yourType));
+      makeM3u8(path.join(videoDir, req.file.filename+"."+yourType),
+               path.join(videoDir, req.file.filename+".m3u8"));
       App.findOne({_id: req.body._id})
       .then((app) => {
 //        fs.unlink(app.video);
         App.findOneAndUpdate({_id: req.body._id}, {
-          video: "upload/appvideo/"+req.file.filename,
+          video: "upload/appvideo/"+req.file.filename+"ts/"+req.file.filename+".m3u8",
         }, {new: true})
         .then((video) => {
           res.send(video);
