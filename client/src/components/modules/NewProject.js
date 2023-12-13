@@ -11,7 +11,7 @@ class NewProject extends Component{
       description: "",
       tags: [],
       selectedTags: [],
-      platforms: [{name: "Web"}, {name: "Windows"}, {name: "MacOS"}, {name: "Linux"}],
+      platforms: ["Web", "Windows", "MacOS", "Linux"],
       selectedPlatforms: [],
       links: [],
       downloads: [],
@@ -38,7 +38,7 @@ class NewProject extends Component{
         description: info.describe,
         tags: [],
         selectedTags: info.tags.map((tag) => tag._id),
-        platforms: [{name: "Web"}, {name: "Windows"}, {name: "MacOS"}, {name: "Linux"}],
+        platforms: ["Web", "Windows", "MacOS", "Linux"],
         selectedPlatforms:info.platforms,
         links: info.links.map((link) => ({name: link.name, url: link.url, givenId: Math.random()})),
 
@@ -78,7 +78,7 @@ class NewProject extends Component{
     return this.state.selectedTags.indexOf(tagId) !== -1;
   }
   isPlatformSelected(platform){
-    return this.state.selectedPlatforms.indexOf(platform) !== -1;
+    return this.state.selectedPlatforms.indexOf(platform) !== -1 ? true : false;
   }
   
   handleLinkDelete(givenId, event){
@@ -135,8 +135,6 @@ class NewProject extends Component{
   }
   handleDownloadFileChange(id, event){
     var __gloableDownloadFile = event.target.files[0];
-    console.log(__gloableDownloadFile);
-    console.log(id);
     this.setState((preState) => ({
       downloads: preState.downloads.map((download) => (download.id === id ?
                                                        {platform: download.platform, filename: __gloableDownloadFile.name,
@@ -210,8 +208,7 @@ class NewProject extends Component{
   }
   
   render(){
-    return (
-      <div className="new-app">
+    const name = (
         <div className="new-app-name">
           <h2>App name</h2>
           <input type="text" placeholder="your app name"
@@ -219,7 +216,9 @@ class NewProject extends Component{
                  className="new-app-name-input new-post-input-input"
           />
         </div>
-      
+    );
+    
+    const logo = (
         <div className="new-app-logo">
           <div className="current-logo">
             <img src={"/"+this.state.logo} />
@@ -235,7 +234,9 @@ class NewProject extends Component{
             上传头像
           </button>
         </div>
-      
+    );
+    
+    const video = (
         <div className="new-app-video">
           <h2>App video</h2>
           <input type="file" accept="video/*"
@@ -249,7 +250,9 @@ class NewProject extends Component{
             上传宣传视频
           </button>
         </div>
-      
+    );
+    
+    const downloads = (
         <div className="new-app-downloads">
           <h2>管理下载项</h2>
           <div className="new-downloads-title">运行平台</div>
@@ -301,7 +304,9 @@ class NewProject extends Component{
             添加下载项
           </button>
         </div>
-      
+    );
+    
+    const describe = (
         <div className="new-app-description">
           <h2>Description</h2>
           <textarea type="text" placeholder="describe your app"
@@ -309,16 +314,19 @@ class NewProject extends Component{
                     className="new-app-description-input new-post-input-input"
           />
         </div>
-      
+    );
+    
+    const selections = (
+      <>
         <div className="new-app-platforms">
           <h2>select platform</h2>
           {
             this.state.platforms.map((pl) => (
               <div className="select-box">
-                <label>{pl.name}</label>
-                <input type="checkbox" name="platform" value={pl.name}
-                       onChange={this.handleSelectPlatforms.bind(this, pl.name)}
-                       defaultChecked={this.isPlatformSelected(pl.name)}
+                <label>{pl}</label>
+                <input type="checkbox" name="platform" value={pl+"pl"}
+                       onChange={this.handleSelectPlatforms.bind(this, pl)}
+                       checked={this.isPlatformSelected(pl)}
                 />
               </div>
             ))
@@ -332,13 +340,16 @@ class NewProject extends Component{
                 <span>{tag.name}</span>
                 <input type="checkbox" name="tag" value={tag._id}
                        onChange={this.handleSelectTags.bind(this, tag._id)}
-                       defaultChecked={this.isTagSelected(tag._id)}
+                       checked={this.isTagSelected(tag._id)}
                 />
               </div>
             ))
           }
         </div>
-      
+      </>
+    );
+    
+    const links = (
         <div className="new-app-links">
           <h2>relative links</h2>
           <div className="new-links-container">
@@ -371,6 +382,39 @@ class NewProject extends Component{
             </button>
           </div>
         </div>
+    );
+    
+    return (
+      <div className="new-app">
+        
+        {this.props.appId ? (
+          <h1 className="page-title">
+            {"管理项目 "+this.state.name}
+          </h1>
+        ) : (
+          <h1 className="page-title">
+            {"创建新项目"}
+          </h1>
+        )}
+      
+        {this.props.appId ? null : name}
+      
+        {this.props.appId ? (
+          <>
+            {logo}
+            {video}
+            {downloads}
+          </>
+        ): null}
+      
+        {describe}
+        
+        {this.props.appId ? (
+          <>
+            {selections}
+            {links}
+          </>
+        ) : null}
       
         <div className="new-app-submit">
           <button type="submit" value="Submit"

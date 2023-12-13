@@ -84,7 +84,7 @@ router.post("/appinfo", (req, res) => {
       .then((tags) => App.findOneAndUpdate({_id:req.body._id},{
           downloads: req.body.downloads,
           links: req.body.links,
-          tags: req.body.tags,
+          tags: tags,
           platforms: req.body.platforms,
           describe: req.body.description,
           updatedate: nowDate,
