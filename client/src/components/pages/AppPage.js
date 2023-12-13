@@ -9,15 +9,10 @@ import AppHomePage from "../modules/AppHomePage.js";
 import AppDownloadPage from "../modules/AppDownloadPage.js";
 import AppCommentsPage from "../modules/AppCommentsPage.js";
 
+import { get } from "../../utilities.js";
+
 import "./AppPage.css";
 import "../modules/Header.css";
-
-const TMP_PICTURES_URL = [
-  "https://pic.downk.cc/item/5e7b1494504f4bcb04d6cda4.jpg",
-	"https://pic.downk.cc/item/5e7cd9d5504f4bcb04e063ec.jpg",
-	"https://pic.downk.cc/item/5e7b16a0504f4bcb04d8f5aa.jpg",
-	"https://pic.downk.cc/item/5e7cd9d5504f4bcb04e063ce.jpg",
-];
 
 const SubPages = {
   HomePage: "#HomePage",
@@ -30,6 +25,17 @@ class AppPage extends Component{
     super(props);
     this.state = {
       page: SubPages.HomePage,
+      video: "",
+      logo: "",
+      authors: [],
+      name: "",
+      describe: "",
+      download: [],
+      createdate: "",
+      updatedate: "",
+      platforms: [],
+      links: [],
+      tags: [],
     };
   }
   
@@ -47,16 +53,20 @@ class AppPage extends Component{
       page: window.location.hash,
     });
     window.addEventListener("hashchange", this.onHashChange.bind(this), false);
+    
+    get("/api/appinfo", {_id: this.props.appId})
+    .then((app) => {
+      this.setState(app);
+    });
   }
   
   render(){
-    console.log(this.props.match);
     let subPage = null;
     if(this.state.page === SubPages.HomePage || this.state.page === ""){
-      subPage = (<AppHomePage appId={this.props.appId} />);
+      subPage = (<AppHomePage describe={this.state.describe} />);
     }
     else if(this.state.page === SubPages.DownloadPage){
-      subPage = (<AppDownloadPage appId={this.props.appId} />);
+      subPage = (<AppDownloadPage downloadList={this.state.download} />);
     }
     else if(this.state.page === SubPages.CommentsPage){
       subPage = (<AppCommentsPage appId={this.props.appId} />);
@@ -64,12 +74,17 @@ class AppPage extends Component{
     
     return (
       <>
-        <AppHeader appId={this.props.appId} />
-        <VideoPlayer videoSrc={"/upload/appvideo/file-1702451156764ts/file-1702451156764.m3u8"} />
+        <AppHeader _id={this.props.appId} name={this.state.name}
+                   logo={"/"+this.state.logo} authors={this.state.authors}
+        />
+        <VideoPlayer videoSrc={"/"+this.state.video}/>
         <div className="sub-page">
           <AppTabs _onClick={this.changeHash} focus={this.state.page}/>
           {subPage}
-          <AppSideBar appId={this.props.appId} />
+          <AppSideBar links={this.state.links} createdate={this.state.createdate}
+                      updatedate={this.state.updatedate} platforms={this.state.platforms}
+                      tags={this.state.tags}
+          />
         </div>
       </>
     );

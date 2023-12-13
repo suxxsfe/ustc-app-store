@@ -12,7 +12,7 @@ class AppHeaderDetail extends Component{
 		{
 		  this.props.authors.map((author) => {
 		    return (
-			  <a href="">{author.name}</a>
+			  <a href={"/user/"+author._id}>{author.name}</a>
 			);
 		  })
 		}

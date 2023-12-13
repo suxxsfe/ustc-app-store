@@ -8,11 +8,8 @@ class ProfileHeaderActions extends Component{
   render(){
     return (
       <div className="profile-header-actions">
-        <a href="www.baidu.com">
+        <a href={"/user/"+this.props._id+"/settings"}>
           <button>管理</button>
-        </a>
-        <a href="www.baidu.com">
-          <button>个人设置</button>
         </a>
       </div>
     );

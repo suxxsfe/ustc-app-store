@@ -2,22 +2,9 @@ import React, { Component } from "react";
 
 import SingleDownloadFile from "./SingleDownloadFile.js";
 
-import { get } from "../../utilities.js";
-
 class AppDownloadPage extends Component{
   constructor(props){
     super(props);
-  	this.state = {
-      downloadList: [],
-  	};
-  }
-  
-  componentDidMount(){
-  	get("/api/appdownload", {_id: this.props.appId}).then((list) => {
-  	  this.setState({
-    		downloadList: list.downloads,
-  	  });
-  	});
   }
   
   render(){
@@ -28,15 +15,15 @@ class AppDownloadPage extends Component{
           <div className="platform download-title">platform</div>
           <div className="upload-date download-title">upload date</div>
           <div className="download-button download-title">download</div>
-		  {
-			this.state.downloadList.map((item) => {
-			  return (
-				<SingleDownloadFile platform={item.platform} uploadedDate={item.updatedate}
-				  				    downloadUrl={""}
-				/>
-			  );
-			})
-		  }
+		      {
+		  	    this.props.downloadList.map((item) => {
+		  	      return (
+		  	      	<SingleDownloadFile platform={item.platform} uploadedDate={item.updatedate}
+		  	    	  				            downloadUrl={"/"+item.path}
+		  	    	  />
+		  	      );
+		  	    })
+		      }
         </div>
       </div>
     );

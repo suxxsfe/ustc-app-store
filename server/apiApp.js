@@ -82,7 +82,6 @@ router.post("/appinfo", (req, res) => {
       
       getTagsByTagIds(req.body.tags)
       .then((tags) => App.findOneAndUpdate({_id:req.body._id},{
-          downloads: req.body.downloads,
           links: req.body.links,
           tags: tags,
           platforms: req.body.platforms,
@@ -209,7 +208,12 @@ router.post("/appinfo/download", downloadUpload.single("file"), (req, res) => {
   else{
     //TODO: check Authorization
     if(/*Authorization checked*/true){
-      const newDownload = {filename: req.file.originalname, id: req.body.id, path: "upload/appdownload/"+req.file.filename};
+      const newDownload = {
+        filename: req.file.originalname,
+        id: req.body.id,
+        path: "upload/appdownload/"+req.file.filename,
+        platform: req.body.platform,
+      };
       App.findOne({_id: req.body._id})
       .then((app) => (App.findOneAndUpdate({_id: req.body._id}, {
         downloads: app.downloads.filter((item) => (item.id === req.body.id)).length ? 

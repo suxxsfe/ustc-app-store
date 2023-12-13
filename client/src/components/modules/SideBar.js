@@ -30,41 +30,29 @@ class SideBar extends Component{
 class AppSideBar extends Component{
   constructor(props){
     super(props);
-    this.state = {
-      about_elements: [],
-      links_elements: [],
-      tags_elements: [],
-    };
   }
   
-  componentDidMount(){
-  	get("/api/appinfo", {_id: this.props.appId}).then((info) => {
-  	  this.setState({
-    		about_elements: [
-          "创建时间: "+info.createdate,
-          "最后编辑: "+info.updatedate,
-          "支持平台: "+info.platforms,
-    		],
-    		links_elements: [
-    		  info.links.map((link) => {
-    		    return (
-    			  <>
-    		      <a href={link.url}>{link.webname}</a>
-    			  </>
-    			);
-    		  })
-    		],
-    		tags_elements: info.tags.map((tag) => tag.name),
-      });
-    });
-  }
-     
   render(){
+		const about_elements = [
+      "创建时间: "+this.props.createdate,
+      "最后编辑: "+this.props.updatedate,
+      "支持平台: "+this.props.platforms,
+		];
+		const links_elements = [
+		  this.props.links.map((link) => {
+		    return (
+			  <>
+		      <a href={link.url}>{link.webname}</a>
+			  </>
+			);
+		  })
+		];
+		const tags_elements = this.props.tags.map((tag) => tag.name);
     return (
       <div className="app-sidebar">
-        <SideBar title="About:" elements={this.state.about_elements} />
-        <SideBar title="Links:" elements={this.state.links_elements} />
-        <SideBar title="Tags:" elements={this.state.tags_elements} />
+        <SideBar title="About:" elements={about_elements} />
+        <SideBar title="Links:" elements={links_elements} />
+        <SideBar title="Tags:" elements={tags_elements} />
       </div>
     );
   }
@@ -79,33 +67,26 @@ class ProfileSideBar extends Component{
     };
   }
   
-  componentDidMount(){
-  	get("/api/userinfo", {_id: this.props.userId}).then((info) => {
-  	  this.setState({
-  		about_elements: [
-        "用户类型："+info.type,
-        "注册时间："+info.regdate,
-        "最后访问："+info.visdate,
-  		],
-  		links_elements: [
-  		  info.links.map((link) => {
-  		    return (
-  			  <>
-  			    <a href={link.url}>TODO: img</a>
-  			    <span>{link.name}</span>
-  			  </>
-  			);
-  		  })
-  		],
-  	  });
-  	});
-  }
-  
   render(){
+  	const about_elements = [
+      "用户类型："+this.props.type,
+      "注册时间："+this.props.regdate,
+      "最后访问："+this.props.visdate,
+  	];
+  	const links_elements = [
+  	  this.props.links.map((link) => {
+  	    return (
+  		  <>
+  		    <a href={link.url}>TODO: img</a>
+  		    <span>{link.name}</span>
+  		  </>
+  		);
+  	  })
+  	];
     return (
       <div className="profile-sidebar">
-        <SideBar title="About:" elements={this.state.about_elements} />
-        <SideBar title="Links:" elements={this.state.links_elements} />
+        <SideBar title="About:" elements={about_elements} />
+        <SideBar title="Links:" elements={links_elements} />
       </div>
     );
   }

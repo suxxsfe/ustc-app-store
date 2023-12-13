@@ -14,6 +14,9 @@ class AppHeaderActions extends Component{
         <a href="www.baidu.com">
           <button>web</button>
         </a>
+        <a href={"/app/"+this.props._id+"/settings"}>
+          <button>管理</button>
+        </a>
       </div>
     );
   }
