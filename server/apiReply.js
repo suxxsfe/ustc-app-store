@@ -10,20 +10,22 @@ const SECRET = 'somesecret';
 router.get("/replies", (req, res) => {
     Reply.find({parent: req.query._id}).then((tmp)=>res.send(tmp));
 });
+
 router.post("/reply", (req, res) => {
-    const {id} = jwt.verify(String(req.body.authorization.split(' ').pop()), SECRET);
-    const person=User.findOne({_id:id});
+    let e=req.body.Authorization;
+    const {id} = jwt.verify(e.split(' ')[1], SECRET);
         
-    const newreply = new Reply({
-        author:{
-            name:person.name,
-            _id:id,
-        },
-        parent:req.body.parent,
-        content:req.body.content,
-    });
+    User.findOne({_id:id}).then((per)=>{
+        const newreply = new Reply({
+            author:{
+                name:per.name,
+                _id:id,
+            },
+            content:req.body.content,
+            parent: req.body.parent,
+        });
     newreply.save();
-    res.send(newcomm);
+    res.send(newcomm);});
 });
 
 module.exports = router;
