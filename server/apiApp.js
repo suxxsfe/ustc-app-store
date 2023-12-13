@@ -149,18 +149,15 @@ router.post("/appinfo/logo", logoUpload.single("file"), (req, res) => {
     //TODO: check Authorization
     if(/*Authorization checked*/true){
       App.findOne({_id: req.body._id})
-      .then((app) => {
-//        fs.unlink(app.logo);
-        App.findOneAndUpdate({_id: req.body._id}, {
+      .then((app) => (App.findOneAndUpdate({_id: req.body._id}, {
           logo: "upload/applogo/"+req.file.filename,
-        }, {new: true})
-        .then((logo) => {
-          res.send(logo);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        }, {new: true})))
+      .then((logo) => {
+        res.send(logo);
       })
+      .catch((error) => {
+        console.log(error);
+      });
     }
     else{
 //      fs.unlink(path.join(__dirname, "upload", "applogo", req.file.filename));
@@ -188,18 +185,15 @@ router.post("/appinfo/video", videoUpload.single("file"), (req, res) => {
       makeM3u8(path.join(videoDir, req.file.filename+"."+yourType),
                path.join(videoDir, req.file.filename+".m3u8"));
       App.findOne({_id: req.body._id})
-      .then((app) => {
-//        fs.unlink(app.video);
-        App.findOneAndUpdate({_id: req.body._id}, {
-          video: "upload/appvideo/"+req.file.filename+"ts/"+req.file.filename+".m3u8",
-        }, {new: true})
-        .then((video) => {
-          res.send(video);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      .then((app) => (App.findOneAndUpdate({_id: req.body._id}, {
+        video: "upload/appvideo/"+req.file.filename+"ts/"+req.file.filename+".m3u8",
+      }, {new: true})))
+      .then((video) => {
+        res.send(video);
       })
+      .catch((error) => {
+        console.log(error);
+      });
     }
     else{
 //      fs.unlink(path.join(__dirname, "upload", "appvideo", req.file.filename));
@@ -214,21 +208,19 @@ router.post("/appinfo/download", downloadUpload.single("file"), (req, res) => {
   else{
     //TODO: check Authorization
     if(/*Authorization checked*/true){
+      const newDownload = {filename: req.file.originalname, id: req.body.id, path: "upload/appdownload/"+req.file.filename};
       App.findOne({_id: req.body._id})
+      .then((app) => (App.findOneAndUpdate({_id: req.body._id}, {
+        downloads: app.downloads.filter((item) => (item.id === req.body.id)).length ? 
+                   (app.downloads.map((item) => (item.id === req.body.id ? newDownload : item))) :
+                   ([...app.downloads, newDownload]),
+        }, {new: true})))
       .then((app) => {
-        const newDownload = {filename: req.file.originalname, id: req.body.id, path: "upload/appdownload/"+req.file.filename};
-        App.findOneAndUpdate({_id: req.body._id}, {
-          downloads: app.downloads.filter((item) => (item.id === req.body.id)).length ? 
-                         (app.downloads.map((item) => (item.id === req.body.id ? newDownload : item))) :
-                         ([...app.downloads, newDownload]),
-        }, {new: true})
-        .then((app) => {
-          res.send(app);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        res.send(app);
       })
+      .catch((error) => {
+        console.log(error);
+      });
     }
     else{
       //
