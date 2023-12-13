@@ -108,8 +108,7 @@ const logoStorage = multer.diskStorage({
   filename: function(req, file, cb){
     return cb(null, file.fieldname+'-'+Date.now()+"."+file.mimetype.split('/')[1]);
   },
-})
-const logoUpload = multer({ storage: logoStorage, limits: {fileSize: 1024*1024*10} });
+});
 const videoStorage = multer.diskStorage({
   destination: function(req, file, cb){
     return cb(null, path.join(__dirname, "upload", "appvideo"));
@@ -117,8 +116,22 @@ const videoStorage = multer.diskStorage({
   filename: function(req, file, cb){
     return cb(null, file.fieldname+'-'+Date.now());
   },
-})
+});
+const downloadStorage = multer.diskStorage({
+  destination: function(req, file, cb){
+    return cb(null, path.join(__dirname, "upload", "appdownload"));
+  },
+  filename: function(req, file, cb){
+    return cb(null, file.fieldname+'-'+Date.now());
+  },
+});
+const fileFilter = (req, file, callback) => {//中文编码支持
+  file.originalname = Buffer.from(file.originalname, "latin1").toString("utf-8");
+  callback(null, true);
+}
 const videoUpload = multer({ storage: videoStorage, limits: {fileSize: 1024*1024*100} });
+const logoUpload = multer({ storage: logoStorage, limits: {fileSize: 1024*1024*10} });
+const downloadUpload = multer({ storage: downloadStorage, limits: {fileSize: 1024*1024*100}, fileFilter });
 
 const fs = require("fs");
 router.post("/appinfo/logo", logoUpload.single("file"), (req, res) => {
@@ -193,6 +206,52 @@ router.post("/appinfo/video", videoUpload.single("file"), (req, res) => {
     }
   }
 });
+router.post("/appinfo/download", downloadUpload.single("file"), (req, res) => {
+  let { size } = req.file;
+  if(size > 1024*1024*100){
+    return res.status(500).send("size too large");
+  }
+  else{
+    //TODO: check Authorization
+    if(/*Authorization checked*/true){
+      App.findOne({_id: req.body._id})
+      .then((app) => {
+        const newDownload = {filename: req.file.originalname, id: req.body.id, path: "upload/appdownload/"+req.file.filename};
+        App.findOneAndUpdate({_id: req.body._id}, {
+          downloads: app.downloads.filter((item) => (item.id === req.body.id)).length ? 
+                         (app.downloads.map((item) => (item.id === req.body.id ? newDownload : item))) :
+                         ([...app.downloads, newDownload]),
+        }, {new: true})
+        .then((app) => {
+          res.send(app);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      })
+    }
+    else{
+      //
+    }
+  }
+});
+
+router.post("/appinfo/deletedownload", (req, res) => {
+  //TODO: check Authorization
+  
+  App.findOne({_id: req.body._id})
+  .then((app) => {
+    App.findOneAndUpdate({_id: req.body._id}, {
+      downloads: app.downloads.filter((item) => (item.id !== req.body.id)),
+    }, {new: true})
+    .then((app) => {
+      res.send(app);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  })
+})
 
 router.get("/search", (req, res) => {
     if(req.query.tag!=undefined){

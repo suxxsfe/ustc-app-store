@@ -14,7 +14,7 @@ class NewProject extends Component{
       platforms: [{name: "Web"}, {name: "Windows"}, {name: "MacOS"}, {name: "Linux"}],
       selectedPlatforms: [],
       links: [],
-      donwloads: [],
+      downloads: [],
       logo: "",
     }
   }
@@ -108,15 +108,66 @@ class NewProject extends Component{
     }));
   }
   
+  handleNewDownload(event){
+    this.setState((preState) => ({
+      downloads: [...preState.downloads, {platform: "Windows", filename: "", id: (Math.random()+"").split('.')[1]}],
+    }));
+  }
+  handleDownloadDelete(id, event){
+    post("/api/appinfo/deletedownload", {
+      _id: this.props.appId,
+      id: id,
+      Authorization: "Bearer"+localStorage.getItem("token"),
+    })
+    .then((res) => {
+      this.setState((preState) => ({
+        downloads: preState.downloads.filter((download) => (download.id !== id)),
+      }));
+    });
+  }
+  handleDownloadPlatformChange(id, event){
+    var __gloableDownloadPlatform = event.target.value;
+    this.setState((preState) => ({
+      downloads: preState.downloads.map((download) => (download.id === id ?
+                                                       {platform: __gloableDownloadPlatform, filename: download.filename, id: download.id, file: download.file} :
+                                                       download)),
+    }));
+  }
+  handleDownloadFileChange(id, event){
+    var __gloableDownloadFile = event.target.files[0];
+    console.log(__gloableDownloadFile);
+    console.log(id);
+    this.setState((preState) => ({
+      downloads: preState.downloads.map((download) => (download.id === id ?
+                                                       {platform: download.platform, filename: __gloableDownloadFile.name,
+                                                        file: __gloableDownloadFile, id: download.id} :
+                                                       download)),
+    }));
+  }
+  handleDownloadSubmit(id, event){
+    let download = this.state.downloads.filter((download) => (download.id === id))[0];
+    if(!download){
+      return;
+    }
+    if(!download.file || !download.platform || !download.id || !download.filename){
+      return;
+    }
+    const formData = new FormData();
+    formData.append("id", download.id);
+    formData.append("platform", download.platform);
+    this.uploadFile("/api/appinfo/download", download.file, (res) => {
+      console.log("更改成功");
+    }, formData);
+  }
+  
   getFile(event){
     console.log(event.target.parentNode.children);
     const fileInput = Array.prototype.slice.call(event.target.parentNode.children)
                       .filter((bro) => bro.classList.contains("file-input"))[0];
     fileInput.click();
   }
-  uploadFile(api, fileData, func){
+  uploadFile(api, fileData, func, formData = new FormData()){
     if(fileData){
-      const formData = new FormData();
       formData.append("_id", this.props.appId);
       formData.append("file", fileData);
       formData.append("Authorization", "Bearer"+localStorage.getItem("token"));
@@ -152,7 +203,7 @@ class NewProject extends Component{
       platforms: this.state.selectedPlatforms,
       links: this.state.links.map((link) => ({webname: link.name, url: link.url}))
                              .filter((link) => (link.webname !== "" && link.url !== "")),
-      donwloads: [],
+      downloads: [],
       Authorization: "Bearer "+localStorage.getItem("token"),
     });
     
@@ -196,6 +247,58 @@ class NewProject extends Component{
                   onClick={this.getFile.bind(this)}
           >
             上传宣传视频
+          </button>
+        </div>
+      
+        <div className="new-app-downloads">
+          <h2>管理下载项</h2>
+          <div className="new-downloads-title">运行平台</div>
+          <div className="new-downloads-title">文件名</div>
+          <div className="new-downloads-title">操作</div>
+          {
+            this.state.downloads.map((item) => (
+              <div className="download-item">
+                <div className="new-download-content">
+                  <select name="platform" className="new-download-select"
+                          value={item.platform} onChange={this.handleDownloadPlatformChange.bind(this, item.id)}
+                  >
+                    <option value="Windows">Windows</option>
+                    <option value="MacOS">MacOS</option>
+                    <option value="Linux">Linux</option>
+                  </select>
+                </div>
+                <div className="new-download-content">
+                  <span>{item.filename}</span>
+                </div>
+                <div className="new-download-content">
+                  <button value="Delete" className="new-download-action"
+                          onClick={this.handleDownloadDelete.bind(this, item.id)}
+                  >
+                    删除
+                  </button>
+                  <input type="file" accept="application/*"
+                         style={{display:"none"}} className="file-input"
+                         onChange={this.handleDownloadFileChange.bind(this, item.id)}
+                         encType="multipart/form-data"
+                  />
+                  <button value="ChangeFile" className="new-download-action"
+                          onClick={this.getFile.bind(this)}
+                  >
+                    选择文件
+                  </button>
+                  <button value="Submit" className="new-download-action"
+                          onClick={this.handleDownloadSubmit.bind(this, item.id)}
+                  >
+                    确认更改
+                  </button>
+                </div>
+              </div>
+            ))
+          } 
+          <button className="new-download-button"
+                  onClick={this.handleNewDownload.bind(this)}
+          >
+            添加下载项
           </button>
         </div>
       
@@ -267,11 +370,6 @@ class NewProject extends Component{
               添加链接
             </button>
           </div>
-        </div>
-      
-        <div className="new-app-downloads">
-          <h2>Downloads</h2>
-          <span>TODO</span>
         </div>
       
         <div className="new-app-submit">
