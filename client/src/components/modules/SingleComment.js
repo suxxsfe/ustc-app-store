@@ -9,7 +9,10 @@ class SingleComment extends Component{
     return (
       <div className="comment-card-commentbody">
         <div className="single-comment-information">
-          {this.props.author_name+"  "+this.props.score}
+          <a className="single-comment-authorname" href={"/user/"+this.props.author._id}>
+            {this.props.author.name}
+          </a>
+          <span>{this.props.score}</span>
         </div>
         <div className="single-comment-content">
           {this.props.content}

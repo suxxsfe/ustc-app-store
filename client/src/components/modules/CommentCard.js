@@ -22,7 +22,7 @@ class CommentCard extends Component{
     return (
       <div className="comment-card">
         <SingleComment _id={this.props._id} score={this.props.score}
-                       author_name={this.props.author_name} content={this.props.content} 
+                       author={this.props.author} content={this.props.content} 
                        handle_show_reply={this.handleShowReply.bind(this)}
         />
         <RepliesBlock commentId={this.props._id}/>

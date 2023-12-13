@@ -27,11 +27,8 @@ class AppCommentsPage extends Component{
 	
   componentDidMount(){
 	get("/api/comments", {_id: this.props.appId}).then((comments) => {
-	  let score = 0;
-	  for(let comment in comments){
-	  	score+=comment.score;
-	  }
-	  score = (score === 0) ? "no score" : (score/comments.length);
+    let score = comments.reduce((score, comment) => (score+comment.score), 0);
+	  score = (score == 0) ? "no score" : (score/comments.length).toFixed(1);
 	    
 	  this.setState({
 	    comments: comments,
@@ -48,7 +45,7 @@ class AppCommentsPage extends Component{
 		  this.state.comments.map((comment) => {
   		    return (
 			  <CommentCard _id={comment._id} score={comment.score}
-						   author_name={comment.author.name} content={comment.content}
+						   author={comment.author} content={comment.content}
 			  />
 		    );
 		  })
