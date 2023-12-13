@@ -30,11 +30,8 @@ const post = (endpoint, params, isFormData = false) => {
   console.log("send to server (post): "+(isFormData ? params : JSON.stringify(params)));
   return fetch(endpoint, {
     method: "post",
-    headers: {
-      "Content-Type": "application/json",
- //     "Authorization": getLoggedInfo(),
-    },
-    body: (isFormData ? params : JSON.stringify(params)),
+    headers: isFormData ? {} : {"Content-type": "application/json" },
+    body: isFormData ? params : JSON.stringify(params),
   }).then(convertToJSON)
     .catch((error) => {
       throw "POST request to "+endpoint+" fail with error:\n"+error;

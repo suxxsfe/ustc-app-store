@@ -11,10 +11,10 @@ class NewProject extends Component{
       description: "",
       tags: [],
       selectedTags: [],
-      platforms: [{name: "Web"}, {name: "Windows"}, {name: "MacOS"}, {name: "Linux"}],
+      platforms: ["Web", "Windows", "MacOS", "Linux"],
       selectedPlatforms: [],
       links: [],
-      donwloads: [],
+      downloads: [],
       logo: "",
     }
   }
@@ -38,9 +38,10 @@ class NewProject extends Component{
         description: info.describe,
         tags: [],
         selectedTags: info.tags.map((tag) => tag._id),
-        platforms: [{name: "Web"}, {name: "Windows"}, {name: "MacOS"}, {name: "Linux"}],
+        platforms: ["Web", "Windows", "MacOS", "Linux"],
         selectedPlatforms:info.platforms,
-        links: info.links,
+        links: info.links.map((link) => ({name: link.name, url: link.url, givenId: Math.random()})),
+
         downloads: info.downloads,
         logo: info.logo,
       });
@@ -77,7 +78,7 @@ class NewProject extends Component{
     return this.state.selectedTags.indexOf(tagId) !== -1;
   }
   isPlatformSelected(platform){
-    return this.state.selectedPlatforms.indexOf(platform) !== -1;
+    return this.state.selectedPlatforms.indexOf(platform) !== -1 ? true : false;
   }
   
   handleLinkDelete(givenId, event){
@@ -107,31 +108,88 @@ class NewProject extends Component{
     }));
   }
   
+  handleNewDownload(event){
+    this.setState((preState) => ({
+      downloads: [...preState.downloads, {platform: "Windows", filename: "", id: (Math.random()+"").split('.')[1]}],
+    }));
+  }
+  handleDownloadDelete(id, event){
+    post("/api/appinfo/deletedownload", {
+      _id: this.props.appId,
+      id: id,
+      Authorization: "Bearer"+localStorage.getItem("token"),
+    })
+    .then((res) => {
+      this.setState((preState) => ({
+        downloads: preState.downloads.filter((download) => (download.id !== id)),
+      }));
+    });
+  }
+  handleDownloadPlatformChange(id, event){
+    var __gloableDownloadPlatform = event.target.value;
+    this.setState((preState) => ({
+      downloads: preState.downloads.map((download) => (download.id === id ?
+                                                       {platform: __gloableDownloadPlatform, filename: download.filename, id: download.id, file: download.file} :
+                                                       download)),
+    }));
+  }
+  handleDownloadFileChange(id, event){
+    var __gloableDownloadFile = event.target.files[0];
+    this.setState((preState) => ({
+      downloads: preState.downloads.map((download) => (download.id === id ?
+                                                       {platform: download.platform, filename: __gloableDownloadFile.name,
+                                                        file: __gloableDownloadFile, id: download.id} :
+                                                       download)),
+    }));
+  }
+  handleDownloadSubmit(id, event){
+    let download = this.state.downloads.filter((download) => (download.id === id))[0];
+    if(!download){
+      return;
+    }
+    if(!download.file || !download.platform || !download.id || !download.filename){
+      return;
+    }
+    const formData = new FormData();
+    formData.append("id", download.id);
+    formData.append("platform", download.platform);
+    this.uploadFile("/api/appinfo/download", download.file, (res) => {
+      console.log("更改成功");
+    }, formData);
+  }
+  
   getFile(event){
     console.log(event.target.parentNode.children);
     const fileInput = Array.prototype.slice.call(event.target.parentNode.children)
                       .filter((bro) => bro.classList.contains("file-input"))[0];
     fileInput.click();
   }
-  handleLogoChange(event){
-    const fileData = event.target.files[0];
+  uploadFile(api, fileData, func, formData = new FormData()){
     if(fileData){
-      const formData = new FormData();
       formData.append("_id", this.props.appId);
       formData.append("file", fileData);
       formData.append("Authorization", "Bearer"+localStorage.getItem("token"));
-      post("/api/appinfo/logo", formData, true)
+      post(api, formData, true)
       .then((res) => {
         console.log("上传成功");
-        console.log(res);
-        this.setState({
-          logo: res.logo,
-        });
+        func(res);
       })
       .catch((error) => {
         console.log("上传失败: "+error);
       });
     }
+  }
+  handleLogoChange(event){
+    this.uploadFile("/api/appinfo/logo", event.target.files[0], (res) => {
+      this.setState({
+        logo: res.logo,
+      });
+    });
+  }
+  handleVideoChange(event){
+    this.uploadFile("/api/appinfo/video", event.target.files[0], (res) => {
+      console.log(res);
+    });
   }
   
   submit(){
@@ -142,17 +200,15 @@ class NewProject extends Component{
       tags: this.state.selectedTags,
       platforms: this.state.selectedPlatforms,
       links: this.state.links.map((link) => ({webname: link.name, url: link.url}))
-                             .filter((link) => (link.name !== "" && link.url !== "")),
-      img_url: "",
-      donwloads: [],
+                             .filter((link) => (link.webname !== "" && link.url !== "")),
+      downloads: [],
       Authorization: "Bearer "+localStorage.getItem("token"),
     });
     
   }
   
   render(){
-    return (
-      <div className="new-app">
+    const name = (
         <div className="new-app-name">
           <h2>App name</h2>
           <input type="text" placeholder="your app name"
@@ -160,7 +216,9 @@ class NewProject extends Component{
                  className="new-app-name-input new-post-input-input"
           />
         </div>
-      
+    );
+    
+    const logo = (
         <div className="new-app-logo">
           <div className="current-logo">
             <img src={"/"+this.state.logo} />
@@ -176,12 +234,79 @@ class NewProject extends Component{
             上传头像
           </button>
         </div>
-      
+    );
+    
+    const video = (
         <div className="new-app-video">
           <h2>App video</h2>
-          TODO
+          <input type="file" accept="video/*"
+                 style={{display:"none"}} className="file-input"
+                 onChange={this.handleVideoChange.bind(this)}
+                 encType="multipart/form-data"
+          />
+          <button className="new-app-logo-upload"
+                  onClick={this.getFile.bind(this)}
+          >
+            上传宣传视频
+          </button>
         </div>
-      
+    );
+    
+    const downloads = (
+        <div className="new-app-downloads">
+          <h2>管理下载项</h2>
+          <div className="new-downloads-title">运行平台</div>
+          <div className="new-downloads-title">文件名</div>
+          <div className="new-downloads-title">操作</div>
+          {
+            this.state.downloads.map((item) => (
+              <div className="download-item">
+                <div className="new-download-content">
+                  <select name="platform" className="new-download-select"
+                          value={item.platform} onChange={this.handleDownloadPlatformChange.bind(this, item.id)}
+                  >
+                    <option value="Windows">Windows</option>
+                    <option value="MacOS">MacOS</option>
+                    <option value="Linux">Linux</option>
+                  </select>
+                </div>
+                <div className="new-download-content">
+                  <span>{item.filename}</span>
+                </div>
+                <div className="new-download-content">
+                  <button value="Delete" className="new-download-action"
+                          onClick={this.handleDownloadDelete.bind(this, item.id)}
+                  >
+                    删除
+                  </button>
+                  <input type="file" accept="application/*"
+                         style={{display:"none"}} className="file-input"
+                         onChange={this.handleDownloadFileChange.bind(this, item.id)}
+                         encType="multipart/form-data"
+                  />
+                  <button value="ChangeFile" className="new-download-action"
+                          onClick={this.getFile.bind(this)}
+                  >
+                    选择文件
+                  </button>
+                  <button value="Submit" className="new-download-action"
+                          onClick={this.handleDownloadSubmit.bind(this, item.id)}
+                  >
+                    确认更改
+                  </button>
+                </div>
+              </div>
+            ))
+          } 
+          <button className="new-download-button"
+                  onClick={this.handleNewDownload.bind(this)}
+          >
+            添加下载项
+          </button>
+        </div>
+    );
+    
+    const describe = (
         <div className="new-app-description">
           <h2>Description</h2>
           <textarea type="text" placeholder="describe your app"
@@ -189,16 +314,19 @@ class NewProject extends Component{
                     className="new-app-description-input new-post-input-input"
           />
         </div>
-      
+    );
+    
+    const selections = (
+      <>
         <div className="new-app-platforms">
           <h2>select platform</h2>
           {
             this.state.platforms.map((pl) => (
               <div className="select-box">
-                <label>{pl.name}</label>
-                <input type="checkbox" name="platform" value={pl.name}
-                       onChange={this.handleSelectPlatforms.bind(this, pl.name)}
-                       defaultChecked={this.isPlatformSelected(pl.name)}
+                <label>{pl}</label>
+                <input type="checkbox" name="platform" value={pl+"pl"}
+                       onChange={this.handleSelectPlatforms.bind(this, pl)}
+                       checked={this.isPlatformSelected(pl)}
                 />
               </div>
             ))
@@ -212,13 +340,16 @@ class NewProject extends Component{
                 <span>{tag.name}</span>
                 <input type="checkbox" name="tag" value={tag._id}
                        onChange={this.handleSelectTags.bind(this, tag._id)}
-                       defaultChecked={this.isTagSelected(tag._id)}
+                       checked={this.isTagSelected(tag._id)}
                 />
               </div>
             ))
           }
         </div>
-      
+      </>
+    );
+    
+    const links = (
         <div className="new-app-links">
           <h2>relative links</h2>
           <div className="new-links-container">
@@ -251,11 +382,39 @@ class NewProject extends Component{
             </button>
           </div>
         </div>
+    );
+    
+    return (
+      <div className="new-app">
+        
+        {this.props.appId ? (
+          <h1 className="page-title">
+            {"管理项目 "+this.state.name}
+          </h1>
+        ) : (
+          <h1 className="page-title">
+            {"创建新项目"}
+          </h1>
+        )}
       
-        <div className="new-app-downloads">
-          <h2>Downloads</h2>
-          <span>TODO</span>
-        </div>
+        {this.props.appId ? null : name}
+      
+        {this.props.appId ? (
+          <>
+            {logo}
+            {video}
+            {downloads}
+          </>
+        ): null}
+      
+        {describe}
+        
+        {this.props.appId ? (
+          <>
+            {selections}
+            {links}
+          </>
+        ) : null}
       
         <div className="new-app-submit">
           <button type="submit" value="Submit"

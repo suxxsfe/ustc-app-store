@@ -44,19 +44,27 @@ app.use("/api", api_reply);
 app.use("/api", api_login);
 // // load the compiled react files, which will serve /index.html and /bundle.js
 
-app.get('/upload/:resoucename/:name', (req, res) => {
-  let fileName = req.params.name;
-  let dirName = req.params.resoucename;
-  res.sendFile(path.join(resourcePath, dirName, fileName), options, (err) => {
-    if (err) {
+app.get('/upload/:dir1/:name', (req, res) => {
+  res.sendFile(path.join(resourcePath, req.params.dir1, req.params.name), options, (err) => {
+    if(err){
       console.log("fuck"+err);
       res.status(err.status).end();
     }
-    else {
-      console.log('Sent:', fileName);
+    else{
+      console.log('Sent:', req.params.name);
     }
   });
-
+});
+app.get('/upload/:dir1/:dir2/:name', (req, res) => {
+  res.sendFile(path.join(resourcePath, req.params.dir1, req.params.dir2, req.params.name), options, (err) => {
+    if(err){
+      console.log("fuck"+err);
+      res.status(err.status).end();
+    }
+    else{
+      console.log('Sent:', req.params.name);
+    }
+  });
 });
 
 // for all other routes, render index.html and let react router handle it

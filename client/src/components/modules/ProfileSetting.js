@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { post } from "../../utilities.js";
+import { get, post } from "../../utilities.js";
 
 class ProfileSetting extends Component{
   constructor(props){
@@ -13,7 +13,47 @@ class ProfileSetting extends Component{
   }
   
   componentDidMount(){
-    //get
+    get("/api/userinfo", {_id: this.props.userId})
+    .then((info) => {
+      this.setState({
+        intro: info.intro,
+        logo: info.logo,
+        links: info.links.map((link) => ({name: link.name, url: link.url, givenId: Math.random()})),
+      });
+    })
+  }
+  
+  handleIntroChange(event){
+    this.setState({
+      intro: event.target.value,
+    });
+  }
+  
+  handleLinkDelete(givenId, event){
+    this.setState((preState) => ({
+      links: preState.links.filter((link) => (link.givenId !== givenId)),
+    }));
+  }
+  handleLinkNameChange(givenId, event){
+    var __gloableLinkNameValue = event.target.value;
+    this.setState((preState) => ({
+      links: preState.links.map((link) => (link.givenId === givenId ?
+                                           {name: __gloableLinkNameValue, url: link.url, givenId: givenId} :
+                                           link)),
+    }));
+  }
+  handleLinkUrlChange(givenId, event){
+    var __gloableLinkUrlValue = event.target.value;
+    this.setState((preState) => ({
+      links: preState.links.map((link) => (link.givenId === givenId ?
+                                           {name: link.name, url: __gloableLinkUrlValue, givenId: givenId} :
+                                           link)),
+    }));
+  }
+  handleNewLink(event){
+    this.setState((preState) => ({
+      links: [...preState.links, {name: "", url: "", givenId: Math.random()}],
+    }));
   }
   
   getFile(event){
@@ -39,6 +79,16 @@ class ProfileSetting extends Component{
       .catch((error) => console.log("上传失败: "+error));
     }
   }
+  
+  submit(){
+    post("/api/userinfo", {
+      _id: this.props.userId,
+      intro: this.state.intro,
+      links: this.state.links.map((link) => ({webname: link.name, url: link.url}))
+                             .filter((link) => (link.webname !== "" && link.url !== "")),
+      Authorization: "Bearer"+localStorage.getItem("token"),
+    })
+  }
 
   render(){
     return (
@@ -56,6 +106,56 @@ class ProfileSetting extends Component{
                   onClick={this.getFile.bind(this)}
           >
             上传头像
+          </button>
+        </div>
+      
+        <div className="user-settings-intro">
+          <h2>Introduction</h2>
+          <textarea type="text" placeholder="introduce your self"
+                    value={this.state.intro} onChange={this.handleIntroChange.bind(this)}
+                    className="user-settings-input new-post-input-input"
+          />
+        </div>
+      
+        <div className="user-settings-links">
+          <h2>relative links</h2>
+          <div className="new-links-container">
+            <div className="new-links-title">链接名称</div>
+            <div className="new-links-title">链接地址</div>
+            <div className="new-links-title">操作</div>
+            {
+              this.state.links.map((link) => {
+                return (
+                  <>
+                    <input type="text" value={link.name} className="new-link-item"
+                           placeholder="describe your link"
+                           onChange={this.handleLinkNameChange.bind(this, link.givenId)}
+                    />
+                    <input type="text" value={link.url} className="new-link-item"
+                           placeholder="link address"
+                           onChange={this.handleLinkUrlChange.bind(this, link.givenId)}
+                    />
+                    <button value="Delete" className="new-link-item"
+                           onClick={this.handleLinkDelete.bind(this, link.givenId)}
+                    />
+                  </>
+                );
+              })
+            }
+            <button className="new-links-button"
+                    onClick={this.handleNewLink.bind(this)}
+            >
+              添加链接
+            </button>
+          </div>
+        </div>
+      
+        <div className="user-settings-submit">
+          <button type="submit" value="Submit"
+                  className="new-post-input-button user-settings-submit-button"
+                  onClick={this.submit.bind(this)}
+          >
+            Submit
           </button>
         </div>
       </div>

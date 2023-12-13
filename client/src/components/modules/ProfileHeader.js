@@ -15,18 +15,19 @@ class ProfileHeader extends Component{
   }
 	
   componentDidMount(){
-	get("/api/userinfo", {_id: this.props.userId}).then((info) => {
-	  this.setState({
-		name: info.name,
-		intro: info.intro,
+  	get("/api/userinfo", {_id: this.props.userId}).then((info) => {
+	    this.setState({
+	    	name: info.name,
+    		intro: info.intro,
+        logo: "/"+info.logo,
+	    });
 	  });
-	});
   }
 
   render(){
     return (
       <div className="profile-header">
-        <img className="user-logo" src="https://himg.bdimg.com/sys/portraitn/item/public.1.f355b4ea.XQ0gvtdscacwVeJkfGxQWw" />
+        <img className="user-logo" src={this.state.logo} />
         <h1 className="user-name">{this.state.name}</h1>
         <ProfileHeaderActions />
         <ProfileHeaderDetail intro={this.state.intro}/>
