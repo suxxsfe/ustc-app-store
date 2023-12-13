@@ -122,7 +122,7 @@ const downloadStorage = multer.diskStorage({
     return cb(null, path.join(__dirname, "upload", "appdownload"));
   },
   filename: function(req, file, cb){
-    return cb(null, file.fieldname+'-'+Date.now());
+    return cb(null, file.fieldname+'-'+Date.now()+"-"+file.originalname);
   },
 });
 const fileFilter = (req, file, callback) => {//中文编码支持
