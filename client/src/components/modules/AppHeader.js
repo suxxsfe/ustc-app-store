@@ -19,6 +19,7 @@ class AppHeader extends Component{
       this.setState({
         appName: info.name,
         authors: info.authors,
+        logo: "/"+info.logo,
       });
   	});
   }
@@ -26,7 +27,7 @@ class AppHeader extends Component{
   render(){
     return (
       <div className="app-header">
-        <img className="app-logo" src="https://himg.bdimg.com/sys/portraitn/item/public.1.f355b4ea.XQ0gvtdscacwVeJkfGxQWw" />
+        <img className="app-logo" src={this.state.logo} />
         <h1 className="app-name">{this.state.appName}</h1>
         <AppHeaderActions />
         <AppHeaderDetail authors={this.state.authors} />
