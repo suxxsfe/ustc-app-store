@@ -9,6 +9,7 @@ class SingleDownloadFile extends Component{
     return (
       <>
         <div className="platform">{this.props.platform}</div>
+        <div className="filename">{this.props.name}</div>
         <div className="upload-date">{this.props.uploadedDate}</div>
         <div className="download-button">
           <a href={this.props.downloadUrl}>

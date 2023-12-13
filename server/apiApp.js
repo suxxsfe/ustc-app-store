@@ -213,6 +213,7 @@ router.post("/appinfo/download", downloadUpload.single("file"), (req, res) => {
         id: req.body.id,
         path: "upload/appdownload/"+req.file.filename,
         platform: req.body.platform,
+        uploaddate: new Date().toLocaleDateString(),
       };
       App.findOne({_id: req.body._id})
       .then((app) => (App.findOneAndUpdate({_id: req.body._id}, {
