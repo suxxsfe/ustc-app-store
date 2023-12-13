@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 
 import AppHeader from "../modules/AppHeader.js";
-import RollingPictures from "../modules/RollingPictures.js";
+//import RollingPictures from "../modules/RollingPictures.js";
+import VideoPlayer from "../modules/VideoPlayer.js";
 import AppTabs from "../modules/AppTabs.js";
 import { AppSideBar } from "../modules/SideBar.js";
 import AppHomePage from "../modules/AppHomePage.js";
@@ -64,7 +65,7 @@ class AppPage extends Component{
     return (
       <>
         <AppHeader appId={this.props.appId} />
-        <RollingPictures pictures={TMP_PICTURES_URL} />
+        <VideoPlayer videoSrc={"/upload/appvideo/file-1702451156764ts/file-1702451156764.m3u8"} />
         <div className="sub-page">
           <AppTabs _onClick={this.changeHash} focus={this.state.page}/>
           {subPage}
