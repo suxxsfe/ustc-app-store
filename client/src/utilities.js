@@ -29,6 +29,7 @@ const post = (endpoint, params, isFormData = false) => {
   
   return fetch(endpoint, {
     method: "post",
+    headers: isFormData ? {} : {"Content-type": "application/json" },
     body: isFormData ? params : JSON.stringify(params),
   }).then(convertToJSON)
     .catch((error) => {
