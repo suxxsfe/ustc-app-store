@@ -64,12 +64,7 @@ router.post("/appinfo", (req, res) => {
         getTagsByTagIds(req.body.tags)
         .then((tags) => new App({
             name: req.body.name,
-            authors: [{name: "qwerty", _id: 123}],
-            img_url: req.body.img_url,
-            downloads: req.body.downloads,
-            links: req.body.links,
-            tags: tags,
-            platforms: req.body.platforms,
+            authors: [{name: "qwerty", _id: 123}],//TODO: 
             describe: req.body.description,
             createdate: nowDate,
             updatedate: nowDate,
@@ -77,24 +72,30 @@ router.post("/appinfo", (req, res) => {
         .then((app) => {
             console.log("success");
             res.send(app);
+        })
+        .catch((error) => {
+          console.log(error);
+          res.status(500).send(error);
         });
     }
     else{
       
       getTagsByTagIds(req.body.tags)
-      .then((tags) => App.update({_id:req.query._id},{$set:{
-          name: req.body.name,
-          img_url: req.body.img_url,
+      .then((tags) => App.findOneAndUpdate({_id:req.body._id},{
           downloads: req.body.downloads,
           links: req.body.links,
           tags: req.body.tags,
           platforms: req.body.platforms,
           describe: req.body.description,
           updatedate: nowDate,
-      }},exec()))
+      },{new: true}))
       .then((app) => {
           console.log("success");
           res.send(app);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.state(500).send(error);
       });
     }
 });
