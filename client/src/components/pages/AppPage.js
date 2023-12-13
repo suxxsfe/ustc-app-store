@@ -30,7 +30,7 @@ class AppPage extends Component{
       authors: [],
       name: "",
       describe: "",
-      download: [],
+      downloads: [],
       createdate: "",
       updatedate: "",
       platforms: [],
@@ -66,7 +66,7 @@ class AppPage extends Component{
       subPage = (<AppHomePage describe={this.state.describe} />);
     }
     else if(this.state.page === SubPages.DownloadPage){
-      subPage = (<AppDownloadPage downloadList={this.state.download} />);
+      subPage = (<AppDownloadPage downloadList={this.state.downloads} />);
     }
     else if(this.state.page === SubPages.CommentsPage){
       subPage = (<AppCommentsPage appId={this.props.appId} />);
