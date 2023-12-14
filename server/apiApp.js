@@ -5,11 +5,10 @@ const m3u8Make = require("./m3u8Maker.js");
 
 const express = require("express");
 //asdsfaf
-
+const checker = require('./jwtThings.js');
 const App = require("./models/App.js");
 
 const Tags = require("./models/Tags.js");
-const checker = require('./jwtThings.js');
 const router = express.Router();
 
 // router.get("/test",(req, res)=>{
@@ -18,19 +17,7 @@ const router = express.Router();
 //   console.log(e);
 //   res.send(e);
 // });
-router.get("/tags", (req, res) => {
-    Tags.find({}).then((tmp)=>res.send(tmp));
-});
-//aeatea
-router.get("/appinfo", (req, res) => {
-    App.findOne({_id: req.query._id})
-    .then((tmp)=>{res.send(tmp)})
-    .catch((error) => {
-      console.log("data base not found: \n"+error);
-      res.status(404).send({});
-    });
- //   res.send(tmp);
-});
+
 router.get("/appdescribe", (req, res) => {
     App.findOne({_id: req.query._id})
     .then((tmp)=>{res.send(tmp)})
@@ -154,7 +141,7 @@ router.post("/appinfo/logo", logoUpload.single("file"), (req, res) => {
   }
   else{
     //TODO: check Authorization
-    if(checker.true || checkAuthorityApp(req.body.token,req.body._id)){
+    if(checker.checkAuthorityApp(req.body.Authority,req.body._id)){
       fs.renameSync(path.join(__dirname, "upload", "applogo", req.file.filename),
                     path.join(__dirname, "upload", "applogo", req.body._id));
       res.send({status: "success"});

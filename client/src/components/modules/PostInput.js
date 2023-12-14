@@ -101,7 +101,7 @@ class NewComment extends Component{
       content: value,
       parent: this.props.app_id,
       score: this.props.score,
-      Authorization: "Bearer "+localStorage.getItem("token"),
+      Authorization: "Bearer  "+localStorage.getItem("token"),
     })
     .then((res) => {
       this.context.setMessage("success", "评论成功！", 1000);
@@ -151,7 +151,7 @@ class NewReply extends Component{
     post("/api/reply", {
       content: value,
       parent: this.props.commentId,
-      Authorization: "Bearer "+localStorage.getItem("token"),
+      Authorization: "Bearer  "+localStorage.getItem("token"),
     });
   }
   

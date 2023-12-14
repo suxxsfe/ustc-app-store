@@ -3,14 +3,9 @@ const express = require("express");
 const User = require("./models/User.js");
 const router = express.Router();
 
-function getID(token){
-  return jwt.verify(token, SECRET).id;
-}
-function checkAuthorityUser(token,id){
-  return getID(token)==id;
-}
-const jwt = require('jsonwebtoken');
-const SECRET = 'somesecret';
+
+const checker = require('./jwtThings.js');
+
 
 router.get("/userinfo", (req, res) => {
     User.findOne({_id:req.query._id}).then((tmp)=>{tmp.password="?????";res.send(tmp)});
@@ -46,7 +41,6 @@ const upload = multer({ storage: storage, limits: {fileSize: 1024*1024*10} });
 
 const fs = require("fs");
 router.post("/userinfo/logo", upload.single("file"), (req, res) => {
-  console.log(req);
   let { size, mimetype } = req.file;
   const allowType = ["jpeg", "jpg", "png"];
   const yourType = mimetype.split('/')[1];
@@ -59,7 +53,7 @@ router.post("/userinfo/logo", upload.single("file"), (req, res) => {
   }
   else{
     //TODO: check Authorization
-    if(checker.true || checkAuthorityUser(req.body.token,req.body._id)){
+    if(checker.checkAuthorityUser(req.body.Authorization,req.body._id)){
       fs.renameSync(path.join(__dirname, "upload", "userlogo", req.file.filename),
                     path.join(__dirname, "upload", "userlogo", req.body._id));
       res.send({status: "success"});

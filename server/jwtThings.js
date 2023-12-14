@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const SECRET = 'somesecret';
 function getID(token){
-    return jwt.verify(token, SECRET).id;
+  return jwt.verify(token.split(' ')[1], SECRET).id;
 }
 function checkAuthorityApp(token,id){
   console.log(token);console.log(id);
