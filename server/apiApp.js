@@ -165,7 +165,7 @@ router.post("/appinfo/video", videoUpload.single("file"), (req, res) => {
   else{
     //TODO: check Authorization
     //done
-    if(checker.checkAuthorityApp(req.body.token,req.body._id)){
+    if(checker.checkAuthorityApp(req.body.Authority,req.body._id)){
       const videoDir = path.join(__dirname, "upload", "appvideo", req.file.filename+"ts");
       fs.mkdirSync(videoDir);
       fs.renameSync(path.join(__dirname, "upload", "appvideo", req.file.filename),
@@ -195,7 +195,7 @@ router.post("/appinfo/download", downloadUpload.single("file"), (req, res) => {
   }
   else{
     //TODO: check Authorization
-    if(checker.checkAuthorityApp(req.body.token,req.body._id)){
+    if(checker.checkAuthorityApp(req.body.Authority,req.body._id)){
       const newDownload = {
         filename: req.file.originalname,
         id: req.body.id,
@@ -224,7 +224,7 @@ router.post("/appinfo/download", downloadUpload.single("file"), (req, res) => {
 
 router.post("/appinfo/deletedownload", (req, res) => {
   //TODO: check Authorization
-  if(checker.checkAuthorityApp(req.body.token,req.body._id)){
+  if(checker.checkAuthorityApp(req.body.Authority,req.body._id)){
     App.findOne({_id: req.body._id})
     .then((app) => {
       App.findOneAndUpdate({_id: req.body._id}, {
