@@ -47,6 +47,7 @@ class NewProject extends Component{
 
         downloads: info.downloads,
         logo: info.logo,
+        web: info.web,
       });
     })
     .catch((error) => console.log(error));
