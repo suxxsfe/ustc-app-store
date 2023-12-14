@@ -1,0 +1,59 @@
+.settings, .user-settings{
+    padding: 10px;
+    background-color: var(--primary-color);
+}
+
+.settings img{
+    width: 150px;
+    height: 150px;
+}
+.settings button{
+    border-radius: 5px;
+    border: 1px solid;
+    padding: 5px;
+}
+
+.settings textarea{
+    width: 800px;
+    height: 300px;
+}
+
+.new-links-container, .new-downloads-container{
+    display: grid;
+    grid-template: auto auto auto;
+}
+.new-links-title, .new-downloads-title{
+    background-color: #c9c9c9;
+    border-width: 0 0 2px 0;
+    border-color: rgba(0, 0, 0, 0.2);
+    border-style: solid;
+    font-size: 16px;
+    grid-row: 1 / 3;
+}
+.new-links-container > div, .new-downloads-container > div{
+    padding: 7px;
+}
+.new-link-item > *, .new-download-content > *{
+    height: 25px;
+    line-height: 25px;
+    font-size: 13px;
+    padding: 0 7px 0 7px !important;
+}
+.new-links-button, .new-download-button{
+    width: 100px;
+}
+.new-download-action{
+    margin-right: 10px;
+}
+
+.new-app-submit, .user-settings-submit{
+    margin: 20px 0 0 0;
+    padding: 20px 0 20px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    justify-content: center;
+    display: flex;
+}
+.new-app-submit button, .user-settings-submit button{
+    margin: auto;
+}
+

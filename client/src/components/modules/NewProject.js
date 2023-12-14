@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import { post,get } from "../../utilities.js";
 
+import "./Settings.css";
+
 class NewProject extends Component{
   constructor(props){
     super(props);
@@ -16,6 +18,7 @@ class NewProject extends Component{
       links: [],
       downloads: [],
       logo: "",
+      web: "",
     }
   }
 
@@ -106,6 +109,12 @@ class NewProject extends Component{
     this.setState((preState) => ({
       links: [...preState.links, {name: "", url: "", givenId: Math.random()}],
     }));
+  }
+  
+  handleWebChange(event){
+    this.setState({
+      web: event.target.value,
+    });
   }
   
   handleNewDownload(event){
@@ -202,6 +211,7 @@ class NewProject extends Component{
       links: this.state.links.map((link) => ({webname: link.name, url: link.url}))
                              .filter((link) => (link.webname !== "" && link.url !== "")),
       downloads: [],
+      web: this.state.web,
       Authorization: "Bearer "+localStorage.getItem("token"),
     });
     
@@ -255,55 +265,68 @@ class NewProject extends Component{
     const downloads = (
         <div className="new-app-downloads">
           <h2>管理下载项</h2>
-          <div className="new-downloads-title">运行平台</div>
-          <div className="new-downloads-title">文件名</div>
-          <div className="new-downloads-title">操作</div>
-          {
-            this.state.downloads.map((item) => (
-              <div className="download-item">
-                <div className="new-download-content">
-                  <select name="platform" className="new-download-select"
-                          value={item.platform} onChange={this.handleDownloadPlatformChange.bind(this, item.id)}
-                  >
-                    <option value="Windows">Windows</option>
-                    <option value="MacOS">MacOS</option>
-                    <option value="Linux">Linux</option>
-                  </select>
-                </div>
-                <div className="new-download-content">
-                  <span>{item.filename}</span>
-                </div>
-                <div className="new-download-content">
-                  <button value="Delete" className="new-download-action"
-                          onClick={this.handleDownloadDelete.bind(this, item.id)}
-                  >
-                    删除
-                  </button>
-                  <input type="file" accept="application/*"
-                         style={{display:"none"}} className="file-input"
-                         onChange={this.handleDownloadFileChange.bind(this, item.id)}
-                         encType="multipart/form-data"
-                  />
-                  <button value="ChangeFile" className="new-download-action"
-                          onClick={this.getFile.bind(this)}
-                  >
-                    选择文件
-                  </button>
-                  <button value="Submit" className="new-download-action"
-                          onClick={this.handleDownloadSubmit.bind(this, item.id)}
-                  >
-                    确认更改
-                  </button>
-                </div>
-              </div>
-            ))
-          } 
-          <button className="new-download-button"
-                  onClick={this.handleNewDownload.bind(this)}
-          >
-            添加下载项
-          </button>
+          <div className="new-downloads-container">
+            <div className="new-downloads-title">运行平台</div>
+            <div className="new-downloads-title">文件名</div>
+            <div className="new-downloads-title">操作</div>
+            {
+              this.state.downloads.map((item) => (
+                <>
+                  <div className="new-download-content">
+                    <select name="platform" className="new-download-select"
+                            value={item.platform} onChange={this.handleDownloadPlatformChange.bind(this, item.id)}
+                    >
+                      <option value="Windows">Windows</option>
+                      <option value="MacOS">MacOS</option>
+                      <option value="Linux">Linux</option>
+                    </select>
+                  </div>
+                  <div className="new-download-content">
+                    <span style={{fontSize: "16px"}}>{item.filename}</span>
+                  </div>
+                  <div className="new-download-content">
+                    <button value="Delete" className="new-download-action"
+                            onClick={this.handleDownloadDelete.bind(this, item.id)}
+                    >
+                      删除
+                    </button>
+                    <input type="file" accept="application/*"
+                           style={{display:"none"}} className="file-input"
+                           onChange={this.handleDownloadFileChange.bind(this, item.id)}
+                           encType="multipart/form-data"
+                    />
+                    <button value="ChangeFile" className="new-download-action"
+                            onClick={this.getFile.bind(this)}
+                    >
+                      选择文件
+                    </button>
+                    <button value="Submit" className="new-download-action"
+                            onClick={this.handleDownloadSubmit.bind(this, item.id)}
+                    >
+                      确认更改
+                    </button>
+                  </div>
+                </>
+              ))
+            } 
+            <button className="new-download-button"
+                    onClick={this.handleNewDownload.bind(this)}
+            >
+              添加下载项
+            </button>
+          </div>
         </div>
+    );
+    
+    const web = (
+      <div classname="new-app-web">
+        <h2>项目 Web 端地址</h2>
+        <p>不支持 Web 端则留空</p>
+        <input type="text" placeholder="web url"
+               value={this.state.web} onChange={this.handleWebChange.bind(this)}
+               className="new-app-web-input new-post-input-input"
+        />
+      </div>
     );
     
     const describe = (
@@ -360,17 +383,25 @@ class NewProject extends Component{
               this.state.links.map((link) => {
                 return (
                   <>
-                    <input type="text" value={link.name} className="new-link-item"
-                           placeholder="describe your link"
-                           onChange={this.handleLinkNameChange.bind(this, link.givenId)}
-                    />
-                    <input type="text" value={link.url} className="new-link-item"
-                           placeholder="link address"
-                           onChange={this.handleLinkUrlChange.bind(this, link.givenId)}
-                    />
-                    <button value="Delete" className="new-link-item"
-                           onClick={this.handleLinkDelete.bind(this, link.givenId)}
-                    />
+                    <div className="new-link-item">
+                      <input type="text" value={link.name}
+                             placeholder="describe your link"
+                             onChange={this.handleLinkNameChange.bind(this, link.givenId)}
+                      />
+                    </div>
+                    <div className="new-link-item">
+                      <input type="text" value={link.url}
+                             placeholder="link address"
+                             onChange={this.handleLinkUrlChange.bind(this, link.givenId)}
+                      />
+                    </div>
+                    <div className="new-link-item">
+                      <button value="Delete"
+                             onClick={this.handleLinkDelete.bind(this, link.givenId)}
+                      >
+                        删除
+                      </button>
+                    </div>
                   </>
                 );
               })
@@ -397,32 +428,35 @@ class NewProject extends Component{
           </h1>
         )}
       
-        {this.props.appId ? null : name}
-      
-        {this.props.appId ? (
-          <>
-            {logo}
-            {video}
-            {downloads}
-          </>
-        ): null}
-      
-        {describe}
+        <div className="settings">
+          {this.props.appId ? null : name}
         
-        {this.props.appId ? (
-          <>
-            {selections}
-            {links}
-          </>
-        ) : null}
-      
-        <div className="new-app-submit">
-          <button type="submit" value="Submit"
-                  className="new-post-input-button new-app-submit-button"
-                  onClick={this.submit.bind(this)}
-          >
-            Submit
-          </button>
+          {this.props.appId ? (
+            <>
+              {logo}
+              {video}
+              {downloads}
+              {web}
+            </>
+          ): null}
+        
+          {describe}
+          
+          {this.props.appId ? (
+            <>
+              {selections}
+              {links}
+            </>
+          ) : null}
+        
+          <div className="new-app-submit">
+            <button type="submit" value="Submit"
+                    className="new-post-input-button new-app-submit-button"
+                    onClick={this.submit.bind(this)}
+            >
+              Submit
+            </button>
+          </div>
         </div>
       </div>
     );
