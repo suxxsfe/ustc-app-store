@@ -25,8 +25,9 @@ const formatParams = (params) => {
 }
 
 const post = (endpoint, params, isFormData = false) => {
-  console.log("send to server (post): "+JSON.stringify(params));
-  
+ /// console.log("send to server (post): "+JSON.stringify(params));
+ //过于玄学，反正之前post的body传不过去现在能了。
+  console.log("send to server (post): "+(isFormData ? params : JSON.stringify(params)));
   return fetch(endpoint, {
     method: "post",
     headers: isFormData ? {} : {"Content-type": "application/json" },
