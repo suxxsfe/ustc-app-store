@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import { post, getLoggedInfo } from "../../utilities.js";
+import { get, post, getLoggedInfo } from "../../utilities.js";
 import PopUpSignIn from "./PopUpSignIn.js";
 
 import "./PostInput.css";
@@ -61,7 +61,10 @@ class SearchPostInput extends Component{
   }
   
   goSearch(value){
-    post("", {content: value, tag: this.props.selected_tag, platform: this.props.selected_platform});
+    get("/api/search", {content: value, tag: this.props.selected_tag, platform: this.props.selected_platform})
+    .then((res) => {
+      console.log(res);
+    });
   }
   
   render(){

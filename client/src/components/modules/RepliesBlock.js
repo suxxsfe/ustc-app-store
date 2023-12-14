@@ -22,6 +22,9 @@ class RepliesBlock extends Component{
   }
 
   render(){
+    if(this.state.replies.length === 0){
+      return (<></>);
+    }
     return (
       <div className="comment-card-replies-block">
         {

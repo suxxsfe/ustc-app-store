@@ -11,11 +11,12 @@
     margin: 0px;
     border: 0px;
 }
-.focus-star svg, .single-star:hover svg,
-.single-star:hover + .single-star svg,
-.single-star:hover + .single-star + .single-star svg,
-.single-star:hover + .single-star + .single-star + .single-star svg,
-.single-star:hover + .single-star + .single-star + .single-star + .single-star svg{
+.focus-star svg,
+.new-comment .comment-stars .single-star:hover svg,
+.new-comment .comment-stars .single-star:hover + .single-star svg,
+.new-comment .comment-stars .single-star:hover + .single-star + .single-star svg,
+.new-comment .comment-stars .single-star:hover + .single-star + .single-star + .single-star svg,
+.new-comment .comment-stars .single-star:hover + .single-star + .single-star + .single-star + .single-star svg{
     fill: #fece3c;
 }
 
