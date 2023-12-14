@@ -3,7 +3,7 @@
     background-color: var(--primary-color);
 }
 
-.settings img{
+.settings img, .user-settings img{
     width: 150px;
     height: 150px;
 }
