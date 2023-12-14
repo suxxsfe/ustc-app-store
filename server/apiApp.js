@@ -154,7 +154,7 @@ router.post("/appinfo/logo", logoUpload.single("file"), (req, res) => {
   }
   else{
     //TODO: check Authorization
-    if(checker.true || checkAuthorityApp(req.body.token,req.body._id)){
+    if(checker.checkAuthorityApp(req.body.token,req.body._id)){
       fs.renameSync(path.join(__dirname, "upload", "applogo", req.file.filename),
                     path.join(__dirname, "upload", "applogo", req.body._id));
       res.send({status: "success"});
