@@ -12,6 +12,11 @@
     column-gap: 30px;
 }
 
+.hls-player{
+    width: 100%;
+    height: 500px;
+}
+
 /************* app tabs **************/
 
 .app-tabs{
