@@ -103,6 +103,7 @@ router.post("/appinfo", (req, res) => {
           platforms: req.body.platforms,
           describe: req.body.description,
           updatedate: nowDate,
+          web: req.body.web,
       },{new: true}))
       .then((app) => {
           console.log("success");
