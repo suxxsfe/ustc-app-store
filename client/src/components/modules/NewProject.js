@@ -46,7 +46,7 @@ class NewProject extends Component{
         links: info.links.map((link) => ({name: link.name, url: link.url, givenId: Math.random()})),
 
         downloads: info.downloads,
-        logo: info.logo,
+        logo: "upload/applogo/"+this.props.appId,
         web: info.web,
       });
     })
@@ -192,7 +192,7 @@ class NewProject extends Component{
   handleLogoChange(event){
     this.uploadFile("/api/appinfo/logo", event.target.files[0], (res) => {
       this.setState({
-        logo: res.logo,
+        logo: "upload/applogo/"+this.props.appId+"?"+Math.random(),
       });
     });
   }

@@ -17,7 +17,7 @@ class ProfileSetting extends Component{
     .then((info) => {
       this.setState({
         intro: info.intro,
-        logo: info.logo,
+        logo: "upload/userlogo/"+this.props.userId,
         links: info.links.map((link) => ({name: link.name, url: link.url, givenId: Math.random()})),
       });
     })
@@ -73,7 +73,7 @@ class ProfileSetting extends Component{
       .then((res) => {
         console.log("上传成功");
         this.setState({
-          logo: res.logo,
+          logo: "upload/userlogo/"+this.props.userId+"?"+Math.random(),
         });
       })
       .catch((error) => console.log("上传失败: "+error));

@@ -152,7 +152,7 @@ const downloadUpload = multer({ storage: downloadStorage, limits: {fileSize: 102
 
 const fs = require("fs");
 router.post("/appinfo/logo", logoUpload.single("file"), (req, res) => {
-  let { size, mimetype, path } = req.file;
+  let { size, mimetype } = req.file;
   const allowType = ["jpeg", "jpg", "png"];
   const yourType = mimetype.split('/')[1];
   
@@ -164,17 +164,10 @@ router.post("/appinfo/logo", logoUpload.single("file"), (req, res) => {
   }
   else{
     //TODO: check Authorization
-    if(checkAuthorityApp(req.body.token,req.body._id)){
-      App.findOne({_id: req.body._id})
-      .then((app) => (App.findOneAndUpdate({_id: req.body._id}, {
-          logo: "upload/applogo/"+req.file.filename,
-        }, {new: true})))
-      .then((logo) => {
-        res.send(logo);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if(true || checkAuthorityApp(req.body.token,req.body._id)){
+      fs.renameSync(path.join(__dirname, "upload", "applogo", req.file.filename),
+                    path.join(__dirname, "upload", "applogo", req.body._id));
+      res.send({status: "success"});
     }
     else{
 //      fs.unlink(path.join(__dirname, "upload", "applogo", req.file.filename));
