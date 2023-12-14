@@ -11,6 +11,7 @@ class SingleProject extends Component{
   	  updateDate: "",
   	  creatDate: "",
       imgUrl: "",
+      appId: "",
   	};
   }
 	
@@ -22,6 +23,7 @@ class SingleProject extends Component{
     		updateDate: info.updatedate,
     		creatDate: info.creatdate,
         imgUrl:info.img_url,
+        appId: info._id,
   	  });
   	});
   }
@@ -29,7 +31,7 @@ class SingleProject extends Component{
   render(){
     return (
       <div className="project">      
-        <img className="project-logo" src={this.state.imgUrl} />
+        <img className="project-logo" src={"/upload/applogo/"+this.state.appId} />
         <div className="project-title">
           <a href="www.baidu.com">
             <span>{this.state.name}</span>
