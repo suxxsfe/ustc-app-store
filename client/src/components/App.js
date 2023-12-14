@@ -14,6 +14,8 @@ import NotFound from "./pages/NotFound.js";
 
 import MessageBlock from "./modules/MessageBlock.js";
 
+import { post } from "../utilities.js";
+
 import Footer from "./modules/Footer.js";
 import NavBar from "./modules/NavBar.js";
 
@@ -28,7 +30,24 @@ class App extends Component{
       showMessage: false,
       messageType: "",
       messageContent: "",
+      whoami: {},
     };
+  }
+  
+  componentDidMount(){
+    if(!window.localStorage.getItem("token")){
+      this.setState({
+        whoami: {name: "", _id: 0},
+      });
+    }
+    else{
+      post("/api/whoami", {Authorization: "Bearer"+localStorage.getItem("token"),})
+      .then((res) => {
+        this.setState({
+          whoami: res,
+        });
+      });
+    }
   }
   
   setMessage(type, content, time){
@@ -47,10 +66,12 @@ class App extends Component{
   
   static childContextTypes = {
     setMessage: PropTypes.func,
+    whoami: PropTypes.object,
   }
   getChildContext(){
     return {
       setMessage: this.setMessage.bind(this),
+      whoami: this.state.whoami,
     }
   }
   

@@ -12,6 +12,19 @@ function checkAuthorityUser(token,id){
 const jwt = require('jsonwebtoken');
 const SECRET = 'somesecret';
 
+router.post("/whoami", (req, res) => {
+    const userId = getID(req.body.Authorization);
+    if(!userId){
+      res.send({_id: 0, name: "", type: ""});
+    }
+    User.findOne({_id: userId})
+        .then((user) => res.send({_id: userId, name: user.name, type: user.type, }))
+        .catch((error) => {
+          console.log(error);
+          res.status(500).send(error);
+        });
+})
+
 router.get("/userinfo", (req, res) => {
     User.findOne({_id:req.query._id}).then((tmp)=>{tmp.password="?????";res.send(tmp)});
 });
@@ -38,6 +51,7 @@ const storage = multer.diskStorage({
   destination: function(req, file, cb){
     return cb(null, path.join(__dirname, "upload", "userlogo"));
   },
+  
   filename: function(req, file, cb){
     return cb(null, file.fieldname+'-'+Date.now()+"."+file.mimetype.split('/')[1]);
   },

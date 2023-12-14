@@ -13,7 +13,7 @@ class AppHeader extends Component{
       <div className="app-header">
         <img className="app-logo" src={this.props.logo} />
         <h1 className="app-name">{this.props.name}</h1>
-        <AppHeaderActions _id={this.props._id}/>
+        <AppHeaderActions _id={this.props._id} authors={this.props.authors} />
         <AppHeaderDetail authors={this.props.authors} />
       </div>
     );
