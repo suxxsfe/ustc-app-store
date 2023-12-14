@@ -75,7 +75,7 @@ class AppPage extends Component{
     return (
       <>
         <AppHeader _id={this.props.appId} name={this.state.name}
-                   logo={"/"+this.state.logo} authors={this.state.authors}
+                   logo={"/upload/applogo/"+this.props.appId} authors={this.state.authors}
         />
         <VideoPlayer videoSrc={"/"+this.state.video}/>
         <div className="sub-page">

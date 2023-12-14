@@ -17,7 +17,7 @@ class ProfileSetting extends Component{
     .then((info) => {
       this.setState({
         intro: info.intro,
-        logo: info.logo,
+        logo: "upload/userlogo/"+this.props.userId,
         links: info.links.map((link) => ({name: link.name, url: link.url, givenId: Math.random()})),
       });
     })
@@ -73,7 +73,7 @@ class ProfileSetting extends Component{
       .then((res) => {
         console.log("上传成功");
         this.setState({
-          logo: res.logo,
+          logo: "upload/userlogo/"+this.props.userId+"?"+Math.random(),
         });
       })
       .catch((error) => console.log("上传失败: "+error));
@@ -127,17 +127,25 @@ class ProfileSetting extends Component{
               this.state.links.map((link) => {
                 return (
                   <>
-                    <input type="text" value={link.name} className="new-link-item"
-                           placeholder="describe your link"
-                           onChange={this.handleLinkNameChange.bind(this, link.givenId)}
-                    />
-                    <input type="text" value={link.url} className="new-link-item"
-                           placeholder="link address"
-                           onChange={this.handleLinkUrlChange.bind(this, link.givenId)}
-                    />
-                    <button value="Delete" className="new-link-item"
-                           onClick={this.handleLinkDelete.bind(this, link.givenId)}
-                    />
+                    <div className="new-link-item">
+                      <input type="text" value={link.name}
+                             placeholder="describe your link"
+                             onChange={this.handleLinkNameChange.bind(this, link.givenId)}
+                      />
+                    </div>
+                    <div className="new-link-item">
+                      <input type="text" value={link.url}
+                             placeholder="link address"
+                             onChange={this.handleLinkUrlChange.bind(this, link.givenId)}
+                      />
+                    </div>
+                    <div className="new-link-item">
+                      <button value="Delete"
+                             onClick={this.handleLinkDelete.bind(this, link.givenId)}
+                      >
+                        删除
+                      </button>
+                    </div>
                   </>
                 );
               })

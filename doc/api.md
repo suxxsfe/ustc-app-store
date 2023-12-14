@@ -273,3 +273,19 @@ returns
 | 名称 | 解释 | 示例 |
 | ---- | ---- | ---- |
 | \token | 用户 token | `12asdffasdafsd3` |  
+
+## POST /api/whoami
+
+params  
+
+none  
+
+returns  
+
+| 名称 | 解释 | 示例 |
+| user | 客户端登陆用户信息 | `{name:"username", _id:123456}` |  
+
+若未登陆，`_id` 为 0  
+
+
+

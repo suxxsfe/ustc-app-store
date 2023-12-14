@@ -15,7 +15,7 @@ class SingleComment extends Component{
     return (
       <div className="comment-card-commentbody">
         <div className="single-comment-author">
-          <img className="single-comment-logo" src="/upload/userlogo/file-1702388125481.png"/>
+          <img className="single-comment-logo" src={"/upload/userlogo/"+this.props.author._id} />
           <a className="single-comment-authorname" href={"/user/"+this.props.author._id}>
             {this.props.author.name}
           </a>

@@ -34,7 +34,7 @@ class Profile extends Component{
     return (
       <>
         <ProfileHeader _id={this.props.userId} name={this.state.name}
-                       logo={"/"+this.state.logo} intro={this.state.intro}
+                       logo={"/upload/userlogo/"+this.props.userId} intro={this.state.intro}
         />
         <div className="profile-main">
           <Projects userId={this.props.userId} />
