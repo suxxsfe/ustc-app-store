@@ -47,8 +47,5 @@ router.post("/userCreate", (req, res) => {
 });
 
 
-function getID(token){
-    return jwt.verify(token, SECRET);
-}
 module.exports = router;
 

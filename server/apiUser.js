@@ -60,6 +60,7 @@ const upload = multer({ storage: storage, limits: {fileSize: 1024*1024*10} });
 
 const fs = require("fs");
 router.post("/userinfo/logo", upload.single("file"), (req, res) => {
+  console.log(req);
   let { size, mimetype } = req.file;
   const allowType = ["jpeg", "jpg", "png"];
   const yourType = mimetype.split('/')[1];
@@ -72,7 +73,7 @@ router.post("/userinfo/logo", upload.single("file"), (req, res) => {
   }
   else{
     //TODO: check Authorization
-    if(true || checkAuthorityUser(req.body.token,req.body._id)){
+    if(checker.true || checkAuthorityUser(req.body.token,req.body._id)){
       fs.renameSync(path.join(__dirname, "upload", "userlogo", req.file.filename),
                     path.join(__dirname, "upload", "userlogo", req.body._id));
       res.send({status: "success"});
