@@ -271,21 +271,15 @@ router.post("/appinfo/deletedownload", (req, res) => {
 })
 
 router.get("/search", (req, res) => {
-    if(req.query.tag!=undefined){
-        if(req.query.platforms!=undefined){
-            App.find({'tag': req.query.tag,platforms:req.query.platforms}).
-            then((app)=>res.send(app));
-        }else{
-            App.find({'tag': req.query.tag}).
-            then((app)=>res.send(app));
-        }
-    }else if(req.query.platforms!=undefined){
-        App.find({platforms:req.query.platforms}).
-            then((app)=>res.send(app));
-    }else{
-        App.find({}).
-        then((app)=>res.send(app));
-    }
+    let searchName="";
+    if(req.query.content!=undefined) {searchName=req.query.content;}
+    if(req.query.platforms!=undefined){
+      App.find({tags: {$elemMatch:{name:req.query.tag}},"platforms":req.query.platforms,                                                          name:{$regex:searchName}}).
+        then((app)=>res.send({projects:app}));
+      }else{
+       App.find({tags: {$elemMatch:{name:req.query.tag}},name:{$regex:searchName}}).
+        then((app)=>res.send({projects:app}));
+   }
 });
 //neraefads  
 module.exports = router;
