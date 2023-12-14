@@ -8,7 +8,7 @@ const checker = require('./jwtThings.js');
 
 
 router.post("/whoami", (req, res) => {
-    const userId = getID(req.body.Authorization);
+    const userId = checker.getID(req.body.Authorization);
     if(!userId){
       res.send({_id: 0, name: "", type: ""});
     }
@@ -27,7 +27,7 @@ router.get("/userprojects", (req, res) => {
     User.findOne({_id:req.query._id},{"projects":1}).then((tmp)=>res.send(tmp));
 });
 router.post("/userupdate", (req, res) => {
-    const {id} = jwt.verify(String(req.body.authorization.split(' ').pop()), SECRET);
+    const {id} = jwt.verify(String(req.body.Authorization.split(' ').pop()), SECRET);
     User.update({_id:id},{$set:{
         name: req.body.name,
         password:req.body.password,
