@@ -68,7 +68,6 @@ class ProfileSetting extends Component{
       const formData = new FormData();
       formData.append("_id", this.props.userId);
       formData.append("file", fileData);
-      formData.append("Authorization", "Bearer "+localStorage.getItem("token"));
       post("/api/userinfo/logo", formData, true)
       .then((res) => {
         console.log("上传成功");
@@ -86,7 +85,6 @@ class ProfileSetting extends Component{
       intro: this.state.intro,
       links: this.state.links.map((link) => ({webname: link.name, url: link.url}))
                              .filter((link) => (link.webname !== "" && link.url !== "")),
-      Authorization: "Bearer "+localStorage.getItem("token"),
     })
   }
 

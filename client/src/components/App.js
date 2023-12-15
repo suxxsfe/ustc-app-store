@@ -41,7 +41,7 @@ class App extends Component{
       });
     }
     else{
-      post("/api/whoami", {Authorization: "Bearer "+localStorage.getItem("token"),})
+      post("/api/whoami", {})
       .then((res) => {
         this.setState({
           whoami: res,
