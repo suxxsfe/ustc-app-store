@@ -252,12 +252,12 @@ router.post("/appinfo/deletedownload", (req, res) => {
 
 router.get("/search", (req, res) => {
     let searchName="";
-    if(req.query.content!=undefined) {searchName=req.query.content;}
-    if(req.query.platforms!=undefined){
-      App.find({tags: {$elemMatch:{name:req.query.tag}},"platforms":req.query.platforms,                                                          name:{$regex:searchName}}).
+    if(req.body.content!=undefined) {searchName=req.body.content;}
+    if(req.body.platforms!=undefined){
+      App.find({tags: {$elemMatch:{name:req.body.tag}},"platforms":req.body.platforms,                                                          name:{$regex:searchName}}).
         then((app)=>res.send({projects:app}));
       }else{
-       App.find({tags: {$elemMatch:{name:req.query.tag}},name:{$regex:searchName}}).
+       App.find({tags: {$elemMatch:{name:req.body.tag}},name:{$regex:searchName}}).
         then((app)=>res.send({projects:app}));
    }
 });
