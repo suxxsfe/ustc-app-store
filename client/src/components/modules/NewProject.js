@@ -127,7 +127,6 @@ class NewProject extends Component{
     post("/api/appinfo/deletedownload", {
       _id: this.props.appId,
       id: id,
-      Authorization: "Bearer "+localStorage.getItem("token"),
     })
     .then((res) => {
       this.setState((preState) => ({
@@ -178,7 +177,6 @@ class NewProject extends Component{
     if(fileData){
       formData.append("_id", this.props.appId);
       formData.append("file", fileData);
-      formData.append("Authorization", "Bearer "+localStorage.getItem("token"));
       post(api, formData, true)
       .then((res) => {
         console.log("上传成功");
@@ -213,7 +211,6 @@ class NewProject extends Component{
                              .filter((link) => (link.webname !== "" && link.url !== "")),
       downloads: [],
       web: this.state.web,
-      Authorization: "Bearer  "+localStorage.getItem("token"),
     });
     
   }
