@@ -1,0 +1,18 @@
+.sign-container{
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    margin: auto;
+}
+
+.sign-container > label, .sign-container > div, .sign-container > button{
+    margin: 10px 0 0 0;
+}
+.sign-container > input, .sign-container > button{
+    height: 25px;   
+    box-sizing: border-box;
+}
+
+.go-sign-up, .go-sign-in{
+    text-align: center;
+}

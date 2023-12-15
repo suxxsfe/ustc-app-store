@@ -61,7 +61,7 @@ class SignUp extends Component{
   render(){
     return (
       <>
-        <div className="sign-up-container">
+        <div className="sign-container">
           <SignUpUsernameInput name={this.state.username}
                                handleChange={this.handleUsernameChange.bind(this)}
           />
@@ -74,9 +74,9 @@ class SignUp extends Component{
           >
             sign up
           </button>
-        </div>
-        <div className="go-sign-in">
-          <a href="/signin">sign in</a>
+          <div className="go-sign-in">
+            <a href="/signin">sign in</a>
+          </div>
         </div>
       </>
     );
@@ -98,7 +98,7 @@ class SignUpPasswordInput extends Component{
   
   render(){
     return (
-      <div className="sign-up-password">
+      <>
         <label for="password" className="sign-up-label">Password</label>
         <input type="password" name="password"
                value={this.props.password} className="sign-up-input"
@@ -109,7 +109,7 @@ class SignUpPasswordInput extends Component{
                vale={this.props.passwordRepeat} className="sign-up-input"
                onChange={this.handleChangeRepeat.bind(this)}
         />
-      </div>
+      </>
     );
   }
 }
@@ -126,13 +126,13 @@ class SignUpUsernameInput extends Component{
   
   render(){
     return (
-      <div className="sign-up-username">
+      <>
         <label for="username" className="sign-up-label">Username</label>
         <input type="text" name="username" placeholder="your username"
                value={this.props.name} className="sign-up-input"
                onChange={this.handleChange.bind(this)}
         />
-      </div>
+      </>
     );
   }
 }

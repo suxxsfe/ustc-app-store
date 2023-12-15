@@ -40,7 +40,7 @@ class SignIn extends Component{
   render(){
     return (
       <>
-        <div className="sign-in-container">
+        <div className="sign-container">
           <label for="username" className="sign-in-label">Username</label>
           <input type="text" name="username" placeholder="your username"
                  onChange={this.handleUsernameChange.bind(this)} value={this.state.username}
@@ -57,9 +57,9 @@ class SignIn extends Component{
           >
             Sign in
           </button>
-        </div>
-        <div className="go-sign-up">
-          <a href="/signup">sign up</a>
+          <div className="go-sign-up">
+            <a href="/signup">sign up</a>
+          </div>
         </div>
       </>
     );
