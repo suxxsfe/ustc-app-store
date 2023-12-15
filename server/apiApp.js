@@ -18,6 +18,15 @@ const router = express.Router();
 //   res.send(e);
 // });
 
+router.get("/appinfo", (req, res) => {
+    App.findOne({_id: req.query._id})
+    .then((tmp)=>{res.send(tmp)})
+    .catch((error) => {
+      console.log("data base not found: \n"+error);
+      res.status(404).send({});
+    });
+});
+
 router.get("/appdescribe", (req, res) => {
     App.findOne({_id: req.query._id})
     .then((tmp)=>{res.send(tmp)})
