@@ -15,4 +15,4 @@ function checkAuthorityUser(token,id){
     return getID(token)==id;
 }
 
-module.exports={checkAuthorityUser, checkAuthorityApp};
+module.exports={ getID, checkAuthorityUser, checkAuthorityApp};
