@@ -26,18 +26,19 @@ router.get("/userinfo", (req, res) => {
 router.get("/userprojects", (req, res) => {
     User.findOne({_id:req.query._id},{"projects":1}).then((tmp)=>res.send(tmp));
 });
-router.post("/userupdate", (req, res) => {
-    const {id} = jwt.verify(String(req.body.Authorization.split(' ').pop()), SECRET);
-    User.update({_id:id},{$set:{
-        name: req.body.name,
-        password:req.body.password,
+router.post("/userinfo", (req, res) => {
+    const id = checker.getID(req.body.Authorization);
+    User.findOneAndUpdate({_id:id},{
+      //  name: req.body.name,
+    //    password:req.body.password,
         intro: req.body.intro,
-        type: req.body.type,
-        regdate: req.body.regdate,
-        visdate: req.body.visdate,
-        projects: req.body.projects,
+     //   type: req.body.type,
+     //   regdate: req.body.regdate,
+      //  visdate: req.body.visdate,
+      //  projects: req.body.projects,
         links: req.body.links,
-}},exec());
+}, {new: true}).then((user)=>res.send(user));
+
 });
 
 const multer = require("multer");
