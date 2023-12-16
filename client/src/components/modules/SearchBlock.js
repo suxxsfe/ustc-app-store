@@ -7,13 +7,16 @@ import { get } from "../../utilities.js";
 
 const TMP_PLATFORMS = [
   {
-    name: "windows",
+    name: "Web",
   },
   {
-    name: "mac",
+    name: "Windows",
   },
   {
-    name: "web",
+    name: "MacOS",
+  },
+  {
+    name: "Linux",
   },
 ];
 

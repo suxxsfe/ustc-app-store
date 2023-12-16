@@ -251,15 +251,22 @@ router.post("/appinfo/deletedownload", (req, res) => {
 })
 
 router.get("/search", (req, res) => {
-    let searchName="";
-    if(req.body.content!=undefined) {searchName=req.body.content;}
-    if(req.body.platforms!=undefined){
-      App.find({tags: {$elemMatch:{name:req.body.tag}},"platforms":req.body.platforms,                                                          name:{$regex:searchName}}).
-        then((app)=>res.send({projects:app}));
-      }else{
-       App.find({tags: {$elemMatch:{name:req.body.tag}},name:{$regex:searchName}}).
-        then((app)=>res.send({projects:app}));
-   }
+    let option={};
+    if(req.query.content!="") {option["name"]={$regex:req.query.content};}
+    if(req.query.platform!="all")option["platforms"]=req.query.platform;
+    if(req.query.tag!="all")option["tags"]={$elemMatch:{name:req.query.tag}}
+    App.find(option). then((app)=>res.send({projects:app}));
+  //   if(req.query.platforms!="all"){
+  //     App.find({tags: {$elemMatch:{name:req.query.tag}},"platforms":req.query.platforms,                                                          name:{$regex:searchName}}).
+  //       then((app)=>res.send({projects:app}));
+  //     }else{
+  //      App.find({tags: {$elemMatch:{name:req.query.tag}},name:{$regex:searchName}}).
+  //       then((app)=>res.send({projects:app}));
+  //  }
 });
 //neraefads  
+router.get("/applist",(req,res)=>{
+ // console.log(App.find({}).sort({createdate:1,name:1}));
+  App.find({}).sort({createdate:1,name:1}).then((app)=>{res.send(app)});
+})
 module.exports = router;
