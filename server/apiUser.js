@@ -78,5 +78,20 @@ router.post("/userinfo/logo", upload.single("file"), (req, res) => {
     }
   }
 });
-
+router.get("/userlist",(req,res)=>{
+    User.find({}).sort({type:1,tags:-1,name:1}).then((users)=>res.send(users));
+});
+router.get("/searchUser", (req, res) => {
+    let option={};
+    if(req.query.content!="") {option["name"]={$regex:req.query.content};}
+    if(req.query.project!="all"&&req.query.project!="")option["projects"]=req.query.project;
+    User.find(option).then((user)=>res.send(user));
+  //   if(req.query.platforms!="all"){
+  //     App.find({tags: {$elemMatch:{name:req.query.tag}},"platforms":req.query.platforms,                                                          name:{$regex:searchName}}).
+  //       then((app)=>res.send({projects:app}));
+  //     }else{
+  //      App.find({tags: {$elemMatch:{name:req.query.tag}},name:{$regex:searchName}}).
+  //       then((app)=>res.send({projects:app}));
+  //  }
+});
 module.exports = router;

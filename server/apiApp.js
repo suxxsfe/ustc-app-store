@@ -255,7 +255,6 @@ router.get("/search", (req, res) => {
     if(req.query.content!="") {option["name"]={$regex:req.query.content};}
     if(req.query.platform!="all")option["platforms"]=req.query.platform;
     if(req.query.tag!="all")option["tags"]={$elemMatch:{name:req.query.tag}}
-    console.log(option);
     App.find(option). then((app)=>res.send({projects:app}));
   //   if(req.query.platforms!="all"){
   //     App.find({tags: {$elemMatch:{name:req.query.tag}},"platforms":req.query.platforms,                                                          name:{$regex:searchName}}).
@@ -266,4 +265,8 @@ router.get("/search", (req, res) => {
   //  }
 });
 //neraefads  
+router.get("/applist",(req,res)=>{
+ // console.log(App.find({}).sort({createdate:1,name:1}));
+  App.find({}).sort({createdate:1,name:1}).then((app)=>{res.send(app)});
+})
 module.exports = router;
