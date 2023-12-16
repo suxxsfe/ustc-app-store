@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { Router } from "@reach/router";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PropTypes from "prop-types";
+
+import PathParamsHOC from "./PathParamsHOC.js";
 
 import AppPage from "./pages/AppPage.js";
 import Profile from "./pages/Profile.js";
@@ -81,19 +83,21 @@ class App extends Component{
         <MessageBlock show={this.state.showMessage}
                       type={this.state.messageType} content={this.state.messageContent}
         />
-        <NavBar />
         <div className="app-container">
-          <Router>
-            <AppSettings path="/app/:appId/settings" />
-            <AppPage path="/app/:appId" />
-            <Profile path="/user/:userId" />
-            <ProfileSettingsPage path="/user/:userId/settings" />
-            <Search path="/search/" />
-            <NewProjectPage path="/new/" />
-            <SignInPage path="/signin/" />
-            <SignUpPage path="/signup/" />
-            <NotFound default />
-          </Router>
+          <BrowserRouter>
+          <NavBar />
+            <Routes>
+              <Route path="/app/:appId/settings" element={<PathParamsHOC component={AppSettings} />} />
+              <Route path="/app/:appId" element={<PathParamsHOC component={AppPage} />} />
+              <Route path="/user/:userId" element={<PathParamsHOC component={Profile} />} />
+              <Route path="/user/:userId/settings" element={<PathParamsHOC component={ProfileSettingsPage} />} />
+              <Route path="/search/" element={<Search />} />
+              <Route path="/new/" element={<NewProjectPage />} />
+              <Route path="/signin/" element={<SignInPage />} />
+              <Route path="/signup/" element={<SignUpPage />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
         </div>
         <Footer />
       </>
