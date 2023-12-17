@@ -27,7 +27,7 @@ router.post("/comment", (req, res) => {
         parent: req.body.parent,
     });
     newcomm.save()
-           .then((res) => res.send(newcomm))
+           .then((newcomm) => res.send(newcomm))
            .catch((error) => {
              console.log(error);
              res.status(500).send(error);
