@@ -9,20 +9,24 @@ function Root(){
   let location = useLocation();
   let [message, setMessage] = useState({show: false, type: "", content: ""});
   
+  const setMessageAndCancel = (mes) => {
+    setMessage(mes);
+    setTimeout(() => {
+      setMessage({show: false, type: "", content: ""});
+    }, 2000);
+  }
+  
   useEffect(() => {
     const st = location.state;
     console.log(st);
     if(st && st.message){
-      setMessage({show: true, type: "success", content: st.message});
-      setTimeout(() => {
-        setShowMessage({show: false, type: "", content: ""});
-      }, 2000);
+      setMessageAndCancel({show: true, type: "success", content: st.message});
     }
   }, [location]);
   
   
   const showMessage = (type, content, time) => {
-    setMessage({show:true, type: type, content: content});
+    setMessageAndCancel({show:true, type: type, content: content});
   }
 
   return (
