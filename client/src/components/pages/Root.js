@@ -3,34 +3,40 @@ import { Outlet, useLocation } from "react-router-dom";
 
 import MessageBlock from "../modules/MessageBlock.js";
 
+const showMessageContext = React.createContext();
+const { Provider, Consumer } = showMessageContext;
 function Root(){
   let location = useLocation();
-  let [showMessage, setShowMessage] = useState(false);
-  let [messageType ,setMessageType] = useState("");
-  let [messageContent, setMessageContent] = useState("");
+  let [message, setMessage] = useState({show: false, type: "", content: ""});
   
   useEffect(() => {
     const st = location.state;
     console.log(st);
     if(st && st.message){
-      setShowMessage(true);
-      setMessageType("success");
-      setMessageContent(st.message);
+      setMessage({show: true, type: "success", content: st.message});
       setTimeout(() => {
-        setShowMessage(false);
+        setShowMessage({show: false, type: "", content: ""});
       }, 2000);
     }
   }, [location]);
+  
+  
+  const showMessage = (type, content, time) => {
+    setMessage({show:true, type: type, content: content});
+  }
 
   return (
     <>
-      <MessageBlock show={showMessage}
-                    type={messageType} content={messageContent}
+      <MessageBlock show={message.show}
+                    type={message.type} content={message.content}
       />
-      <Outlet />
+      <Provider value={showMessage} >
+        <Outlet />
+      </Provider>
     </>
   );
 }
 
 export default Root;
+export { Consumer };
 

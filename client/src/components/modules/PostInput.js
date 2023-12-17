@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
+import { Consumer } from "../pages/Root.js";
+
 import { get, post, getLoggedInfo } from "../../utilities.js";
 import PopUpSignIn from "./PopUpSignIn.js";
 
@@ -86,10 +88,10 @@ class NewComment extends Component{
   }
   
   static contextTypes ={
-    setMessage: PropTypes.func,
+    showMessage: PropTypes.func,
   }
   
-  postNewComment(value){
+  postNewComment(showMessage, value){
     if(!getLoggedInfo()){
       this.setState({
         popupSignIn: true,
@@ -103,7 +105,7 @@ class NewComment extends Component{
       score: this.props.score,
     })
     .then((res) => {
-      this.context.setMessage("success", "评论成功！", 1000);
+      showMessage("success", "评论成功！", 1000);
     })
     .catch((error) => {
       console.log(error);
@@ -118,14 +120,18 @@ class NewComment extends Component{
   
   render(){
     return (
-      <>
-        <PopUpSignIn showPopUpSignIn={this.state.popupSignIn}
-                     handleClosePopUp={this.handleClosePopUp.bind(this)}
-        />
-        <NewPostInput default_text="new comment" button_text="提交"
-                      on_submit={this.postNewComment.bind(this)} use_textarea={true}
-        />
-      </>
+      <Consumer>
+        {(value) => (
+          <>
+            <PopUpSignIn showPopUpSignIn={this.state.popupSignIn}
+                         handleClosePopUp={this.handleClosePopUp.bind(this)}
+            />
+            <NewPostInput default_text="new comment" button_text="提交"
+                          on_submit={this.postNewComment.bind(this, value)} use_textarea={true}
+            />
+          </>
+        )}
+      </Consumer>
     );
   }
 }
@@ -139,7 +145,7 @@ class NewReply extends Component{
     };
   }
   
-  postNewReply(value){
+  postNewReply(showMessage, value){
     if(!getLoggedInfo()){
       this.setState({
         popupSignIn: true,
@@ -150,6 +156,12 @@ class NewReply extends Component{
     post("/api/reply", {
       content: value,
       parent: this.props.commentId,
+    })
+    .then((res) => {
+      showMessage("success", "回复成功", 1000);
+    })
+    .catch((error) => {
+      console.log(error)
     });
   }
   
@@ -161,14 +173,18 @@ class NewReply extends Component{
   
   render(){
     return (
-      <>
-        <PopUpSignIn showPopUpSignIn={this.state.popupSignIn}
-                     handleClosePopUp={this.handleClosePopUp.bind(this)}
-        />
-        <NewPostInput default_text="new reply" button_text="提交"
-                      on_submit={this.postNewReply.bind(this)} use_textarea={true}
-        />
-      </>
+      <Consumer>
+       {(value) => (
+         <>
+           <PopUpSignIn showPopUpSignIn={this.state.popupSignIn}
+                        handleClosePopUp={this.handleClosePopUp.bind(this)}
+           />
+           <NewPostInput default_text="new reply" button_text="提交"
+                         on_submit={this.postNewReply.bind(this, value)} use_textarea={true}
+           />
+         </>
+       )}
+      </Consumer>
     );
   }
 }

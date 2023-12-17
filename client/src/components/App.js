@@ -15,8 +15,6 @@ import AppSettings from "./pages/AppSettings.js";
 import ProfileSettingsPage from "./pages/ProfileSettingsPage.js";
 import NotFound from "./pages/NotFound.js";
 
-import MessageBlock from "./modules/MessageBlock.js";
-
 import { post } from "../utilities.js";
 
 import Footer from "./modules/Footer.js";
@@ -30,9 +28,6 @@ class App extends Component{
     super(props);
     
     this.state = {
-      showMessage: false,
-      messageType: "",
-      messageContent: "",
       whoami: {},
     };
   }
@@ -59,28 +54,12 @@ class App extends Component{
     });
   }
   
-  setMessage(type, content, time){
-    this.setState({
-      showMessage: true,
-      messageType: type,
-      messageContent: content,
-    },() => {
-      setTimeout(() => {
-        this.setState({
-          showMessage: false,
-        });
-      }, time);
-    });
-  }
-  
   static childContextTypes = {
-    setMessage: PropTypes.func,
     whoami: PropTypes.object,
     deleteWhoami: PropTypes.func,
   }
   getChildContext(){
     return {
-      setMessage: this.setMessage.bind(this),
       whoami: this.state.whoami,
       deleteWhoami: this.deleteWhoami.bind(this),
     }
@@ -89,9 +68,6 @@ class App extends Component{
   render(){
     return (
       <>
-        <MessageBlock show={this.state.showMessage}
-                      type={this.state.messageType} content={this.state.messageContent}
-        />
         <div className="app-container">
           <BrowserRouter>
           <NavBar _id={this.state.whoami._id}/>
