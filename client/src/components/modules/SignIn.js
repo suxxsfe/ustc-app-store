@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { createBrowserHistory } from "history";
+import PropTypes from "prop-types";
 
 import { post } from "../../utilities.js";
 

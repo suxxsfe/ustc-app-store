@@ -51,7 +51,7 @@ class SignUp extends Component{
     })
     .then((res) => {
       console.log("created user successfully");
-      location.href = "/signin";
+      this.props.successSignUpHook();
     })
     .catch((error) => {
       console.log(error);

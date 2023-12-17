@@ -211,6 +211,11 @@ class NewProject extends Component{
                              .filter((link) => (link.webname !== "" && link.url !== "")),
       downloads: [],
       web: this.state.web,
+    })
+    .then((app) => {
+      if(this.props.successSetHook){
+        this.props.successSetHook(app._id);
+      }
     });
     
   }

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Navigate } from "react-router-dom";
 
 import NewProject from "../modules/NewProject.js";
 
@@ -13,10 +14,19 @@ class AppSettings extends Component{
     };
   }
   
+  handleSet(appId){
+    this.setState({
+      app: appId,
+    });
+  }
+  
   render(){
-    return (
-      <NewProject appId={this.props.appId} />
-    );
+    if(this.state.app){
+      return <Navigate to={"/app/"+this.state.app} state={{from: "/app/"+this.state.set+"/settings"}} />;
+    }
+    else{
+      return <NewProject appId={this.props.appId} successSetHook={this.handleSet.bind(this)} />;
+    }
   }
 }
 

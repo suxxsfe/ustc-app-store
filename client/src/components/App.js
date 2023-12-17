@@ -52,6 +52,12 @@ class App extends Component{
     }
   }
   
+  deleteWhoami(){
+    this.setState({
+      whoami: {name: "", _id: 0},
+    });
+  }
+  
   setMessage(type, content, time){
     this.setState({
       showMessage: true,
@@ -69,11 +75,13 @@ class App extends Component{
   static childContextTypes = {
     setMessage: PropTypes.func,
     whoami: PropTypes.object,
+    deleteWhoami: PropTypes.func,
   }
   getChildContext(){
     return {
       setMessage: this.setMessage.bind(this),
       whoami: this.state.whoami,
+      deleteWhoami: this.deleteWhoami.bind(this),
     }
   }
   
@@ -85,7 +93,7 @@ class App extends Component{
         />
         <div className="app-container">
           <BrowserRouter>
-          <NavBar />
+          <NavBar _id={this.state.whoami._id}/>
             <Routes>
               <Route path="/app/:appId/settings" element={<PathParamsHOC component={AppSettings} />} />
               <Route path="/app/:appId" element={<PathParamsHOC component={AppPage} />} />

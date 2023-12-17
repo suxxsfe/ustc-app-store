@@ -86,6 +86,11 @@ class ProfileSetting extends Component{
       links: this.state.links.map((link) => ({webname: link.name, url: link.url}))
                              .filter((link) => (link.webname !== "" && link.url !== "")),
     })
+    .then((user) => {
+      if(this.props.successSetHook){
+        this.props.successSetHook(user._id);
+      }
+    });
   }
 
   render(){
