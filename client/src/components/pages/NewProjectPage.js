@@ -28,10 +28,10 @@ class NewProjectPage extends Component{
 
   render(){
     if(this.context.whoami._id == 0){
-      return <Navigate to="/signin" state={{from: "/new"}} />;
+      return <Navigate to="/signin" state={{from: "/new", message: "请先登陆"}} />;
     }
     else if(this.state.set){
-      return <Navigate to={"/app/"+this.state.set+"/settings"} state={{from: "/new"}} />;
+      return <Navigate to={"/app/"+this.state.set+"/settings"} state={{from: "/new", message: "创建成功，请继续完善信息"}} />;
     }
     else{
       return <NewProject appId={undefined} successSetHook={this.handleSet.bind(this)} />;

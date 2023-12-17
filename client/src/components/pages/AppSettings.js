@@ -22,7 +22,7 @@ class AppSettings extends Component{
   
   render(){
     if(this.state.app){
-      return <Navigate to={"/app/"+this.state.app} state={{from: "/app/"+this.state.set+"/settings"}} />;
+      return <Navigate to={"/app/"+this.state.app} state={{from: "/app/"+this.state.set+"/settings", message: "修改成功"}} />;
     }
     else{
       return <NewProject appId={this.props.appId} successSetHook={this.handleSet.bind(this)} />;

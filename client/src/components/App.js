@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import PathParamsHOC from "./PathParamsHOC.js";
+import Root from "./pages/Root.js";
 
 import AppPage from "./pages/AppPage.js";
 import Profile from "./pages/Profile.js";
@@ -95,15 +96,17 @@ class App extends Component{
           <BrowserRouter>
           <NavBar _id={this.state.whoami._id}/>
             <Routes>
-              <Route path="/app/:appId/settings" element={<PathParamsHOC component={AppSettings} />} />
-              <Route path="/app/:appId" element={<PathParamsHOC component={AppPage} />} />
-              <Route path="/user/:userId" element={<PathParamsHOC component={Profile} />} />
-              <Route path="/user/:userId/settings" element={<PathParamsHOC component={ProfileSettingsPage} />} />
-              <Route path="/search/" element={<Search />} />
-              <Route path="/new/" element={<NewProjectPage />} />
-              <Route path="/signin/" element={<SignInPage />} />
-              <Route path="/signup/" element={<SignUpPage />} />
-              <Route path="*" element={<NotFound />} />
+              <Route path="/" element={<Root />} >
+                <Route path="/app/:appId/settings" element={<PathParamsHOC component={AppSettings} />} />
+                <Route path="/app/:appId" element={<PathParamsHOC component={AppPage} />} />
+                <Route path="/user/:userId" element={<PathParamsHOC component={Profile} />} />
+                <Route path="/user/:userId/settings" element={<PathParamsHOC component={ProfileSettingsPage} />} />
+                <Route path="/search/" element={<Search />} />
+                <Route path="/new/" element={<NewProjectPage />} />
+                <Route path="/signin/" element={<SignInPage />} />
+                <Route path="/signup/" element={<SignUpPage />} />
+                <Route path="*" element={<NotFound />} />
+              </Route>
             </Routes>
           </BrowserRouter>
         </div>

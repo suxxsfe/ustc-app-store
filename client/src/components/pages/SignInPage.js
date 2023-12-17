@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { createBrowserHistory } from "history";
 import PropTypes from "prop-types";
+import { Navigate } from "react-router-dom";
 
 import SignIn from "../modules/SignIn.js";
 
@@ -9,6 +10,9 @@ import "../modules/SignInUp.css";
 class SignInPage extends Component{
   constructor(props){
     super(props);
+    this.state = {
+      signed: 0,//0-unsigned 1-already signed 2-signed
+    };
   }
   
   static contextTypes = {
@@ -17,27 +21,32 @@ class SignInPage extends Component{
   
   componentDidMount(){
     if(this.context.whoami._id){
-      this.handleSigned();
+      this.setState({
+        signed: 1,
+      });
     }
   }
   
   handleSigned(){
-    let history = createBrowserHistory();
-//    history.push({pathname: "/", state: {from: "adfsf"}});
-    const st = history.location.state;
-    if(st && st.from){
-      history.push({pathname: st.from == "/signup" ? "/" : st.from});
-      history.go();
-    }
-    else{
-      history.go(-1);
-    }
+    this.setState({
+      signed: 2,
+    });
   }
 
   render(){
-    return (
-      <SignIn successSignInHook={this.handleSigned.bind(this)} />
-    );
+    if(this.state.signed != 0){
+      const history = createBrowserHistory();
+      const st = history.location.state;
+      let whereToGo = "/";
+      if(st && st.from && st.from != "/signup"){
+        whereToGo = st.from;
+      }
+      const message = this.state.signed == 1 ? "您已登陆" : "登陆成功";
+      return <Navigate to={whereToGo} state={{from: "/signin", message: message}} />
+    }
+    else{
+      return <SignIn successSignInHook={this.handleSigned.bind(this)} />;
+    }
   }
 }
 

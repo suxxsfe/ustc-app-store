@@ -19,7 +19,7 @@ class ProfileSettingsPage extends Component{
 
   render(){
     if(this.state.set){
-      return <Navigate to={"/user/"+this.state.set} state={{from: "/user/"+this.state.set+"/settings"}} />;
+      return <Navigate to={"/user/"+this.state.set} state={{from: "/user/"+this.state.set+"/settings", message: "修改成功"}} />;
     }
     else{
       return <ProfileSetting userId={this.props.userId} successSetHook={this.handleSet.bind(this)} />
