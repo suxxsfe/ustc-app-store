@@ -35,6 +35,7 @@
     "body-parser": "^1.20.2",
     "core-js": "^3.33.2",
     "fluent-ffmpeg": "^2.1.2",
+    "history": "^5.3.0",
     "jsonwebtoken": "^9.0.2",
     "localStorage": "^1.0.4",
     "mongoose": "^8.0.1",
