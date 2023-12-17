@@ -18,6 +18,11 @@ const router = express.Router();
 //   res.send(e);
 // });
 
+router.get("/tags", (req, res) => {
+  Tags.find({}).then((tags) => res.send(tags))
+               .catch((error) => res.status(500).send(error));
+})
+
 router.get("/appinfo", (req, res) => {
     App.findOne({_id: req.query._id})
     .then((tmp)=>{res.send(tmp)})
