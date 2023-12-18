@@ -12,7 +12,10 @@ router.post("/whoami", (req, res) => {
     if(!userId){
       res.send({_id: 0, name: "", type: ""});
     }
-    User.findOne({_id: userId})
+  
+    let nowDate = new Date().toLocaleDateString();
+  console.log(nowDate);
+    User.findOneAndUpdate({_id: userId}, {visdate: nowDate}, {new: true})
         .then((user) => res.send({_id: userId, name: user.name, type: user.type, }))
         .catch((error) => {
           console.log(error);
