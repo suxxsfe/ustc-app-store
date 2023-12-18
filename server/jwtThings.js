@@ -1,5 +1,8 @@
 const jwt = require('jsonwebtoken');
 const SECRET = 'somesecret';
+function signID(id){
+  return jwt.sign({ id: String(id)}, SECRET);
+}
 function getID(token){
   return jwt.verify(token.split(' ')[1], SECRET).id;
 }
@@ -15,4 +18,4 @@ function checkAuthorityUser(token,id){
     return getID(token)==id;
 }
 
-module.exports={ getID, checkAuthorityUser, checkAuthorityApp};
+module.exports={ signID,getID, checkAuthorityUser, checkAuthorityApp};
