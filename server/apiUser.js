@@ -28,16 +28,16 @@ router.get("/userprojects", (req, res) => {
 });
 router.post("/userinfo", (req, res) => {
     const id = checker.getID(req.body.Authorization);
+    if(id != req.body._id){
+      res.status(403).send("permission deny");
+      return;
+    }
+  
     User.findOneAndUpdate({_id:id},{
-      //  name: req.body.name,
-    //    password:req.body.password,
         intro: req.body.intro,
-     //   type: req.body.type,
-     //   regdate: req.body.regdate,
-      //  visdate: req.body.visdate,
-      //  projects: req.body.projects,
         links: req.body.links,
-}, {new: true}).then((user)=>res.send(user));
+    }, {new: true})
+    .then((user)=>res.send(user));
 
 });
 

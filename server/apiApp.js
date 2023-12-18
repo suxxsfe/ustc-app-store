@@ -6,6 +6,7 @@ const m3u8Make = require("./m3u8Maker.js");
 const express = require("express");
 //asdsfaf
 const checker = require('./jwtThings.js');
+const User = require("./models/User.js");
 const App = require("./models/App.js");
 
 const Tags = require("./models/Tags.js");
@@ -62,49 +63,69 @@ const getTagsByTagIds = async function (tagIds){
 
 router.post("/appinfo", (req, res) => {
     console.log("kkksc03");
-    
-    let nowDate = new Date().toLocaleDateString();
-  
-    if(req.body._id === undefined){
-        console.log(req.body);
-        
-        getTagsByTagIds(req.body.tags)
-        .then((tags) => new App({
-            name: req.body.name,
-            authors: [{name: "qwerty", _id: 123}],//TODO: 
-            describe: req.body.description,
-            createdate: nowDate,
-            updatedate: nowDate,
-        }).save())
-        .then((app) => {
-            console.log("success");
-            res.send(app);
-        })
-        .catch((error) => {
-          console.log(error);
-          res.status(500).send(error);
-        });
+    if(!req.body.Authorization || req.body.Authorization == ""){
+      res.status(403).send("please login first");
+      return;
     }
-    else{
+    User.find({_id: checker.getID(req.body.Authorization)})
+    .then((users) => {
+        if(users.length != 1){
+          res.status(403).send("user not found");
+          return;
+        }
       
-      getTagsByTagIds(req.body.tags)
-      .then((tags) => App.findOneAndUpdate({_id:req.body._id},{
-          links: req.body.links,
-          tags: tags,
-          platforms: req.body.platforms,
-          describe: req.body.description,
-          updatedate: nowDate,
-          web: req.body.web,
-      },{new: true}))
-      .then((app) => {
-          console.log("success");
-          res.send(app);
-      })
-      .catch((error) => {
-        console.log(error);
-        res.state(500).send(error);
-      });
-    }
+        const user = users[0];
+        let nowDate = new Date().toLocaleDateString();
+      
+        if(req.body._id === undefined){
+            getTagsByTagIds(req.body.tags)
+            .then((tags) => new App({
+                name: req.body.name,
+//                authors: [{name: "qwerty", _id: 123}],//TODO: 
+                authors: [{name: user.name, _id: user._id}],
+                describe: req.body.description,
+                createdate: nowDate,
+                updatedate: nowDate,
+            }).save())
+            .then((app) => {
+                console.log("success");
+                res.send(app);
+            })
+            .catch((error) => {
+              console.log(error);
+              res.status(500).send(error);
+            });
+        }
+        else{
+          App.find({_id: req.body._id}).then((apps) => {
+              if(apps.length != 1){
+                  res.status(403).send("app not found");
+                  return;
+              }
+              if(!apps[0].authors.map((author) => (String(author._id))).includes(user.id)){
+                  res.status(403).send("permission deny");
+                  return;
+              }
+              getTagsByTagIds(req.body.tags)
+              .then((tags) => App.findOneAndUpdate({_id:req.body._id},{
+                  links: req.body.links,
+                  tags: tags,
+                  platforms: req.body.platforms,
+                  describe: req.body.description,
+                  updatedate: nowDate,
+                  web: req.body.web,
+              },{new: true}))
+              .then((app) => {
+                  console.log("success");
+                  res.send(app);
+              })
+              .catch((error) => {
+                  console.log(error);
+                  res.state(500).send(error);
+              });
+          });
+        }
+    });
 });
 
 const multer = require("multer");
