@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import { get, post } from "../../utilities.js";
+import { Consumer } from "../pages/Root.js";
 
 class ProfileSetting extends Component{
   constructor(props){
