@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 
+import { marked } from "marked";
+import * as DOMPurify from "dompurify";
+
 import { get } from "../../utilities.js";
 
 class AppHomePage extends Component{
@@ -10,9 +13,7 @@ class AppHomePage extends Component{
   render(){
     return (
       <div className="home-page sub-page-main">
-        <p>
-          {this.props.describe}
-        </p>
+        <div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(marked.parse(this.props.describe))}} ></div>
       </div>
     );
   }
