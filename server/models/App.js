@@ -13,6 +13,7 @@ const AppSchema = new mongoose.Schema({
     describe:String,
     logo: String,
     video: String,
+    videoname: String,
     web: String,
 });
 

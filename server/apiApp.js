@@ -73,7 +73,6 @@ router.post("/appinfo", (req, res) => {
     .then((users) => {
         if(users.length != 1){
           res.status(403).send("user not found");
-          return;
         }
       
         const user = users[0];
@@ -104,11 +103,9 @@ router.post("/appinfo", (req, res) => {
           App.find({_id: req.body._id}).then((apps) => {
               if(apps.length != 1){
                   res.status(403).send("app not found");
-                  return;
               }
               if(!apps[0].authors.map((author) => (String(author._id))).includes(user.id)){
                   res.status(403).send("permission deny");
-                  return;
               }
               getTagsByTagIds(req.body.tags)
               .then((tags) => App.findOneAndUpdate({_id:req.body._id},{
@@ -161,7 +158,7 @@ const fileFilter = (req, file, callback) => {//中文编码支持
   file.originalname = Buffer.from(file.originalname, "latin1").toString("utf-8");
   callback(null, true);
 }
-const videoUpload = multer({ storage: videoStorage, limits: {fileSize: 1024*1024*100} });
+const videoUpload = multer({ storage: videoStorage, limits: {fileSize: 1024*1024*100}, fileFilter});
 const logoUpload = multer({ storage: logoStorage, limits: {fileSize: 1024*1024*10} });
 const downloadUpload = multer({ storage: downloadStorage, limits: {fileSize: 1024*1024*100}, fileFilter });
 
@@ -212,6 +209,7 @@ router.post("/appinfo/video", videoUpload.single("file"), (req, res) => {
       App.findOne({_id: req.body._id})
       .then((app) => (App.findOneAndUpdate({_id: req.body._id}, {
         video: "upload/appvideo/"+req.file.filename+"ts/"+req.file.filename+".m3u8",
+        videoname: req.file.originalname,
       }, {new: true})))
       .then((video) => {
         res.send(video);
@@ -221,6 +219,7 @@ router.post("/appinfo/video", videoUpload.single("file"), (req, res) => {
       });
     }
     else{
+      console.log("fuck you");
 //      fs.unlink(path.join(__dirname, "upload", "appvideo", req.file.filename));
     }
   }

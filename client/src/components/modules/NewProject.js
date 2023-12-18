@@ -19,6 +19,7 @@ class NewProject extends Component{
       links: [],
       downloads: [],
       logo: "",
+      videoname: "",
       web: "",
     }
   }
@@ -48,6 +49,7 @@ class NewProject extends Component{
 
         downloads: info.downloads,
         logo: "upload/applogo/"+this.props.appId,
+        videoname: info.videoname,
         web: info.web,
       });
     })
@@ -199,6 +201,9 @@ class NewProject extends Component{
   handleVideoChange(event){
     this.uploadFile("/api/appinfo/video", event.target.files[0], (res) => {
       console.log(res);
+      this.setState({
+        videoname: res.videoname,
+      });
     });
   }
   
@@ -262,6 +267,7 @@ class NewProject extends Component{
     const video = (
         <div className="new-app-video">
           <h2>App video</h2>
+          {this.state.videoname && (<p>{this.state.videoname}</p>)}
           <input type="file" accept="video/*"
                  style={{display:"none"}} className="file-input"
                  onChange={this.handleVideoChange.bind(this)}
