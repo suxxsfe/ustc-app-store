@@ -15,8 +15,9 @@ class Projects extends Component{
 	
   componentDidMount(){
    	get("/api/userprojects", {_id: this.props.userId}).then((pro) => {
+      console.log(pro);
    	  this.setState({
-   		  projects: pro.projects,
+   		  projects: pro,
    	  });
    	});
   }
@@ -27,11 +28,11 @@ class Projects extends Component{
         <h2 className="project-title">Projects</h2>
         <ProjectsOverview projects_num={this.state.projects ? this.state.projects.length : 0} />
         {
-          this.state.projects ? this.state.projects.map((obj) => {
+          this.state.projects && this.state.projects.map((obj) => {
             return (
-              <SingleProject projectId={obj} />
+              <SingleProject project={obj} />
             );
-          }) : null
+          })
         }
       </div>
     );
