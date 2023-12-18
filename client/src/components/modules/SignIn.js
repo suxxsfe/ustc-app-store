@@ -3,6 +3,7 @@ import { createBrowserHistory } from "history";
 import PropTypes from "prop-types";
 
 import { post } from "../../utilities.js";
+import { Consumer } from "../pages/Root.js";
 
 class SignIn extends Component{
   constructor(props){
@@ -36,34 +37,42 @@ class SignIn extends Component{
     })
     .catch((error) => {
       console.log(error);
+      this.showMessage("fail", "用户名或密码错误", 1000);
     });
   }
 
   render(){
     return (
-      <>
-        <div className="sign-container">
-          <label for="username" className="sign-in-label">Username</label>
-          <input type="text" name="username" placeholder="your username"
-                 onChange={this.handleUsernameChange.bind(this)} value={this.state.username}
-                 className="sign-in-input"
-          />
-          <label for="password">Password</label>
-          <input type="password" name="password"
-                 onChange={this.handlePasswordChange.bind(this)} value={this.state.password}
-                 className="sign-in-input"
-          />
-          <button type="submit" value="Submit"
-                  className="new-post-input-button sign-in-button"
-                  onClick={this.goSignIn.bind(this)}
-          >
-            Sign in
-          </button>
-          <div className="go-sign-up">
-            <a href="/signup">sign up</a>
-          </div>
-        </div>
-      </>
+      <Consumer>
+        {(value) => {
+          this.showMessage = value;
+          return (
+            <>
+              <div className="sign-container">
+                <label for="username" className="sign-in-label">Username</label>
+                <input type="text" name="username" placeholder="your username"
+                       onChange={this.handleUsernameChange.bind(this)} value={this.state.username}
+                       className="sign-in-input"
+                />
+                <label for="password">Password</label>
+                <input type="password" name="password"
+                       onChange={this.handlePasswordChange.bind(this)} value={this.state.password}
+                       className="sign-in-input"
+                />
+                <button type="submit" value="Submit"
+                        className="new-post-input-button sign-in-button"
+                        onClick={this.goSignIn.bind(this)}
+                >
+                  Sign in
+                </button>
+                <div className="go-sign-up">
+                  <a href="/signup">sign up</a>
+                </div>
+              </div>
+            </>
+          );
+        }}
+      </Consumer>
     );
   }
 }

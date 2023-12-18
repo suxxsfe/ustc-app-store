@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import { post,get } from "../../utilities.js";
+import { Consumer } from "../pages/Root.js";
 
 import "./Settings.css";
 
@@ -184,6 +185,7 @@ class NewProject extends Component{
       })
       .catch((error) => {
         console.log("上传失败: "+error);
+        this.showMessage("fail", "上传失败", 1000);
       });
     }
   }
@@ -200,15 +202,20 @@ class NewProject extends Component{
     });
   }
   
-  submit(){
+  submit(showMessage){
+    console.log(this.state.links);
+    if(this.state.links.filter((link) => (!link.name || !link.url || link.name == "" || link.url == "")).length > 0){
+      this.showMessage("fail", "链接名或地址不能为空", 1000);
+      return;
+    }
+    
     post("/api/appinfo", {
       _id: this.props.appId,
       name: this.state.name,
       description: this.state.description,
       tags: this.state.selectedTags,
       platforms: this.state.selectedPlatforms,
-      links: this.state.links.map((link) => ({webname: link.name, url: link.url}))
-                             .filter((link) => (link.webname !== "" && link.url !== "")),
+      links: this.state.links.map((link) => ({webname: link.name, url: link.url})),
       downloads: [],
       web: this.state.web,
     })
@@ -216,7 +223,10 @@ class NewProject extends Component{
       if(this.props.successSetHook){
         this.props.successSetHook(app._id);
       }
-    });
+    })
+    .catch((error) => {
+      console.log(error);
+    })
     
   }
   
@@ -419,49 +429,56 @@ class NewProject extends Component{
     );
     
     return (
-      <div className="new-app">
-        
-        {this.props.appId ? (
-          <h1 className="page-title">
-            {"管理项目 "+this.state.name}
-          </h1>
-        ) : (
-          <h1 className="page-title">
-            {"创建新项目"}
-          </h1>
-        )}
-      
-        <div className="settings">
-          {this.props.appId ? null : name}
-        
-          {this.props.appId ? (
-            <>
-              {logo}
-              {video}
-              {downloads}
-              {web}
-            </>
-          ): null}
-        
-          {describe}
-          
-          {this.props.appId ? (
-            <>
-              {selections}
-              {links}
-            </>
-          ) : null}
-        
-          <div className="new-app-submit">
-            <button type="submit" value="Submit"
-                    className="new-post-input-button new-app-submit-button"
-                    onClick={this.submit.bind(this)}
-            >
-              Submit
-            </button>
-          </div>
-        </div>
-      </div>
+      <Consumer>
+       {(value) => {
+         this.showMessage = value;
+         return (
+           <div className="new-app">
+             
+             {this.props.appId ? (
+               <h1 className="page-title">
+                 {"管理项目 "+this.state.name}
+               </h1>
+             ) : (
+               <h1 className="page-title">
+                 {"创建新项目"}
+               </h1>
+             )}
+           
+             <div className="settings">
+               {this.props.appId ? null : name}
+             
+               {this.props.appId ? (
+                 <>
+                   {logo}
+                   {video}
+                   {downloads}
+                   {web}
+                 </>
+               ): null}
+             
+               {describe}
+               
+               {this.props.appId ? (
+                 <>
+                   {selections}
+                   {links}
+                 </>
+               ) : null}
+             
+               <div className="new-app-submit">
+                 <button type="submit" value="Submit"
+                         className="new-post-input-button new-app-submit-button"
+                         onClick={this.submit.bind(this)}
+                 >
+                   Submit
+                 </button>
+               </div>
+             </div>
+           </div>
+         )
+       }}
+      </Consumer>
     );
   }
 }

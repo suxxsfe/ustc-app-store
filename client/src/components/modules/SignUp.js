@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import { post } from "../../utilities.js";
+import { Consumer } from "../pages/Root.js";
 
 class SignUp extends Component{
   constructor(props){
@@ -31,13 +32,12 @@ class SignUp extends Component{
   }
   
   goSignUp(){
-    if(this.state.username === ""){
-      return;
-    }
-    if(this.state.password === ""){
+    if(this.state.username === "" || this.state.username === ""){
+      this.showMessage("fail", "用户名或密码不能为空", 1000);
       return;
     }
     if(this.state.password !== this.state.passwordRepeat){
+      this.showMessage("fail", "两次密码不一致", 1000);
       return;
     }
     
@@ -60,25 +60,32 @@ class SignUp extends Component{
 
   render(){
     return (
-      <>
-        <div className="sign-container">
-          <SignUpUsernameInput name={this.state.username}
-                               handleChange={this.handleUsernameChange.bind(this)}
-          />
-          <SignUpPasswordInput password={this.state.password} passwordRepeat={this.state.passwordRepeat}
-                               handleChange={this.handlePasswordChange.bind(this)}
-                               handleRepeatChange={this.handlePasswordRepeatChange.bind(this)}
-          />
-          <button className="sign-up-button"
-                  onClick={this.goSignUp.bind(this)}
-          >
-            sign up
-          </button>
-          <div className="go-sign-in">
-            <a href="/signin">sign in</a>
-          </div>
-        </div>
-      </>
+      <Consumer>
+        {(value) => {
+          this.showMessage = value;
+          return (
+            <>
+              <div className="sign-container">
+                <SignUpUsernameInput name={this.state.username}
+                                     handleChange={this.handleUsernameChange.bind(this)}
+                />
+                <SignUpPasswordInput password={this.state.password} passwordRepeat={this.state.passwordRepeat}
+                                     handleChange={this.handlePasswordChange.bind(this)}
+                                     handleRepeatChange={this.handlePasswordRepeatChange.bind(this)}
+                />
+                <button className="sign-up-button"
+                        onClick={this.goSignUp.bind(this)}
+                >
+                  sign up
+                </button>
+                <div className="go-sign-in">
+                  <a href="/signin">sign in</a>
+                </div>
+              </div>
+            </>
+          );
+        }}
+      </Consumer>
     );
   }
 }
