@@ -23,9 +23,8 @@ class VideoPlayer extends Component{
   }
 
   render(){
-    return (
+    return (this.props.videoSrc && this.props.videoSrc != "" && this.props.videoSrc != "/") &&
       <video className="hls-player" controls />
-    );
   }
 }
 
