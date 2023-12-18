@@ -3,11 +3,11 @@
 const express = require("express");
 
 const User = require("./models/User.js");
-
+const Private=require("./models/Private.js");
 const router = express.Router();
-const jwt = require('jsonwebtoken');
-const SECRET = 'somesecret';
+var NodeRSA = require('node-rsa');
 
+const checker = require('./jwtThings.js');
 router.post('/login', async (req, res) => {
     const user = await User.findOne({name: req.body.name});
 
@@ -16,18 +16,23 @@ router.post('/login', async (req, res) => {
         message: '用户名不存在lll'});
     }
 
- 
-    if(req.body.password!=user.password) {
-        return res.status(422).send({
-            message: '密码不正确'
+    let privateKey;
+    Private.findOne({}).then((key)=>{
+        var privateKey = new NodeRSA(key.name);
+        privateKey.setOptions({encryptionScheme: 'pkcs1'});
+        var password = privateKey.decrypt(req.body.password, 'utf8');
+        if(password!=user.password) {
+            return res.status(422).send({
+                message: '密码不正确'
+            })
+        }
+    
+        const token = checker.signID(user._id);
+        res.send({
+            user,
+            token
         })
-    }
- 
-    const token = jwt.sign({ id: String(user._id)}, SECRET);
-    res.send({
-        user,
-        token
-    })
+    });
 });
 
 const fs = require("fs");
@@ -51,7 +56,7 @@ router.post("/userCreate", (req, res) => {
             links: [],
             type: "普通用户",
         });
-        const token = jwt.sign({ id: String(newuser._id)}, SECRET)
+        const token = checker.signID(newuser._id);
         newuser.save().then((user) => {
           fs.copyFileSync(path.join(__dirname, "upload", "defaultuserlogo.jpeg"),
                           path.join(__dirname, "upload", "userlogo", String(user._id)));

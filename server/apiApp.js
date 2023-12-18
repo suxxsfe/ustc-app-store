@@ -175,14 +175,11 @@ router.post("/appinfo/logo", logoUpload.single("file"), (req, res) => {
   }
   else{
     //TODO: check Authorization
-    if(checker.checkAuthorityApp(req.body.Authorization,req.body._id)){
+    checker.checkAuthorityApp(req.body.Authorization,req.body._id).then(()=>{
       fs.renameSync(path.join(__dirname, "upload", "applogo", req.file.filename),
                     path.join(__dirname, "upload", "applogo", req.body._id));
       res.send({status: "success"});
-    }
-    else{
-//      fs.unlink(path.join(__dirname, "upload", "applogo", req.file.filename));
-    }
+    }).catch((error) => {res.status(422).send(error);});
   }
 });
 router.post("/appinfo/video", videoUpload.single("file"), (req, res) => {
@@ -199,7 +196,7 @@ router.post("/appinfo/video", videoUpload.single("file"), (req, res) => {
   else{
     //TODO: check Authorization
     //done
-    if(checker.checkAuthorityApp(req.body.Authorization,req.body._id)){
+    checker.checkAuthorityApp(req.body.Authorization,req.body._id).then(()=>{
       const videoDir = path.join(__dirname, "upload", "appvideo", req.file.filename+"ts");
       fs.mkdirSync(videoDir);
       fs.renameSync(path.join(__dirname, "upload", "appvideo", req.file.filename),
@@ -217,11 +214,7 @@ router.post("/appinfo/video", videoUpload.single("file"), (req, res) => {
       .catch((error) => {
         console.log(error);
       });
-    }
-    else{
-      console.log("fuck you");
-//      fs.unlink(path.join(__dirname, "upload", "appvideo", req.file.filename));
-    }
+    }).catch((error) => {res.status(422).send(error);});
   }
 });
 router.post("/appinfo/download", downloadUpload.single("file"), (req, res) => {
@@ -231,7 +224,7 @@ router.post("/appinfo/download", downloadUpload.single("file"), (req, res) => {
   }
   else{
     //TODO: check Authorization
-    if(checker.checkAuthorityApp(req.body.Authorization,req.body._id)){
+    checker.checkAuthorityApp(req.body.Authorization,req.body._id).then(()=>{
       const newDownload = {
         filename: req.file.originalname,
         id: req.body.id,
@@ -251,17 +244,14 @@ router.post("/appinfo/download", downloadUpload.single("file"), (req, res) => {
       .catch((error) => {
         console.log(error);
       });
-    }
-    else{
-      //
-    }
+    }).catch((error) => {res.status(422).send(error);});
   }
 });
 
 router.post("/appinfo/deletedownload", (req, res) => {
   //TODO: check Authorization
-  if(checker.checkAuthorityApp(req.body.Authorization,req.body._id)){
-    App.findOne({_id: req.body._id})
+  checker.checkAuthorityApp(req.body.Authorization,req.body._id).then(()=>{
+     App.findOne({_id: req.body._id})
     .then((app) => {
       App.findOneAndUpdate({_id: req.body._id}, {
         downloads: app.downloads.filter((item) => (item.id !== req.body.id)),
@@ -273,7 +263,7 @@ router.post("/appinfo/deletedownload", (req, res) => {
         console.log(error);
       });
     })
-  }
+  }).catch((error) => {res.status(422).send(error);});
   
 })
 
@@ -296,4 +286,11 @@ router.get("/applist",(req,res)=>{
  // console.log(App.find({}).sort({createdate:1,name:1}));
   App.find({}).sort({createdate:1,name:1}).then((app)=>{res.send(app)});
 })
+router.post("/appdelete",(req,res)=>{
+  // console.log(req.body);
+  // console.log(req.query);
+  checker.checkAuthorityApp(req.query.Authorization,req.query._id).then((result)=>{
+    App.deleteOne({_id:req.query._id}).then(res.status(200).send("完成"+result)).catch(()=>console.log("error"));
+  }).catch((error)=>res.status(422).send(error));
+});
 module.exports = router;

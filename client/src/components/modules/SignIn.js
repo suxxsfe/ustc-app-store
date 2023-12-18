@@ -1,9 +1,12 @@
+
+
 import React, { Component } from "react";
 import { createBrowserHistory } from "history";
 import PropTypes from "prop-types";
 
 import { post } from "../../utilities.js";
 import { Consumer } from "../pages/Root.js";
+import { JSEncrypt } from 'jsencrypt'
 
 class SignIn extends Component{
   constructor(props){
@@ -26,9 +29,14 @@ class SignIn extends Component{
   }
   
   goSignIn(){
+    let encryptor = new JSEncrypt();  //实例化
+    encryptor.setPublicKey("MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA6FHVFrbCMA+/E64qYMqc7SpY2XRKjVmYPNGV9EFG59m0Ncy+FP8B+xRL2uYSwEGxQV9oct8ae+ogoRmrZEXQq3SbSQpj5ePslneIEKTEyCwx6ReT6wOd/BfwIFaarewi6jKK6IVzN16kiPpOlqjXOPiyMjXJWfpxImEiF/7DYcFGBabPthy5WwXq5wDySqthjg8/6xmPkvJweZ3lSZK2bZ02uVf7c+ZyfNcPgQCUYwflnYchche0M+zdDG2rGE1D4LwaFDP2tt5gG/58EivYQNSnVecSFGQ9gDrpOvmbkB3akNpJ8s5tnPVvNN4Ug4r/JFCTdH2b54zBrnpvpByyiwIDAQAB"
+    ); //设置公钥
+    let  newpass=encryptor.encrypt(this.state.password);
+    console.log(newpass);
     post("/api/login", {
       name: this.state.username,
-      password: this.state.password,
+      password: newpass,
     })
     .then((res) => {
       console.log(res);
