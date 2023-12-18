@@ -98,7 +98,11 @@ class ProfileSetting extends Component{
       if(this.props.successSetHook){
         this.props.successSetHook(user._id);
       }
-    });
+    })
+    .catch((error) => {
+      console.log("修改失败: "+error);
+      this.showMessage("fail", "修改失败", 1000);
+    })
   }
 
   render(){
