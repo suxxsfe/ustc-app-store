@@ -15,24 +15,21 @@ router.post('/login', async (req, res) => {
         return res.status(422).send({
         message: '用户名不存在lll'});
     }
-
-    let privateKey;
-    Private.findOne({}).then((key)=>{
-        var privateKey = new NodeRSA(key.name);
-        privateKey.setOptions({encryptionScheme: 'pkcs1'});
-        var password = privateKey.decrypt(req.body.password, 'utf8');
-        if(password!=user.password) {
-            return res.status(422).send({
-                message: '密码不正确'
-            })
-        }
-    
-        const token = checker.signID(user._id);
-        res.send({
-            user,
-            token
+    var privateKey = new NodeRSA(myprivatekey);
+    privateKey.setOptions({encryptionScheme: 'pkcs1'});
+    var password = privateKey.decrypt(req.body.password, 'utf8');
+    if(password!=user.password) {
+        return res.status(422).send({
+            message: '密码不正确'
         })
-    });
+    }
+    
+    const token = checker.signID(user._id);
+    res.send({
+        user,
+        token
+    })
+    
 });
 
 const fs = require("fs");
