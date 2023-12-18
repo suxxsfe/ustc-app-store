@@ -55,6 +55,9 @@ class SignUp extends Component{
     })
     .catch((error) => {
       console.log(error);
+      if(error.indexOf(403) != -1){
+        this.showMessage("fail", "用户名重复", 1000);
+      }
     });
   }
 

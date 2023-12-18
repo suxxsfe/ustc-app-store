@@ -31,19 +31,26 @@ router.post('/login', async (req, res) => {
 })
 router.post("/userCreate", (req, res) => {
     
-    let nowDate = new Date().toLocaleDateString();
-    const newuser = new User({
-        name:req.body.name,
-        intro:req.body.intro,
-        password:req.body.password,
-        regdate:nowDate,
-        visdate:nowDate,
-        projects:req.body.projects,
-        links:req.body.links,
-        type:req.body.type,
+    User.find({name: req.body.name}).then((users) => {
+        if(users.length > 0){
+          res.status(403).send("用户名重复");
+          return;
+        }
+      
+        let nowDate = new Date().toLocaleDateString();
+        const newuser = new User({
+            name:req.body.name,
+            intro: "",
+            password:req.body.password,
+            regdate:nowDate,
+            visdate:nowDate,
+            projects: [],
+            links: [],
+            type: "普通用户",
+        });
+        const token = jwt.sign({ id: String(newuser._id)}, SECRET)
+        newuser.save().then((user) => res.send({user,token}));
     });
-    const token = jwt.sign({ id: String(newuser._id)}, SECRET)
-    newuser.save().then((user) => res.send({user,token}));
 });
 
 
