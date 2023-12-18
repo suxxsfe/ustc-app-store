@@ -6,8 +6,9 @@ const User = require("./models/User.js");
 const Private=require("./models/Private.js");
 const router = express.Router();
 var NodeRSA = require('node-rsa');
-
+const myprivatekey=process.env.myprivatekey;
 const checker = require('./jwtThings.js');
+var privateKey = new NodeRSA(myprivatekey);
 router.post('/login', async (req, res) => {
     const user = await User.findOne({name: req.body.name});
 
@@ -15,7 +16,7 @@ router.post('/login', async (req, res) => {
         return res.status(422).send({
         message: '用户名不存在lll'});
     }
-    var privateKey = new NodeRSA(myprivatekey);
+    
     privateKey.setOptions({encryptionScheme: 'pkcs1'});
     var password = privateKey.decrypt(req.body.password, 'utf8');
     if(password!=user.password) {
