@@ -11,6 +11,8 @@ const App = require("./models/App.js");
 
 const Tags = require("./models/Tags.js");
 const router = express.Router();
+const fs = require("fs");
+const path = require("path");
 
 // router.get("/test",(req, res)=>{
 //   console.log(req.query);
@@ -88,6 +90,8 @@ router.post("/appinfo", (req, res) => {
                 updatedate: nowDate,
             }).save())
             .then((app) => {
+                fs.copyFileSync(path.join(__dirname, "upload", "defaultapplogo.jpg"),
+                                path.join(__dirname, "upload", "applogo", String(app._id)));
                 console.log("success");
                 res.send(app);
             })
@@ -129,7 +133,6 @@ router.post("/appinfo", (req, res) => {
 });
 
 const multer = require("multer");
-const path = require("path");
 const logoStorage = multer.diskStorage({
   destination: function(req, file, cb){
     return cb(null, path.join(__dirname, "upload", "applogo"));
@@ -162,7 +165,6 @@ const videoUpload = multer({ storage: videoStorage, limits: {fileSize: 1024*1024
 const logoUpload = multer({ storage: logoStorage, limits: {fileSize: 1024*1024*10} });
 const downloadUpload = multer({ storage: downloadStorage, limits: {fileSize: 1024*1024*100}, fileFilter });
 
-const fs = require("fs");
 router.post("/appinfo/logo", logoUpload.single("file"), (req, res) => {
   let { size, mimetype } = req.file;
   const allowType = ["jpeg", "jpg", "png"];
