@@ -42,9 +42,11 @@
     grid-template-rows: 30px 80px 20px 15px;
     grid-row-gap: 10px;
     grid-column-gap: 20px;
+    overflow: show;
 }
 .project a{
     text-decoration: none;
+    overflow: visible;
 }
 .project-logo{
     grid-column: 1 / 2;
