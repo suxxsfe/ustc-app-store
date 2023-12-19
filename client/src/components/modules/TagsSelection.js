@@ -18,7 +18,6 @@ class TagsSelection extends Component{
   render(){
     return (
       <div className="tags-selection">
-        <h2 className="tags-title">{this.props.tags_title}</h2>
         <div className="tags">
           <SingleTag tag_name="all" is_selected={this.isSelected("all")}
                      _onclick={this.handleOnClick.bind(this)}

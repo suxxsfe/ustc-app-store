@@ -7,11 +7,14 @@
 
 /**************** tags selection ****************/
 .tags-selection{
-    padding: 20px 0 20px 0;
-    margin: 0 0 20px 0;
+    padding: 10px 0 10px 0;
+    margin: 0;
     border-width: 0 0 1px 0;
     border-style: solid;
     border-color: rgba(0, 0, 0, 0.5);
+}
+.tags-selection:last-child{
+    margin: 0 0 20px 0;
 }
 .tags-title{
     margin: 0;
