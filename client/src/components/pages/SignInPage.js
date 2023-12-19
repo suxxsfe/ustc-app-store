@@ -34,6 +34,9 @@ class SignInPage extends Component{
   }
 
   render(){
+    if(this.state.signed == 2){
+      window.reload();
+    }
     if(this.state.signed != 0){
       const history = createBrowserHistory();
       const st = history.location.state;
