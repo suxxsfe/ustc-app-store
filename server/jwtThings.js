@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
-const SECRET = 'somesecret';
 const App = require("./models/App.js");
+const SECRET=process.env.jwtsecret;
 
 function signID(id){
   return jwt.sign({ id: String(id)}, SECRET);
