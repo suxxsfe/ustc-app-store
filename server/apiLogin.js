@@ -5,8 +5,7 @@ const express = require("express");
 const User = require("./models/User.js");
 const Private=require("./models/Private.js");
 const router = express.Router();
-var NodeRSA = require('node-rsa');
-const myprivatekey=const checker = require('./jwtThings.js');
+var NodeRSA = require('node-rsa');const checker = require('./jwtThings.js');
 var privateKey = new NodeRSA(myprivatekey);
 router.post('/login', async (req, res) => {
     const user = await User.findOne({name: req.body.name});

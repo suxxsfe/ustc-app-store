@@ -1,11 +1,11 @@
 const jwt = require('jsonwebtoken');
 const App = require("./models/App.js");
-const SECRET=;
 
 function signID(id){
   return jwt.sign({ id: String(id)}, SECRET);
 }
 function getID(token){
+  if(token==""||token==null)return 0;
   return jwt.verify(token.split(' ')[1], SECRET).id;
 }
 function checkAuthorityApp(token,id){

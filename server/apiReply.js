@@ -4,17 +4,14 @@ const express = require("express");
 const User = require("./models/User.js");
 const Reply = require("./models/reply.js");
 const router = express.Router();
-const jwt = require('jsonwebtoken');
-const SECRET = 'somesecret';
+const checker = require('./jwtThings.js');
 
 router.get("/replies", (req, res) => {
     Reply.find({parent: req.query._id}).then((tmp)=>res.send(tmp));
 });
 
 router.post("/reply", (req, res) => {
-    let e=req.body.Authorization;
-    const {id} = jwt.verify(e.split(' ')[1], SECRET);
-        
+    const id=checker.getID(req.body.Authorization);
     User.findOne({_id:id}).then((per)=>{
         const newreply = new Reply({
             author:{
