@@ -48,6 +48,10 @@ class App extends Component{
     }
   }
   
+  updateWhoami(){
+    this.componentDidMount();
+  }
+  
   deleteWhoami(){
     this.setState({
       whoami: {name: "", _id: 0},
@@ -72,7 +76,7 @@ class App extends Component{
           <BrowserRouter>
             <NavBar _id={this.state.whoami._id}/>
             <Routes>
-              <Route path="/" element={<Root />} errorElement={<NotFound />} >
+              <Route path="/" element={<Root updateWhoami={this.updateWhoami.bind(this)}/>} errorElement={<NotFound />} >
                 <Route path="/" element={<Search />} />
                 <Route path="/app/:appId/settings" element={<PathParamsHOC component={AppSettings} />} />
                 <Route path="/app/:appId" element={<PathParamsHOC component={AppPage} />} />

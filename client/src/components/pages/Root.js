@@ -5,11 +5,14 @@ import MessageBlock from "../modules/MessageBlock.js";
 
 const showMessageContext = React.createContext();
 const { Provider, Consumer } = showMessageContext;
-function Root(){
+function Root(props){
   let location = useLocation();
   let [message, setMessage] = useState({show: false, type: "", content: ""});
   
   const setMessageAndCancel = (mes) => {
+    if(mes.content == "登陆成功"){//强制更新 whoami
+      props.updateWhoami();
+    }
     setMessage(mes);
     var __type = mes.type, __content = mes.content;
     setTimeout(() => {
