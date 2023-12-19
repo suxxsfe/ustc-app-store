@@ -32,10 +32,9 @@ class SignInPage extends Component{
       signed: 2,
     });
   }
-
   render(){
     if(this.state.signed == 2){
-      window.reload();
+      return <Navigate to={"/"} state={{from: "/signin"}} />
     }
     if(this.state.signed != 0){
       const history = createBrowserHistory();
