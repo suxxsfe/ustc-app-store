@@ -21,12 +21,24 @@ body{
     padding: 0px;
     font-weight: 300;
 }
+html, body{
+    height: 100%;
+}
 #root{
     position: relative;
     top: 0px;
     right: 0px;
     padding: 0px;
     margin: 0px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    align-content: space-between ;
+}
+.app-container{
+    flex: 1;
+}
+.footer{
 }
 
 .u-inlineblock{
