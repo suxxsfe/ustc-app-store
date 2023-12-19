@@ -28,11 +28,9 @@ router.get("/userinfo", (req, res) => {
     User.findOne({_id:req.query._id}).then((tmp)=>{tmp.password="?????";res.send(tmp)});
 });
 router.get("/userprojects", (req, res) => {
-    User.findOne({_id:req.query._id})
-    .then((user) => App.find({
-      authors: {$in: [{name: user.name, _id: user._id}]}
-    }))
-    .then((apps) => res.send(apps))
+
+  console.log(User);  console.log(req.query);
+  App.find({authors:{$elemMatch:{_id:req.query._id}}}).then((apps) => res.send(apps))
     .catch((error) => {
       console.log(error);
       res.status(500).send("failed");

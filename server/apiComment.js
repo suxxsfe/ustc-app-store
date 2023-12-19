@@ -4,18 +4,18 @@ const express = require("express");
 const User = require("./models/User.js");
 const Comment = require("./models/Comment.js");
 const router = express.Router();
-const jwt = require('jsonwebtoken');
-const SECRET = 'somesecret';
-
+const checker = require('./jwtThings.js');
 router.get("/comments", (req, res) => {
-    Comment.find({parent: req.query._id}).then((tmp)=>{res.send(tmp)});
+    Comment.find({parent: req.query._id}).then((tmp)=>{res.send(tmp)}).catch((error) => {
+      console.log("data base not found: \n"+error);
+      res.status(404).send({});
+    });
 });
 
 
 router.post("/comment", (req, res) => {
   //  console.log(req.body);
-    let e=req.body.Authorization;
-    const {id} = jwt.verify(e.split(' ')[1], SECRET);
+    const id=checker.getID(req.body.Authorization);
     User.findOne({_id:id}).then((per)=>{
     const newcomm = new Comment({
         author:{
