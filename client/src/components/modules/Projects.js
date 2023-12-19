@@ -19,7 +19,10 @@ class Projects extends Component{
    	  this.setState({
    		  projects: pro,
    	  });
-   	});
+   	})
+    .catch((error) => {
+      console.log(error);
+    });
   }
 
   render(){

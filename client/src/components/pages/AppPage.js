@@ -9,6 +9,8 @@ import AppHomePage from "../modules/AppHomePage.js";
 import AppDownloadPage from "../modules/AppDownloadPage.js";
 import AppCommentsPage from "../modules/AppCommentsPage.js";
 
+import NotFound from "../pages/NotFound.js";
+
 import { get } from "../../utilities.js";
 
 import "./AppPage.css";
@@ -36,6 +38,7 @@ class AppPage extends Component{
       platforms: [],
       links: [],
       tags: [],
+      notFound: false,
     };
   }
   
@@ -57,10 +60,24 @@ class AppPage extends Component{
     get("/api/appinfo", {_id: this.props.appId})
     .then((app) => {
       this.setState(app);
+    })
+    .catch((error) => {
+      if(error.indexOf("404") != -1){
+        this.setState({
+          notFound: true,
+        });
+      }
+      else{
+        console.log(error);
+      }
     });
   }
   
   render(){
+    if(this.state.notFound){
+      return <NotFound />
+    }
+    
     let subPage = null;
     if(this.state.page === SubPages.HomePage || this.state.page === ""){
       subPage = (<AppHomePage describe={this.state.describe} />);
