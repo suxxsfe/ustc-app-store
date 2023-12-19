@@ -14,7 +14,11 @@ router.get("/comments", (req, res) => {
 
 
 router.post("/comment", (req, res) => {
-  //  console.log(req.body);
+ console.log(req);
+  if(!req.body.Authorization || req.body.Authorization == ""){
+    res.status(403).send("please login first");
+    return;
+  }
     const id=checker.getID(req.body.Authorization);
     User.findOne({_id:id}).then((per)=>{
     const newcomm = new Comment({

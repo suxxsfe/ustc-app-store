@@ -272,7 +272,7 @@ router.get("/search", (req, res) => {
     if(req.query.content!="") {option["name"]={$regex:req.query.content};}
     if(req.query.platform!="all")option["platforms"]=req.query.platform;
     if(req.query.tag!="all")option["tags"]={$elemMatch:{name:req.query.tag}}
-    App.find(option). then((app)=>res.send({projects:app}));
+    App.find(option). then((app)=>res.send({projects:app})).catch((err)=>res.status(422).send("nofile"+error));
   //   if(req.query.platforms!="all"){
   //     App.find({tags: {$elemMatch:{name:req.query.tag}},"platforms":req.query.platforms,                                                          name:{$regex:searchName}}).
   //       then((app)=>res.send({projects:app}));
