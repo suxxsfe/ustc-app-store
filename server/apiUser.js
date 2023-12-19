@@ -6,7 +6,16 @@ const router = express.Router();
 
 
 const checker = require('./jwtThings.js');
+const ObjectId = require('mongoose').Types.ObjectId;
 
+const isVaild = (id) => {
+  if(ObjectId.isValid(id)){
+        if((String)(new ObjectId(id)) === id)
+            return true;
+        return false;
+    }
+    return false;
+}
 
 router.post("/whoami", (req, res) => {
     const userId = checker.getID(req.body.Authorization);
@@ -25,11 +34,37 @@ router.post("/whoami", (req, res) => {
 })
 
 router.get("/userinfo", (req, res) => {
-    User.findOne({_id:req.query._id}).then((tmp)=>{tmp.password="?????";res.send(tmp)});
+  if(!req.query._id || !isVaild(req.query._id)){
+    console.log("fuck you, wrong id");
+    res.status(404).send("wrong id format");
+    return;
+  }
+  
+    User.find({_id:req.query._id})
+    .then((tmp)=>{
+      if(tmp.length != 1){
+          res.status(404).send("not found");
+      }
+      else{
+          tmp[0].password="?????";
+          res.send(tmp[0])
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+      res.status(404).send(e);
+    })
 });
 router.get("/userprojects", (req, res) => {
 
   console.log(User);  console.log(req.query);
+
+  if(!req.query._id || !isVaild(req.query._id)){
+    console.log("fuck you, wrong id");
+    res.status(404).send("wrong id format");
+    return;
+  }
+  
   App.find({authors:{$elemMatch:{_id:req.query._id}}}).then((apps) => res.send(apps))
     .catch((error) => {
       console.log(error);
