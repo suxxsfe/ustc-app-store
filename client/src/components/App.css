@@ -32,3 +32,8 @@ h1{
     color: #FFFFFF;
 }
 
+/**********所有框加阴影************/
+.settings, .projects, .sub-page-main, .projects, .profile-sidebar > div, .app-sidebar > div{
+    box-shadow: 1px 1px 5px var(--shadow-color), -1px 1px 5px var(--shadow-color);
+}
+

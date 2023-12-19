@@ -17,9 +17,11 @@
     --xl: 36px;
 }
 
+/*
 body *{
     overflow: hidden;
 }
+*/
 
 body{
     margin: 0px;
