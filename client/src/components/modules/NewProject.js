@@ -238,7 +238,7 @@ class NewProject extends Component{
   render(){
     const name = (
         <div className="new-app-name">
-          <h2>App name</h2>
+          <h2>项目名</h2>
           <input type="text" placeholder="your app name"
                  value={this.state.name} onChange={this.handleNameChange.bind(this)}
                  className="new-app-name-input new-post-input-input"
@@ -266,7 +266,7 @@ class NewProject extends Component{
     
     const video = (
         <div className="new-app-video">
-          <h2>App video</h2>
+          <h2>项目宣传视频</h2>
           {this.state.videoname && (<p>{this.state.videoname}</p>)}
           <input type="file" accept="video/*"
                  style={{display:"none"}} className="file-input"
@@ -276,7 +276,7 @@ class NewProject extends Component{
           <button className="new-app-logo-upload"
                   onClick={this.getFile.bind(this)}
           >
-            上传宣传视频
+            上传视频
           </button>
         </div>
     );
@@ -350,7 +350,8 @@ class NewProject extends Component{
     
     const describe = (
         <div className="new-app-description">
-          <h2>Description</h2>
+          <h2>项目描述</h2>
+          <p>支持 markdown</p>
           <textarea type="text" placeholder="describe your app"
                     value={this.state.description} onChange={this.handleDescriptionChange.bind(this)}
                     className="new-app-description-input new-post-input-input"
@@ -361,7 +362,7 @@ class NewProject extends Component{
     const selections = (
       <>
         <div className="new-app-platforms">
-          <h2>select platform</h2>
+          <h2>选择支持的平台</h2>
           {
             this.state.platforms.map((pl) => (
               <div className="select-box">
@@ -393,7 +394,7 @@ class NewProject extends Component{
     
     const links = (
         <div className="new-app-links">
-          <h2>relative links</h2>
+          <h2>相关链接</h2>
           <div className="new-links-container">
             <div className="new-links-title">链接名称</div>
             <div className="new-links-title">链接地址</div>

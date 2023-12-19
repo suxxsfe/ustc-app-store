@@ -129,7 +129,7 @@ class ProfileSetting extends Component{
               </div>
             
               <div className="user-settings-intro">
-                <h2>Introduction</h2>
+                <h2>个人介绍</h2>
                 <textarea type="text" placeholder="introduce your self"
                           value={this.state.intro} onChange={this.handleIntroChange.bind(this)}
                           className="user-settings-input new-post-input-input"
@@ -137,7 +137,7 @@ class ProfileSetting extends Component{
               </div>
             
               <div className="user-settings-links">
-                <h2>relative links</h2>
+                <h2>个人链接</h2>
                 <div className="new-links-container">
                   <div className="new-links-title">链接名称</div>
                   <div className="new-links-title">链接地址</div>
