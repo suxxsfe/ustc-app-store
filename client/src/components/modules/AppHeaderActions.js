@@ -13,9 +13,13 @@ class AppHeaderActions extends Component{
   render(){
     return (
       <div className="header-actions">
-        <a href="www.baidu.com">
-          <button>web</button>
-        </a>
+        {
+          (this.props.web && this.props.web != "") &&  (
+            <a href={this.props.web} target="_blank">
+              <button>web</button>
+            </a>
+          )
+        }
         {
           this.props.authors.filter((author) => (author._id == this.context.whoami._id)).length !== 0 ?
           (

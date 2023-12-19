@@ -42,7 +42,7 @@ class AppSideBar extends Component{
 		  this.props.links.map((link) => {
 		    return (
 			  <>
-		      <a href={link.url}>{link.webname}</a>
+		      <a href={link.url} target="_blank">{link.webname}</a>
 			  </>
 			);
 		  })
