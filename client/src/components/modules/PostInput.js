@@ -63,10 +63,16 @@ class SearchPostInput extends Component{
   }
   
   goSearch(value){
+    this.props.giveResult(undefined);
     get("/api/search", {content: value, tag: this.props.selected_tag, platform: this.props.selected_platform})
     .then((res) => {
-      console.log(res);
+      console.log("seach result: "+res.projects);
+      this.props.giveResult(res.projects);
     });
+  }
+  
+  componentDidMount(){
+    this.goSearch("");
   }
   
   render(){

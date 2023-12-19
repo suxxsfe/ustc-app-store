@@ -45,9 +45,9 @@ class SearchBlock extends Component{
     }));
   }
 	
-  componentdidmount(){
+  componentDidMount(){
 	  get("/api/tags").then((tags) => {
-	    this.setstate({
+	    this.setState({
     		tags: tags,
 	    });
   	});
@@ -57,7 +57,10 @@ class SearchBlock extends Component{
     return (
       <div className="search-block">
         <h1 className="search-block-title">搜索</h1>
-        <SearchPostInput selected_tag={this.state.selectedTag} selected_platform={this.state.selectedPlatform} />
+        <SearchPostInput selected_tag={this.state.selectedTag} 
+                         selected_platform={this.state.selectedPlatform} 
+                         giveResult={this.props.giveResult}
+        />
         <TagsSelection handle_selection={this.handleTagSelection.bind(this)}
                        selected_tag={this.state.selectedTag}
                        tags_name={this.state.tags} tags_title="Tags"
