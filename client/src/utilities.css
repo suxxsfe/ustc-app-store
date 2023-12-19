@@ -25,6 +25,7 @@ body{
     margin: 0px;
     padding: 0px;
     font-weight: 300;
+    background-color: var(--backgroundcolor);
 }
 html, body{
     height: 100%;

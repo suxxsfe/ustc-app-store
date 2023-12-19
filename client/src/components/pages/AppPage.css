@@ -12,6 +12,25 @@
     column-gap: 30px;
 }
 
+@media(max-width: 900px){
+    .sub-page{
+        grid-template-columns: auto;
+        grid-template-rows: auto auto auto;
+    }
+    .app-tabs{
+        grid-column: 1 / 2 !important;
+        grid-row: 1 / 2 !important;
+    }
+    .sub-page-main{
+        grid-column: 1 / 2 !important;
+        grid-row: 2 / 3 !important;
+    }
+    .app-sidebar{
+        grid-column: 1 / 2 !important;
+        grid-row: 3 / 4 !important;
+    }
+}
+
 .hls-player{
     width: 100%;
     height: 500px;

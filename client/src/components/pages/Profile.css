@@ -13,6 +13,7 @@
     grid-template-columns: auto 250px;
     grid-column-gap: 30px;
     column-gap: 30px;
+    row-gap: 30px;
 }
 
 .projects{
@@ -21,6 +22,19 @@
     min-height: 100vh;
     background-color: var(--primary-color);
     padding: 20px;
+}
+
+@media(max-width:900px){
+    .profile-main{
+        grid-template-rows: auto auto;
+        grid-template-columns: auto;
+    }
+    .projects{
+        grid-row: 1 / 2;
+    }
+    .profile-sidebar{
+        grid-row: 2 / 3;
+    }
 }
 
 .project-title{
@@ -46,6 +60,9 @@
 }
 .project a{
     text-decoration: none;
+    overflow: visible;
+}
+.project span{
     overflow: visible;
 }
 .project-logo{
@@ -108,5 +125,4 @@
     border-radius: 10px;
     padding: 5px;
 }
-
 
