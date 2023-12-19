@@ -3,15 +3,38 @@
     border-color: rgba(0, 0, 0, 0.5);
     border-style: solid;
     
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
+}
+.footer a{
+    text-decoration: none;
+    color: #333333;
+}
+.footer a:visited{
+    color: #333333;
+}
+.footer a:hover{
+    color: #0645AD;
 }
 
 .footer-text{
     margin: auto;
+    color: #333333;
+}
+
+.footer-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.footer-content{
+    padding: 0 0 0 10px;
+}
+.footer-content:first-child{
+    padding: 0px;
 }
 
