@@ -12,7 +12,7 @@ function Root(){
   const setMessageAndCancel = (mes) => {
     setMessage(mes);
     setTimeout(() => {
-      setMessage({show: false, type: "", content: ""});
+      setMessage({show: false, type: message.type, content: message.content});
     }, 2000);
   }
   
