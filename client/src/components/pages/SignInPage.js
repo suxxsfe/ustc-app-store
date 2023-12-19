@@ -41,7 +41,10 @@ class SignInPage extends Component{
       if(st && st.from && st.from != "/signup"){
         whereToGo = st.from;
       }
-      const message = this.state.signed == 1 ? "您已登陆" : "登陆成功";
+      const message = {
+        type: "success",
+        content: this.state.signed == 1 ? "您已登陆" : "登陆成功",
+      };
       return <Navigate to={whereToGo} state={{from: "/signin", message: message}} />
     }
     else{

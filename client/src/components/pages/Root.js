@@ -11,8 +11,9 @@ function Root(){
   
   const setMessageAndCancel = (mes) => {
     setMessage(mes);
+    var __type = mes.type, __content = mes.content;
     setTimeout(() => {
-      setMessage({show: false, type: message.type, content: message.content});
+      setMessage({show: false, type: __type, content: __content});
     }, 2000);
   }
   
@@ -20,7 +21,7 @@ function Root(){
     const st = location.state;
     console.log(st);
     if(st && st.message){
-      setMessageAndCancel({show: true, type: "success", content: st.message});
+      setMessageAndCancel({show: true, type: st.message.type, content: st.message.content});
     }
   }, [location]);
   

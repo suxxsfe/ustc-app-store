@@ -29,7 +29,10 @@ class SignUpPage extends Component{
 
   render(){
     return this.state.signed ?
-      <Navigate to="/signin" state={{from: "/signup", message: "注册成功"}} /> :
+      <Navigate to="/signin" state={{
+        from: "/signup",
+        message: {type: "success", content: "注册成功"}
+      }} /> :
       <SignUp successSignUpHook={this.handleSigned.bind(this)}/>
   }
 }
