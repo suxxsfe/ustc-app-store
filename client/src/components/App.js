@@ -70,9 +70,10 @@ class App extends Component{
       <>
         <div className="app-container">
           <BrowserRouter>
-          <NavBar _id={this.state.whoami._id}/>
+            <NavBar _id={this.state.whoami._id}/>
             <Routes>
-              <Route path="/" element={<Root />} >
+              <Route path="/" element={<Root />} errorElement={<NotFound />} >
+                <Route path="/" element={<Search />} />
                 <Route path="/app/:appId/settings" element={<PathParamsHOC component={AppSettings} />} />
                 <Route path="/app/:appId" element={<PathParamsHOC component={AppPage} />} />
                 <Route path="/user/:userId" element={<PathParamsHOC component={Profile} />} />
