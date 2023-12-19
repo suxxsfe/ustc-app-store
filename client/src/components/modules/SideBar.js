@@ -42,7 +42,7 @@ class AppSideBar extends Component{
 		  this.props.links.map((link) => {
 		    return (
 			  <>
-		      <a href={link.url} target="_blank">{link.webname}</a>
+		      <a href={link.url} target="_blank" rel="noopener noreferrer">{link.webname}</a>
 			  </>
 			);
 		  })
@@ -77,8 +77,7 @@ class ProfileSideBar extends Component{
   	  this.props.links.map((link) => {
   	    return (
   		  <>
-  		    <a href={link.url}>TODO: img</a>
-  		    <span>{link.name}</span>
+  		    <a href={link.url} rel="noopener noreferrer">{link.name}</a>
   		  </>
   		);
   	  })

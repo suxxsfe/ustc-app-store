@@ -15,7 +15,7 @@ class AppHeaderActions extends Component{
       <div className="header-actions">
         {
           (this.props.web && this.props.web != "") &&  (
-            <a href={this.props.web} target="_blank">
+            <a href={this.props.web} target="_blank" rel="noopener noreferrer">
               <button>web</button>
             </a>
           )
