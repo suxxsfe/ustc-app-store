@@ -25,6 +25,11 @@
     
     height: 100%;
     background-color: var(--primary-color);
+    cursor: pointer;
+}
+.app-tabs a{
+    text-decoration: none;
+    color: #000000;
 }
 .app-tabs-list{
     list-style-type: none;

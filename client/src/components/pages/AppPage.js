@@ -98,7 +98,7 @@ class AppPage extends Component{
         />
         <VideoPlayer videoSrc={"/"+this.state.video}/>
         <div className="sub-page">
-          <AppTabs _onClick={this.changeHash} focus={this.state.page}/>
+          <AppTabs _onClick={this.changeHash} focus={this.state.page} appId={this.props.appId}/>
           {subPage}
           <AppSideBar links={this.state.links} createdate={this.state.createdate}
                       updatedate={this.state.updatedate} platforms={this.state.platforms}
