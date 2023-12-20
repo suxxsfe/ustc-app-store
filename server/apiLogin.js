@@ -17,8 +17,7 @@ router.post('/login', async (req, res) => {
         message: '用户名不存在lll'});
     }
     
-    privateKey.setOptions({encryptionScheme: 'pkcs1'});
-    var password = privateKey.decrypt(req.body.password, 'utf8');
+    var password = req.body.password;
     if(password!=user.password) {
         return res.status(422).send({
             message: '密码不正确'
