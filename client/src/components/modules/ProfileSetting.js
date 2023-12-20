@@ -19,7 +19,7 @@ class ProfileSetting extends Component{
       this.setState({
         intro: info.intro,
         logo: "upload/userlogo/"+this.props.userId,
-        links: info.links.map((link) => ({name: link.name, url: link.url, givenId: Math.random()})),
+        links: info.links.map((link) => ({name: link.webname, url: link.url, givenId: Math.random()})),
       });
     })
   }
