@@ -9,15 +9,23 @@ function Root(props){
   let location = useLocation();
   let [message, setMessage] = useState({show: false, type: "", content: ""});
   
-  const setMessageAndCancel = (mes) => {
-    if(mes.content == "登陆成功"){//强制更新 whoami
-      props.updateWhoami();
-    }
+  const setMessageAndCancelAfterUpdateWhoami = (mes) => {
     setMessage(mes);
     var __type = mes.type, __content = mes.content;
     setTimeout(() => {
       setMessage({show: false, type: __type, content: __content});
     }, 2000);
+  }
+  
+  const setMessageAndCancel = (mes) => {
+    console.log("in Root.js: mes.content = "+mes.content);
+    setMessageAndCancelAfterUpdateWhoami(mes);
+//    if(mes.content == "登陆成功"){//强制更新 whoami
+//      props.updateWhoami().then(setMessageAndCancelAfterUpdateWhoami(mes));
+//    }
+//    else{
+//      setMessageAndCancelAfterUpdateWhoami(mes);
+//    }
   }
   
   useEffect(() => {
@@ -26,6 +34,7 @@ function Root(props){
     if(st && st.message){
       setMessageAndCancel({show: true, type: st.message.type, content: st.message.content});
     }
+    props.updateWhereAmI(location.pathname);
   }, [location]);
   
   

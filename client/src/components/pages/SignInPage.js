@@ -12,6 +12,7 @@ class SignInPage extends Component{
     super(props);
     this.state = {
       signed: 0,//0-unsigned 1-already signed 2-signed
+      gofor: undefined,
     };
   }
   
@@ -33,6 +34,9 @@ class SignInPage extends Component{
     });
   }
   render(){
+    if(this.state.gofor){
+      return this.state.gofor;
+    }
     if(this.state.signed != 0){
       const history = createBrowserHistory();
       const st = history.location.state;
@@ -44,11 +48,14 @@ class SignInPage extends Component{
         type: "success",
         content: this.state.signed == 1 ? "您已登陆" : "登陆成功",
       };
-      return <Navigate to={whereToGo} state={{from: "/signin", message: message}} />
+      console.log("wheretogo? "+whereToGo);
+      this.props.updateWhoami().then(() => {
+        this.setState({
+          gofor: <Navigate to={whereToGo} state={{from: "/signin", message: message}} />,
+        });
+      });
     }
-    else{
-      return <SignIn successSignInHook={this.handleSigned.bind(this)} />;
-    }
+    return <SignIn successSignInHook={this.handleSigned.bind(this)} />;
   }
 }
 

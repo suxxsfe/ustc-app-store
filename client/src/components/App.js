@@ -29,33 +29,47 @@ class App extends Component{
     
     this.state = {
       whoami: {},
+      whereAmI: "/",
     };
   }
   
   componentDidMount(){
-    if(!window.localStorage.getItem("token")){
-      this.setState({
-        whoami: {name: "", _id: 0},
-      });
-    }
-    else{
-      post("/api/whoami", {})
-      .then((res) => {
-        this.setState({
-          whoami: res,
-        });
-      });
-    }
+    this.updateWhoami();
   }
   
   updateWhoami(){
-    this.componentDidMount();
+    return new Promise((resolve, reject) => {
+      let newWhoami = {name: "", _id: 0};
+      if(!window.localStorage.getItem("token")){
+        this.setState({
+          whoami: {name: "", _id: 0},
+        }, () => (resolve("success updated whoami")));
+      }
+      else{
+        post("/api/whoami", {})
+        .then((res) => {
+          this.setState({
+            whoami: res,
+          }, () => (resolve("success updated whoami")));
+        })
+        .catch((e) => {
+          console.log(e);
+          resolve("fail updated whoami");
+        });
+      }
+    });
   }
   
   deleteWhoami(){
     this.setState({
       whoami: {name: "", _id: 0},
     });
+  }
+  
+  updateWhereAmI(where){
+    this.setState({
+      whereAmI: where,
+    }, () => console.log("where am i now?? "+where));
   }
   
   static childContextTypes = {
@@ -74,9 +88,13 @@ class App extends Component{
       <>
         <div className="app-container">
           <BrowserRouter>
-            <NavBar _id={this.state.whoami._id}/>
+            <NavBar _id={this.state.whoami._id} whereAmI={this.state.whereAmI}/>
             <Routes>
-              <Route path="/" element={<Root updateWhoami={this.updateWhoami.bind(this)}/>} errorElement={<NotFound />} >
+              <Route path="/" element={<Root updateWhoami={this.updateWhoami.bind(this)}
+                                             updateWhereAmI={this.updateWhereAmI.bind(this)}
+                                       />}
+                              errorElement={<NotFound />}
+              >
                 <Route path="/" element={<Search />} />
                 <Route path="/app/:appId/settings" element={<PathParamsHOC component={AppSettings} />} />
                 <Route path="/app/:appId" element={<PathParamsHOC component={AppPage} />} />
@@ -84,7 +102,7 @@ class App extends Component{
                 <Route path="/user/:userId/settings" element={<PathParamsHOC component={ProfileSettingsPage} />} />
                 <Route path="/search/" element={<Search />} />
                 <Route path="/new/" element={<NewProjectPage />} />
-                <Route path="/signin/" element={<SignInPage />} />
+                <Route path="/signin/" element={<SignInPage updateWhoami={this.updateWhoami.bind(this)} />} />
                 <Route path="/signup/" element={<SignUpPage />} />
                 <Route path="*" element={<NotFound />} />
               </Route>
