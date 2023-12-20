@@ -1,4 +1,4 @@
-
+import * as CryptoJS from "crypto-js";
 
 import React, { Component } from "react";
 import { createBrowserHistory } from "history";
@@ -31,7 +31,7 @@ class SignIn extends Component{
   goSignIn(){
     post("/api/login", {
       name: this.state.username,
-      password: this.state.password,
+      password: CryptoJS.MD5(this.state.password).toString(),
     })
     .then((res) => {
       console.log(res);

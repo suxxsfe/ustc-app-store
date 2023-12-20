@@ -1,3 +1,4 @@
+import * as CryptoJS from "crypto-js";
 import React, { Component } from "react";
 
 import { post } from "../../utilities.js";
@@ -44,7 +45,7 @@ class SignUp extends Component{
     post("/api/usercreate", {
       name: this.state.username,
       intro: "",
-      password: this.state.password,
+      password: CryptoJS.MD5(this.state.password).toString(),
       projects: [],
       links: [],
       type: "普通用户",
