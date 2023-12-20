@@ -41,7 +41,7 @@ class SignInPage extends Component{
       const history = createBrowserHistory();
       const st = history.location.state;
       let whereToGo = "/";
-      if(st && st.from && st.from != "/signup"){
+      if(st && st.from && st.from != "/signup" && st.from != "/signin"){
         whereToGo = st.from;
       }
       const message = {
