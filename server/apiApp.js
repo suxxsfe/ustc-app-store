@@ -14,6 +14,14 @@ const router = express.Router();
 const fs = require("fs");
 const path = require("path");
 
+const isVaild = (id) => {
+  if(id && ObjectId.isValid(id)){
+        if((String)(new ObjectId(id)) === id)
+            return true;
+        return false;
+    }
+    return false;
+}
 // router.get("/test",(req, res)=>{
 //   console.log(req.query);
 //   let e=checkAuthorityApp(req.query.token,req.query._id);
@@ -27,6 +35,10 @@ router.get("/tags", (req, res) => {
 })
 
 router.get("/appinfo", (req, res) => {
+    if(!isValid(req.query._id)){
+      res.status(500).send("fuck you wrong id format");
+      return;
+    }
     App.findOne({_id: req.query._id})
     .then((tmp)=>{res.send(tmp)})
     .catch((error) => {
@@ -36,6 +48,10 @@ router.get("/appinfo", (req, res) => {
 });
 
 router.get("/appdescribe", (req, res) => {
+    if(!isValid(req.query._id)){
+      res.status(500).send("fuck you wrong id format");
+      return;
+    }
     App.findOne({_id: req.query._id})
     .then((tmp)=>{res.send(tmp)})
     .catch((error) => {
@@ -44,6 +60,10 @@ router.get("/appdescribe", (req, res) => {
     });
 });
 router.get("/appdownload", (req, res) => {
+    if(!isValid(req.query._id)){
+      res.status(500).send("fuck you wrong id format");
+      return;
+    }
     App.findOne({_id: req.query._id})
     .then((tmp)=>{res.send(tmp)})
     .catch((error) => {
@@ -64,6 +84,11 @@ const getTagsByTagIds = async function (tagIds){
 }
 
 router.post("/appinfo", (req, res) => {
+    if(!isValid(req.body._id)){
+      res.status(500).send("fuck you wrong id format");
+      return;
+    }
+  
     console.log("kkksc03");
     if(!req.body.Authorization || req.body.Authorization == ""){
       res.status(403).send("please login first");
@@ -126,7 +151,11 @@ router.post("/appinfo", (req, res) => {
               });
           });
         }
-    });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send("user not found");
+    })
 });
 
 const multer = require("multer");

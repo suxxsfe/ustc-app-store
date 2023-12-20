@@ -9,7 +9,7 @@ const checker = require('./jwtThings.js');
 const ObjectId = require('mongoose').Types.ObjectId;
 
 const isVaild = (id) => {
-  if(ObjectId.isValid(id)){
+  if(id && ObjectId.isValid(id)){
         if((String)(new ObjectId(id)) === id)
             return true;
         return false;
