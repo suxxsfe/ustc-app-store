@@ -19,7 +19,7 @@ h1{
     height: 40px;
     left: 50%;
     transform: translateX(-50%);
-    transition: 0.5s 0s;
+    transition: 0.5s 0.2s;
     border-radius: 5px;
     box-shadow: 1px 1px 1px var(--shadow-color);
 }
@@ -30,6 +30,10 @@ h1{
     height: 100%;
     font-size: 13px;
     color: #FFFFFF;
+}
+
+.settings, .projects, .sub-page-main{
+    min-width: 650px;
 }
 
 /**********所有框加阴影************/
