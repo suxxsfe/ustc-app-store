@@ -16,9 +16,6 @@ class AppTabs extends Component{
               className={this.props.focus === "#DownloadPage" ? "focus-tab" : ""}>下载</li>
           <li onClick={this.props._onClick} hashcode="#CommentsPage"
               className={this.props.focus === "#CommentsPage" ? "focus-tab" : ""}>评论</li>
-          <li>
-            <Link to={"/app/"+this.props.appId+"/settings"}>编辑</Link>
-          </li>
         </ul>
       </div>
     );
