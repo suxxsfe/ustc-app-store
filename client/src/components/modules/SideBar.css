@@ -28,4 +28,7 @@
     text-align: center;
     margin: 0 0 10px 0;
 }
+.sidebar-part-list a{
+    display: block;
+}
 
