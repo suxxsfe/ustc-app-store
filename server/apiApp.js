@@ -16,6 +16,7 @@ const path = require("path");
 
 const ObjectId = require('mongoose').Types.ObjectId;
 const isValid = (id) => {
+  console.log("check is valid: "+id);
   if(id && ObjectId.isValid(id)){
         if((String)(new ObjectId(id)) === id)
             return true;
@@ -85,16 +86,11 @@ const getTagsByTagIds = async function (tagIds){
 }
 
 router.post("/appinfo", (req, res) => {
-    if(!isValid(req.body._id)){
-      res.status(500).send("fuck you wrong id format");
-      return;
-    }
-  
-    console.log("kkksc03");
     if(!req.body.Authorization || req.body.Authorization == ""){
       res.status(403).send("please login first");
       return;
     }
+  
     User.find({_id: checker.getID(req.body.Authorization)})
     .then((users) => {
         if(users.length != 1){
@@ -126,6 +122,11 @@ router.post("/appinfo", (req, res) => {
             });
         }
         else{
+          if(!isValid(req.body._id)){
+            res.status(500).send("fuck you wrong id format");
+            return;
+          }
+          
           App.find({_id: req.body._id}).then((apps) => {
               if(apps.length != 1){
                   res.status(403).send("app not found");
