@@ -45,7 +45,7 @@ class NewProject extends Component{
         selectedTags: info.tags.map((tag) => tag._id),
         platforms: ["Web", "Windows", "MacOS", "Linux"],
         selectedPlatforms:info.platforms,
-        links: info.links.map((link) => ({name: link.name, url: link.url, givenId: Math.random()})),
+        links: info.links.map((link) => ({name: link.webname, url: link.url, givenId: Math.random()})),
 
         downloads: info.downloads,
         logo: "upload/applogo/"+this.props.appId,
