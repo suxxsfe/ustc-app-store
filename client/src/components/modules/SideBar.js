@@ -77,7 +77,7 @@ class ProfileSideBar extends Component{
   	  this.props.links.map((link) => {
   	    return (
   		  <>
-  		    <a href={link.url} rel="noopener noreferrer">{link.name}</a>
+  		    <a href={link.url} rel="noopener noreferrer">{link.webname}</a>
   		  </>
   		);
   	  })
