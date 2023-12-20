@@ -95,6 +95,7 @@ router.post("/appinfo", (req, res) => {
     .then((users) => {
         if(users.length != 1){
           res.status(403).send("user not found");
+          return;
         }
       
         const user = users[0];
@@ -119,6 +120,7 @@ router.post("/appinfo", (req, res) => {
             .catch((error) => {
               console.log(error);
               res.status(500).send(error);
+              return;
             });
         }
         else{
@@ -130,9 +132,11 @@ router.post("/appinfo", (req, res) => {
           App.find({_id: req.body._id}).then((apps) => {
               if(apps.length != 1){
                   res.status(403).send("app not found");
+                  return;
               }
               if(!apps[0].authors.map((author) => (String(author._id))).includes(user.id)){
                   res.status(403).send("permission deny");
+                  return;
               }
               getTagsByTagIds(req.body.tags)
               .then((tags) => App.findOneAndUpdate({_id:req.body._id},{
@@ -149,7 +153,8 @@ router.post("/appinfo", (req, res) => {
               })
               .catch((error) => {
                   console.log(error);
-                  res.state(500).send(error);
+                  res.status(500).send(error);
+                  return;
               });
           });
         }
