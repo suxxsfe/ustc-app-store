@@ -14,7 +14,7 @@ const router = express.Router();
 const fs = require("fs");
 const path = require("path");
 
-const isVaild = (id) => {
+const isValid = (id) => {
   if(id && ObjectId.isValid(id)){
         if((String)(new ObjectId(id)) === id)
             return true;
