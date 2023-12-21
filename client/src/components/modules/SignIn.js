@@ -1,5 +1,6 @@
 import * as CryptoJS from "crypto-js";
 
+import { Link } from "react-router-dom";
 import React, { Component } from "react";
 import { createBrowserHistory } from "history";
 import PropTypes from "prop-types";
@@ -69,7 +70,7 @@ class SignIn extends Component{
                   Sign in
                 </button>
                 <div className="go-sign-up">
-                  <a href="/signup">sign up</a>
+                  <Link to="/signup">sign up</Link>
                 </div>
               </div>
             </>

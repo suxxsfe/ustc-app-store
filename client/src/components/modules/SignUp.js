@@ -1,5 +1,6 @@
 import * as CryptoJS from "crypto-js";
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 import { post } from "../../utilities.js";
 import { Consumer } from "../pages/Root.js";
@@ -83,7 +84,7 @@ class SignUp extends Component{
                   sign up
                 </button>
                 <div className="go-sign-in">
-                  <a href="/signin">sign in</a>
+                  <Link to="/signin">sign in</Link>
                 </div>
               </div>
             </>

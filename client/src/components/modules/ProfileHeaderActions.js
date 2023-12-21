@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 class ProfileHeaderActions extends Component{
@@ -16,9 +17,9 @@ class ProfileHeaderActions extends Component{
         {
           this.props._id == this.context.whoami._id ?
           (
-            <a href={"/user/"+this.props._id+"/settings"}>
+            <Link to={"/user/"+this.props._id+"/settings"}>
               <button>管理</button>
-            </a>
+            </Link>
           ) :
           null
         }

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 class AppHeaderActions extends Component{
   constructor(props){
@@ -23,9 +24,9 @@ class AppHeaderActions extends Component{
         {
           this.props.authors.filter((author) => (author._id == this.context.whoami._id)).length !== 0 ?
           (
-            <a href={"/app/"+this.props._id+"/settings"}>
+            <Link to={"/app/"+this.props._id+"/settings"}>
               <button>管理</button>
-            </a>
+            </Link>
           ) :
           null
         }

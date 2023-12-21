@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class AppHeaderDetail extends Component{
   constructor(props){
@@ -12,7 +13,7 @@ class AppHeaderDetail extends Component{
 		{
 		  this.props.authors.map((author) => {
 		    return (
-			  <a href={"/user/"+author._id}>{author.name}</a>
+			  <Link to={"/user/"+author._id}>{author.name}</Link>
 			);
 		  })
 		}
