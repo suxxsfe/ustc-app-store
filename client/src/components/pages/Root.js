@@ -33,6 +33,7 @@ function Root(props){
     console.log(st);
     if(st && st.message){
       setMessageAndCancel({show: true, type: st.message.type, content: st.message.content});
+      window.history.replaceState({}, document.title);
     }
     props.updateWhereAmI(location.pathname);
   }, [location]);
